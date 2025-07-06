@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:24:45 by root              #+#    #+#             */
-/*   Updated: 2025/07/06 14:45:40 by root             ###   ########.fr       */
+/*   Updated: 2025/07/06 20:49:37 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 						// thread: create, join, detach
 #include <sys/time.h>	// gettimeofday
 #include <limits.h>		// INT_MAX
+#include <errno.h>
 
 // ANSI escape sequences for bold colored text
 #define RST "\033[0m"      // Reset
@@ -37,7 +38,7 @@ typedef enum e_opcode
 	UNLOCK,
 	INIT,
 	DESTROY,
-	CARE,
+	CREATE,
 	JOIN,
 	DETACH,
 }		t_opcode;
@@ -102,3 +103,6 @@ void parse_input(t_table *table, char **argv);
 
 // safe_functions.c
 void	*safe_malloc(size_t bytes);
+void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
+void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *),
+		void *data, t_opcode opcode);
