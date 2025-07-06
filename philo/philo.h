@@ -1,0 +1,86 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/05 17:24:45 by root              #+#    #+#             */
+/*   Updated: 2025/07/05 20:13:51 by root             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <stdio.h>		// printf
+#include <stdlib.h>		// malloc, free
+#include <unistd.h>		// usleep
+#include <stdbool.h>	// bool
+#include <pthread.h>	// mutex: init, lock, unlock, destroy
+						// thread: create, join, detach
+#include <sys/time.h>	// gettimeofday
+#include <limits.h>		// INT_MAX
+
+// ANSI escape sequences for bold colored text
+#define RST "\033[0m"      // Reset
+#define RED "\033[1;31m"   // Bold Red
+#define G   "\033[1;32m"   // Bold Green
+#define Y   "\033[1;33m"   // Bold Yellow
+#define B   "\033[1;34m"   // Bold Blue
+#define M   "\033[1;35m"   // Bold Magenta
+#define C   "\033[1;36m"   // Bold Cyan
+#define W   "\033[1;37m"   // Bold White
+
+
+/** structures */
+
+/**
+ * core more redable names
+ */
+typedef pthread_mutex_t	t_mtx;
+typedef struct s_table t_table;
+
+/*
+  * Forks
+  */
+typedef struct s_fork
+{
+	t_mtx		fork;
+	int			fork_id;
+
+}				t_fork;
+/*
+  * philosopher: a struct representing a philosopher
+  * ./philo 5 800 200 200 [5]
+  */
+typedef struct s_philo
+{
+	int			id;
+	long		meals_counter;
+	bool		full;
+	long		last_meal_time; // time passed from the meal;
+	t_fork		*left_fork;
+	t_fork		*right_fork;
+	pthread_t	thread_id;		// a philo is a thread
+	t_table		*table;
+}				t_philo;
+
+/**
+ * TABLE
+ * ./philo 5 800 200 200 [5]
+ */
+struct s_table
+{
+	long		philo_nbr;
+	long		time_to_die;
+	long		time_to_eat;
+	long		time_to_sleep;
+	long		number_of_limit_meals;	// [5] | FLAG if -1
+	long		start_simulation;		// when we start
+	bool		end_simulation;			// a philo dier or all philos full
+	t_fork		*forks;					// array to forks
+	t_philo		*philos;				// all philos
+};
+
+// PROTOTYPES
+
+// utils.c
+void	error_exit(const char *error);
