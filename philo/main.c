@@ -9,7 +9,7 @@ int main(int argc, char **argv)
 	if (5 == argc || 6 == argc)
 	{
 		// errors checking
-		parse_input(&table, argv);	// TODO
+		parse_input(&table, argv);
 		// creating the actual thing
 		data_init(&table);	// TODO
 		// main simulation

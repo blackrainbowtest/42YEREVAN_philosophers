@@ -57,14 +57,18 @@ static long	ft_atol(const char *str)
  * 3) timestamps > 60ms
  * usleep wants microseconds
  */
-parse_input(t_table *table, char **argv)
+void parse_input(t_table *table, char **argv)
 {
-	table->philo_nbr = ft_atol(argv[1]);	//TODO
+	table->philo_nbr = ft_atol(argv[1]);
 	table->time_to_die = ft_atol(argv[2]) * 1e3;
 	table->time_to_eat = ft_atol(argv[3]) * 1e3;
 	table->time_to_sleep = ft_atol(argv[4]) * 1e3;
 	if (table->time_to_die < 6e4
 		|| table->time_to_eat < 6e4
 		|| table->time_to_sleep < 6e4)
-
+		error_exit("Use timestamps major than 60ms");
+	if (argv[5])
+		table->number_of_limit_meals = ft_atol(argv[5]);
+	else
+		table->number_of_limit_meals = -1;
 }

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:24:45 by root              #+#    #+#             */
-/*   Updated: 2025/07/05 20:13:51 by root             ###   ########.fr       */
+/*   Updated: 2025/07/06 14:45:40 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,19 @@
 #define M   "\033[1;35m"   // Bold Magenta
 #define C   "\033[1;36m"   // Bold Cyan
 #define W   "\033[1;37m"   // Bold White
-
+/**
+ * OPCODE for mutex
+ */
+typedef enum e_opcode
+{
+	LOCK,
+	UNLOCK,
+	INIT,
+	DESTROY,
+	CARE,
+	JOIN,
+	DETACH,
+}		t_opcode;
 
 /** structures */
 
@@ -84,3 +96,9 @@ struct s_table
 
 // utils.c
 void	error_exit(const char *error);
+
+// parsing.c
+void parse_input(t_table *table, char **argv);
+
+// safe_functions.c
+void	*safe_malloc(size_t bytes);
