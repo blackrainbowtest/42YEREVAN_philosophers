@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:24:45 by root              #+#    #+#             */
-/*   Updated: 2025/07/08 21:38:33 by root             ###   ########.fr       */
+/*   Updated: 2025/07/09 00:54:23 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ typedef struct s_philo
 	long		meals_counter;
 	bool		full;
 	long		last_meal_time; // time passed from the meal;
-	t_fork		*left_fork;
-	t_fork		*right_fork;
+	t_fork		*first_fork;
+	t_fork		*second_fork;
 	pthread_t	thread_id;		// a philo is a thread
 	t_table		*table;
 }				t_philo;

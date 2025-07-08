@@ -1,5 +1,41 @@
 #include "philo.h"
 
+// EVEN ODD fork asign
+static void	assign_fork(t_philo *philo, t_fork *forks,
+		int philo_position)
+{
+	int	philo_nbr;
+
+	philo_nbr = philo->table->philo_nbr;
+	// DEADLOCK HERE
+	philo->first_fork = &forks[(philo_position + 1) % philo_position];
+	philo->second_fork = &forks[philo_position];
+	if (philo-> id % 2)
+	{
+		philo->first_fork = &forks[philo_position];
+		philo->second_fork = &forks[(philo_position + 1) % philo_position];
+	}
+}
+
+static void	philo_init(t_table *table)
+{
+	int		i;
+	t_philo	*philo;
+
+	i = -1;
+	while(++i < table->philo_nbr)
+	{
+		philo = table->philos + i;
+		philo->id = i + 1;
+		philo->full = false;
+		philo->meals_counter = 0;
+		philo->table = table;
+
+		// AD hoc
+		assign_fork(philo, table->forks, i);
+	}
+}
+
 void	data_init(t_table *table)
 {
 	int	i;
@@ -11,7 +47,8 @@ void	data_init(t_table *table)
 	while (++i < table->philo_nbr)
 	{
 		safe_mutex_handle(&table->forks[i].fork, INIT);
-		table->forks[i].fork_id = i;
+		table->forks[i].fork_id = i;	// usefull for debuging
 	}
+	philo_init(table);
 	
 }
