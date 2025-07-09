@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:24:45 by root              #+#    #+#             */
-/*   Updated: 2025/07/09 00:54:23 by root             ###   ########.fr       */
+/*   Updated: 2025/07/09 23:33:14 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ struct s_table
 	long		number_of_limit_meals;	// [5] | FLAG if -1
 	long		start_simulation;		// when we start
 	bool		end_simulation;			// a philo dier or all philos full
+	bool		all_threads_ready;		// syncro philos
+	t_mtx		table_mutex;			// avoid races from reading a table
 	t_fork		*forks;					// array to forks
 	t_philo		*philos;				// all philos
 };
@@ -106,3 +108,13 @@ void	*safe_malloc(size_t bytes);
 void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
 void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *),
 		void *data, t_opcode opcode);
+
+// init.c
+void	data_init(t_table *table);
+
+// philo.c
+void	set_bool(t_mtx *mutex, bool *dest, bool value);
+bool	get_bool(t_mtx *mutex, bool *value);
+void	set_long(t_mtx *mutex, long *dest, long value);
+long	get_long(t_mtx *mutex, long *value);
+bool	simulation_finish(t_table *table);

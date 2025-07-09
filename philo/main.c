@@ -11,7 +11,7 @@ int main(int argc, char **argv)
 		// errors checking
 		parse_input(&table, argv);
 		// creating the actual thing
-		data_init(&table);	// TODO
+		data_init(&table);
 		// main simulation
 		dinner_start(&table);	// TODO
 		// no leaks -> 1 philo died or all philos full

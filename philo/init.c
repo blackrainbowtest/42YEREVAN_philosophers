@@ -10,7 +10,7 @@ static void	assign_fork(t_philo *philo, t_fork *forks,
 	// DEADLOCK HERE
 	philo->first_fork = &forks[(philo_position + 1) % philo_position];
 	philo->second_fork = &forks[philo_position];
-	if (philo-> id % 2)
+	if (philo->id % 2)
 	{
 		philo->first_fork = &forks[philo_position];
 		philo->second_fork = &forks[(philo_position + 1) % philo_position];
@@ -42,7 +42,9 @@ void	data_init(t_table *table)
 
 	i = -1;
 	table->end_simulation = false;
+	table->all_threads_ready = false;
 	table->philos = safe_malloc(sizeof(t_philo) * table->philo_nbr);
+	safe_mutex_handle(&table->table_mutex, INIT);
 	table->forks = safe_malloc(sizeof(t_fork) * table->philo_nbr);
 	while (++i < table->philo_nbr)
 	{
