@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:24:45 by root              #+#    #+#             */
-/*   Updated: 2025/07/09 23:33:14 by root             ###   ########.fr       */
+/*   Updated: 2025/07/10 21:21:41 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,16 @@ typedef enum e_opcode
 	JOIN,
 	DETACH,
 }		t_opcode;
+
+/**
+ * CODES FOR GETTIME
+ */
+typedef enum e_time_code
+{
+	SECOND,
+	MILISECOND,
+	MICROSECOND,
+}			t_time_code;
 
 /** structures */
 
@@ -99,6 +109,7 @@ struct s_table
 
 // utils.c
 void	error_exit(const char *error);
+long	gettime(t_time_code time_code);
 
 // parsing.c
 void parse_input(t_table *table, char **argv);
@@ -118,3 +129,6 @@ bool	get_bool(t_mtx *mutex, bool *value);
 void	set_long(t_mtx *mutex, long *dest, long value);
 long	get_long(t_mtx *mutex, long *value);
 bool	simulation_finish(t_table *table);
+
+// syncro_utils.c
+void	wait_all_threads(t_table *table);
