@@ -50,7 +50,7 @@ void	precise_usleep(long usec, t_table *table)
 
 		// Եթե մնացել է սպասելու ավելի քան 1000 միկրովարկյան ազատում ենք cpy 
 		if (rem > 1e3)
-			usleep(rem / 2):
+			usleep(rem / 2);
 		else
 		{
 			// SPINLOCK - ակտիվ սպասողական վիճակ

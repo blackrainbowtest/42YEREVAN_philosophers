@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:24:45 by root              #+#    #+#             */
-/*   Updated: 2025/07/10 21:21:41 by root             ###   ########.fr       */
+/*   Updated: 2025/07/11 18:50:49 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,16 @@
 /**
  * OPCODE for mutex
  */
+typedef enum e_status
+{
+	EATING,
+	SLEEPING,
+	THINKING,
+	TAKE_FIRST_FORK,	// denug
+	TAKE_SECOND_FORK,	// debug
+	DIED,
+}		t_status;
+ 
 typedef enum e_opcode
 {
 	LOCK,
@@ -101,6 +111,7 @@ struct s_table
 	bool		end_simulation;			// a philo dier or all philos full
 	bool		all_threads_ready;		// syncro philos
 	t_mtx		table_mutex;			// avoid races from reading a table
+	t_mtx		write_mutex;			// print mutex
 	t_fork		*forks;					// array to forks
 	t_philo		*philos;				// all philos
 };
