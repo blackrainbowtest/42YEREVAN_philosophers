@@ -20,8 +20,15 @@ long	gettime(t_time_code time_code)
 		error_exit("Wrong input to gettime");
 	return (42);
 }
+
 /**
- *						(ինչքան միկրովարկյան քնել, ընդհանուր ստրուկտուրա)
+ * precise usleep, the real one suck
+ * 
+ * why table is simulation finish?
+ * 
+ * 1) usleep the majorty of time, not CPU intensive
+ * 2) refine last microsec with spinlock
+ *                    (ինչքան միկրովարկյան քնել, ընդհանուր ստրուկտուրա)
  */
 void	precise_usleep(long usec, t_table *table)
 {
@@ -51,19 +58,6 @@ void	precise_usleep(long usec, t_table *table)
 				;
 		}
 	}
-}
-
-/**
- * precise usleep, the real one suck
- * 
- * why table is simulation finish?
- * 
- * 1) usleep the majorty of time, not CPU intensive
- * 2) refine last microsec with spinlock
- */
-void	precise_usleep(long usec, t_table *table)
-{
-
 }
 
 void	error_exit(const char *error)
