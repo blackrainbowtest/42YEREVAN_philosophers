@@ -20,10 +20,37 @@ long	gettime(t_time_code time_code)
 		error_exit("Wrong input to gettime");
 	return (42);
 }
-
+/**
+ *						(ինչքան միկրովարկյան քնել, ընդհանուր ստրուկտուրա)
+ */
 void	precise_usleep(long usec, t_table *table)
 {
-	
+	long	start;		// սպասման ժամանակի մեկնարկային կետը (միկրովարկյաններով)
+	long	elapsed;	// ինչքան ժամանակ է անցել մեկնարկից սկսած
+	long	rem;		// remaining ինչքան է դեռ մնացել սպասելու
+
+	start = gettime(MICROSECOND);
+	// ցիկլը աշխատում է քանի դեռ մեկնարկից չի անցել քնելու չափ ժամանակ
+	while (gettime(MICROSECOND) - start < usec)
+	{
+		// եթե քնելու ընթացքում սիմուլացիան ավարտվել է, դուրս գալ ցիկլից
+		if (simulation_finish(table))
+			break ;
+		// ինչքան է անցել մեկնարկից հետո
+		elapsed = gettime(MICROSECOND) - start;
+		// ինչքան է մնացել դեռ քնելու
+		rem = usec - elapsed;
+
+		// Եթե մնացել է սպասելու ավելի քան 1000 միկրովարկյան ազատում ենք cpy 
+		if (rem > 1e3)
+			usleep(rem / 2):
+		else
+		{
+			// SPINLOCK - ակտիվ սպասողական վիճակ
+			while (gettime(MICROSECOND) - start < usec)
+				;
+		}
+	}
 }
 
 /**

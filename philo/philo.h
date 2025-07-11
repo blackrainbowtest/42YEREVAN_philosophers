@@ -110,6 +110,7 @@ struct s_table
 // utils.c
 void	error_exit(const char *error);
 long	gettime(t_time_code time_code);
+void	precise_usleep(long usec, t_table *table);
 
 // parsing.c
 void parse_input(t_table *table, char **argv);
