@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:24:45 by root              #+#    #+#             */
-/*   Updated: 2025/07/11 18:50:49 by aramarak         ###   ########.fr       */
+/*   Updated: 2025/07/12 12:53:44 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@
 #define M   "\033[1;35m"   // Bold Magenta
 #define C   "\033[1;36m"   // Bold Cyan
 #define W   "\033[1;37m"   // Bold White
+
+/**
+ * DEBUG MODE 0
+ */
+#define DEBUG_MODE 0
 /**
  * OPCODE for mutex
  */
@@ -93,6 +98,7 @@ typedef struct s_philo
 	t_fork		*first_fork;
 	t_fork		*second_fork;
 	pthread_t	thread_id;		// a philo is a thread
+	t_mtx		philo_mutex;	// usefull for races the monitor
 	t_table		*table;
 }				t_philo;
 
@@ -110,10 +116,12 @@ struct s_table
 	long		start_simulation;		// when we start
 	bool		end_simulation;			// a philo dier or all philos full
 	bool		all_threads_ready;		// syncro philos
+	long		threads_running_number;
 	t_mtx		table_mutex;			// avoid races from reading a table
 	t_mtx		write_mutex;			// print mutex
 	t_fork		*forks;					// array to forks
 	t_philo		*philos;				// all philos
+	pthread_t	monitor;				// 
 };
 
 // PROTOTYPES
@@ -144,3 +152,10 @@ bool	simulation_finish(t_table *table);
 
 // syncro_utils.c
 void	wait_all_threads(t_table *table);
+bool	all_threads_running(t_mtx *mutex, long *threads, long philo_nbr);
+
+// write.c
+void	write_status(t_status status, t_philo *philo, bool debug);
+
+// dinner.c
+void	dinner_start(t_table *table);

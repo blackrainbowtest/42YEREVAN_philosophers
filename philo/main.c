@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 		// main simulation
 		dinner_start(&table);	// TODO
 		// no leaks -> 1 philo died or all philos full
-		clean(&table);	// TODO
+		// clean(&table);	// TODO
 	}
 	else
 	{

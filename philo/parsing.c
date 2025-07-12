@@ -18,7 +18,7 @@ static inline bool	is_space(char c)
 static const char	*valid_input(const char *str)
 {
 	int		len;
-	char	*number;
+	const char	*number;
 
 	len = 0;
 	while(is_space(*str))

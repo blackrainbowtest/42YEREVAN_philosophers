@@ -83,7 +83,7 @@ void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *),
 		void *data, t_opcode opcode)
 {
 	if (CREATE == opcode)
-		handle_thread_error(pthread_create(*thread, NULL, foo, data), opcode);
+		handle_thread_error(pthread_create(thread, NULL, foo, data), opcode);
 	else if (JOIN == opcode)
 		handle_thread_error(pthread_join(*thread, NULL), opcode);
 	else if (DETACH == opcode)
