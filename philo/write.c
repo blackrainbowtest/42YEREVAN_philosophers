@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 19:26:55 by aramarak          #+#    #+#             */
-/*   Updated: 2025/07/12 17:14:52 by root             ###   ########.fr       */
+/*   Updated: 2025/07/13 00:29:14 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	write_status(t_status status, t_philo *philo, bool debug)
 		else if (THINKING == status)
 			printf(W"%-6ld"RST" %d is thinking\n", elapsed, philo->id);
 		else if (DIED == status)
-			printf(W"%-6ld %d died"RST, elapsed, philo->id);
+			printf(RED"%-6ld %d died\n"RST, elapsed, philo->id);
 	}
 	safe_mutex_handle(&philo->table->write_mutex, UNLOCK);
 }

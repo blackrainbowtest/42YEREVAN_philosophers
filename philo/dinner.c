@@ -6,7 +6,7 @@ void	thinking(t_philo *philo, bool pre_simulation)
 	long	t_sleep;
 	long	t_think;
 
-	if (!pre_simulation)
+	if (!pre_simulation && !simulation_finish(philo->table))
 		write_status(THINKING, philo, DEBUG_MODE);
 	if (philo->table->philo_nbr % 2 == 0)
 		return ;
