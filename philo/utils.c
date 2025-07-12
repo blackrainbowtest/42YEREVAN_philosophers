@@ -60,7 +60,7 @@ void	precise_usleep(long usec, t_table *table)
 	}
 }
 
-void	*clean(t_table *table)
+void	clean(t_table *table)
 {
 	t_philo	*philo;
 	int		i;

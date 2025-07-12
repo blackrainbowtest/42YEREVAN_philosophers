@@ -21,7 +21,7 @@ static bool	philo_died(t_philo *philo)
 	return (false);
 }
 
-void	*monitor_dinner(void *data)
+void	monitor_dinner(void *data)
 {
 	int		i;
 	t_table *table;

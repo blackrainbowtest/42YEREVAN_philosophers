@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:24:45 by root              #+#    #+#             */
-/*   Updated: 2025/07/12 20:54:39 by root             ###   ########.fr       */
+/*   Updated: 2025/07/13 01:27:12 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ struct s_table
 void	error_exit(const char *error);
 long	gettime(t_time_code time_code);
 void	precise_usleep(long usec, t_table *table);
-void	*clean(t_table *table);
+void	clean(t_table *table);
 
 // parsing.c
 void parse_input(t_table *table, char **argv);
@@ -165,4 +165,4 @@ void	dinner_start(t_table *table);
 void	thinking(t_philo *philo, bool pre_simulation);
 
 // monitor.c
-void	*monitor_dinner(void *data);
+void	monitor_dinner(void *data);
