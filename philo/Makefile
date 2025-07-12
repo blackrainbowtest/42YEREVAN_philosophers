@@ -35,4 +35,7 @@ fclean: clean
 # Rebuild rules
 re: fclean all
 
+t:
+	./$(NAME) $(ARGS)
+
 .PHONY: all clean fclean re
