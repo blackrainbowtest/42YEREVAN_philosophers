@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:24:45 by root              #+#    #+#             */
-/*   Updated: 2025/07/12 12:53:44 by root             ###   ########.fr       */
+/*   Updated: 2025/07/12 20:54:39 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ struct s_table
 void	error_exit(const char *error);
 long	gettime(t_time_code time_code);
 void	precise_usleep(long usec, t_table *table);
+void	*clean(t_table *table);
 
 // parsing.c
 void parse_input(t_table *table, char **argv);
@@ -153,9 +154,15 @@ bool	simulation_finish(t_table *table);
 // syncro_utils.c
 void	wait_all_threads(t_table *table);
 bool	all_threads_running(t_mtx *mutex, long *threads, long philo_nbr);
+void	increase_long(t_mtx *mutex, long *value);
+void	de_synchronize_philos(t_philo *philo);
 
 // write.c
 void	write_status(t_status status, t_philo *philo, bool debug);
 
 // dinner.c
 void	dinner_start(t_table *table);
+void	thinking(t_philo *philo, bool pre_simulation);
+
+// monitor.c
+void	*monitor_dinner(void *data);

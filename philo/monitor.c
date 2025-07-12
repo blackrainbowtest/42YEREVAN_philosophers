@@ -12,8 +12,9 @@ static bool	philo_died(t_philo *philo)
 
 	if (get_bool(&philo->philo_mutex, &philo->full))
 		return (false);
-	elapsed = gettime(MILISECOND) - get_long(&philo->philo_mutex, philo->last_meal_time);
-	t_to_die = philo->table->time_to_die;
+	elapsed = gettime(MILISECOND) - get_long(&philo->philo_mutex, &philo->last_meal_time);
+	// convert back to miliseconds
+	t_to_die = philo->table->time_to_die / 1e3;
 
 	if (elapsed > t_to_die)
 		return (true);
@@ -29,7 +30,7 @@ void	*monitor_dinner(void *data)
 	table = (t_table *)data;
 	// make sure all philo running
 	// spinlock till all thread run
-	while (!all_threads_running(&table->table_mutex, table->threads_running_number,
+	while (!all_threads_running(&table->table_mutex, &table->threads_running_number,
 			table->philo_nbr))
 		;
 	while (!simulation_finish(table))
