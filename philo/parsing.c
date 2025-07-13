@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 16:01:42 by root              #+#    #+#             */
-/*   Updated: 2025/07/13 18:47:36 by root             ###   ########.fr       */
+/*   Updated: 2025/07/13 22:57:22 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,17 @@ static const char	*valid_input(const char *str)
 	return (number);
 }
 
+/**
+ * @brief Converts a string to a long integer.
+ * 
+ * This function converts a string representation of a number to a long integer,
+ * ensuring that the number is valid and does not exceed the maximum limit for
+ * an integer. It also checks for valid input format and handles errors
+ * appropriately.
+ * 
+ * @param str The string to convert.
+ * @return Returns the converted long integer value.
+ */
 static long	ft_atol(const char *str)
 {
 	long	num;
@@ -86,12 +97,20 @@ static long	ft_atol(const char *str)
 }
 
 /**
- * ./philo 	5 		800 	200 	200 	[5]
- * 			argv[1]	argv[2]	argv[3]	argv[4]	argv[5]
- * 1) actual numbers
- * 2) not > INT_MAX
- * 3) timestamps > 60ms
- * usleep wants microseconds
+ * @brief Parses the command line arguments and initializes the table structure.
+ * 
+ * This function takes the command line arguments, validates them, and 
+ * initializes the `t_table` structure with the parsed values. It checks for 
+ * the number of philosophers, time to die, time to eat, time to sleep, and 
+ * the optional number of meals each philosopher should eat. If the input 
+ * is invalid, it exits with an error message.
+ * 
+ * @param table Pointer to the `t_table` structure to be initialized.
+ * @param argv Array of command line arguments.
+ * @return void
+ * 
+ * example:
+ * ./philo 5 800 200 200 [5]
  */
 void	parse_input(t_table *table, char **argv)
 {
@@ -102,7 +121,7 @@ void	parse_input(t_table *table, char **argv)
 	if (table->time_to_die < 6e4
 		|| table->time_to_eat < 6e4
 		|| table->time_to_sleep < 6e4)
-		error_exit("Use timestamps major than 60ms");
+		error_exit("Time to die, eat or sleep must be more than 60ms.");
 	if (argv[5])
 		table->number_of_limit_meals = ft_atol(argv[5]);
 	else
