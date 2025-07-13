@@ -1,39 +1,73 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/13 16:01:42 by root              #+#    #+#             */
+/*   Updated: 2025/07/13 18:47:36 by root             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
+/**
+ * @brief Checks whether the passed value is a number or not.
+ * 
+ * This function checks if the character is a digit (0-9).
+ * 
+ * @param c The character to check.
+ * @return Returns true if the character is a digit, false otherwise. 
+ */
 static inline bool	is_digit(char c)
 {
 	return (c >= '0' && c <= '9');
 }
 
+/**
+ * @brief Checks whether the passed value is a whitespace character.
+ * 
+ * This function checks if the character is a whitespace character,
+ * 
+ * @param c The character to check.
+ * @return Returns true if the character is a whitespace, false otherwise.
+ */
 static inline bool	is_space(char c)
 {
 	return ((c >= 9 && c <= 13) || 31 == c);
 }
 
 /**
- * 1) check for negative numbers
- * 2) check if number is legit "    +123$#R"
- * 3) check for INT_MAX (if len > 10 num > INTT_MAX)
+ * @brief Validates the input string for parsing.
+ * 
+ * This function checks if the input string is a valid number,
+ * ensuring it does not contain negative values, non-digit characters,
+ * and that it does not exceed the maximum length for an integer.
+ * 
+ * @param str The input string to validate.
+ * @return Returns a pointer to the valid number part of the string.
  */
 static const char	*valid_input(const char *str)
 {
-	int		len;
+	int			len;
 	const char	*number;
 
 	len = 0;
-	while(is_space(*str))
+	while (is_space(*str))
 		++str;
 	if (*str == '+')
 		++str;
 	else if (*str == '-')
-		error_exit("I can't handle negative numbers!");
+		error_exit("You can't handle negative numbers! Use positive ones.");
 	if (!is_digit(*str))
-		error_exit("Incorrect input!");
+		error_exit("Incorrect input! Use only digits.");
 	number = str;
 	while (is_digit(*str++))
 		++len;
 	if (len > 10)
-		error_exit("The value is too big, INT_MAX is the limit.");
+		error_exit("The value is too big, INT_MAX is the limit. "
+			"Use less than 10 digits.");
 	return (number);
 }
 
@@ -46,9 +80,11 @@ static long	ft_atol(const char *str)
 	while (is_digit(*str))
 		num = (num * 10) + (*str++ - '0');
 	if (num > INT_MAX)
-		error_exit("The value is too big, INT_MAX is the limit.");
+		error_exit("The value is too big, INT_MAX is the limit. "
+			"Use less than 10 digits.");
 	return (num);
 }
+
 /**
  * ./philo 	5 		800 	200 	200 	[5]
  * 			argv[1]	argv[2]	argv[3]	argv[4]	argv[5]
@@ -57,7 +93,7 @@ static long	ft_atol(const char *str)
  * 3) timestamps > 60ms
  * usleep wants microseconds
  */
-void parse_input(t_table *table, char **argv)
+void	parse_input(t_table *table, char **argv)
 {
 	table->philo_nbr = ft_atol(argv[1]);
 	table->time_to_die = ft_atol(argv[2]) * 1e3;
