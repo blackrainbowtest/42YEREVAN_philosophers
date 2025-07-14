@@ -28,6 +28,24 @@ static bool	philo_died(t_philo *philo)
 	return (false);
 }
 
+/**
+ * @brief Monitors the philosophers to detect death or simulation completion.
+ * 
+ * This function runs in a separate thread and continuously checks if any
+ * philosopher has died from starvation. It waits until all philosopher threads 
+ * are running before starting monitoring. The loop terminates once the simulation
+ * is marked as finished.
+ * 
+ * Access to shared variables is protected by mutexes to ensure thread safety.
+ * If a philosopher is detected as dead, the simulation is stopped and the
+ * appropriate status is printed.
+ * 
+ * @param data Pointer to the `t_table` structure (cast from void*).
+ * @return void
+ * 
+ * @note This function is designed to run concurrently with philosopher threads.
+ * It uses spinlocks at the beginning to wait for all threads to start.
+ */
 void	monitor_dinner(void *data)
 {
 	int		i;
@@ -35,8 +53,6 @@ void	monitor_dinner(void *data)
 
 	i = -1;
 	table = (t_table *)data;
-	// make sure all philo running
-	// spinlock till all thread run
 	while (!all_threads_running(&table->table_mutex, &table->threads_running_number,
 			table->philo_nbr))
 		;
@@ -45,7 +61,7 @@ void	monitor_dinner(void *data)
 		i = -1;
 		while (++i < table->philo_nbr && !simulation_finish(table))
 		{
-			if (philo_died(table->philos + i)) //TODO
+			if (philo_died(table->philos + i))
 			{
 				set_bool(&table->table_mutex, &table->end_simulation, true);
 				write_status(DIED, table->philos + i, DEBUG_MODE);
