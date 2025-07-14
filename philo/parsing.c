@@ -97,20 +97,18 @@ static long	ft_atol(const char *str)
 }
 
 /**
- * @brief Parses the command line arguments and initializes the table structure.
+ * @brief Main entry point of the philosopher simulation.
  * 
- * This function takes the command line arguments, validates them, and 
- * initializes the `t_table` structure with the parsed values. It checks for 
- * the number of philosophers, time to die, time to eat, time to sleep, and 
- * the optional number of meals each philosopher should eat. If the input 
- * is invalid, it exits with an error message.
+ * Parses input arguments, initializes data structures, launches the simulation,
+ * and performs cleanup after execution.
  * 
- * @param table Pointer to the `t_table` structure to be initialized.
- * @param argv Array of command line arguments.
- * @return void
+ * @param argc Number of command-line arguments.
+ * @param argv Array of argument strings.
  * 
- * example:
- * ./philo 5 800 200 200 [5]
+ * @return 0 on successful execution, or exits with error if invalid input.
+ * 
+ * @note Usage: ./philo 5 800 200 200 [5]
+ * @see parse_input(), data_init(), dinner_start(), clean()
  */
 void	parse_input(t_table *table, char **argv)
 {

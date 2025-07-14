@@ -42,7 +42,7 @@ typedef enum e_status
 	EATING,
 	SLEEPING,
 	THINKING,
-	TAKE_FIRST_FORK,	// denug
+	TAKE_FIRST_FORK,	// debug
 	TAKE_SECOND_FORK,	// debug
 	DIED,
 }		t_status;
@@ -71,7 +71,7 @@ typedef enum e_time_code
 /** structures */
 
 /**
- * core more redable names
+ * core more readable names
  */
 typedef pthread_mutex_t	t_mtx;
 typedef struct s_table t_table;
