@@ -1,9 +1,18 @@
 #include "philo.h"
 
 /**
- * t_die
- * last_meal____________________last_meal
- * maybe philo full
+ * @brief Checks if the philosopher has died from starvation.
+ * 
+ * Calculates the time elapsed since the philosopher's last meal and compares
+ * it to the configured time to die. If the philosopher has eaten all required
+ * meals (is full), the function returns false. Access to shared variables is
+ * synchronized with a mutex.
+ * 
+ * @param philo Pointer to the philosopher structure.
+ * @return true if the philosopher has died, false otherwise.
+ * 
+ * @note Time is measured in milliseconds. `time_to_die` is originally in 
+ * microseconds and is converted back to milliseconds for comparison.
  */
 static bool	philo_died(t_philo *philo)
 {
@@ -12,10 +21,8 @@ static bool	philo_died(t_philo *philo)
 
 	if (get_bool(&philo->philo_mutex, &philo->full))
 		return (false);
-	elapsed = gettime(MILISECOND) - get_long(&philo->philo_mutex, &philo->last_meal_time);
-	// convert back to miliseconds
+	elapsed = gettime(MILLISECOND) - get_long(&philo->philo_mutex, &philo->last_meal_time);
 	t_to_die = philo->table->time_to_die / 1e3;
-
 	if (elapsed > t_to_die)
 		return (true);
 	return (false);

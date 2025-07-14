@@ -24,7 +24,7 @@ void	*lone_philo(void *arg)
 
 	philo = (t_philo *)arg;
 	wait_all_threads(philo->table);
-	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILISECOND));
+	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILLISECOND));
 	increase_long(&philo->table->table_mutex, &philo->table->threads_running_number);
 	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
 	while (!simulation_finish(philo->table))
@@ -47,7 +47,7 @@ static void	eat(t_philo *philo)
 	write_status(TAKE_SECOND_FORK, philo, DEBUG_MODE);
 
 	//2)
-	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILISECOND));
+	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILLISECOND));
 	philo->meals_counter++;
 	write_status(EATING, philo, DEBUG_MODE);
 	precise_usleep(philo->table->time_to_eat, philo->table);
@@ -74,7 +74,7 @@ static void	*dinner_simulation(void *data)
 
 	// set time last meal
 	set_long(&philo->philo_mutex, &philo->last_meal_time,
-		gettime(MILISECOND));
+		gettime(MILLISECOND));
 	// synchro with monitor
 	// increas a table variable counter, with all threads running
 	increase_long(&philo->table->table_mutex,
@@ -128,7 +128,7 @@ void	dinner_start(t_table *table)
 	safe_thread_handle(&table->monitor, monitor_dinner, table, CREATE); //TODO
 
 	// start of simulation
-	table->start_simulation = gettime(MILISECOND);
+	table->start_simulation = gettime(MILLISECOND);
 
 	set_bool(&table->table_mutex, &table->all_threads_ready, true);
 

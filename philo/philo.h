@@ -64,7 +64,7 @@ typedef enum e_opcode
 typedef enum e_time_code
 {
 	SECOND,
-	MILISECOND,
+	MILLISECOND,
 	MICROSECOND,
 }			t_time_code;
 
