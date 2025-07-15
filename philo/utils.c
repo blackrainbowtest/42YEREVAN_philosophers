@@ -1,8 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/15 23:40:17 by root              #+#    #+#             */
+/*   Updated: 2025/07/15 23:40:18 by root             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 /**
- * gettimeofday // January 1, 1970
- * time_code -> SECONDS, MILLISECONDS, MICROSECONDS
+ * @brief Returns the current time in the requested unit.
+ * 
+ * Retrieves the current system time using `gettimeofday` and returns it
+ * as a `long` in seconds, milliseconds, or microseconds depending on the
+ * specified `time_code`.
+ * 
+ * @param time_code Time unit to return: SECOND, MILLISECOND, or MICROSECOND.
+ * @return Current time in the specified unit as a `long`.
+ * 
+ * @note The function exits with an error if `gettimeofday` fails or if
+ * an invalid time code is passed.
+ * 
+ * @see t_time_code, gettimeofday(), error_exit()
  */
 long	gettime(t_time_code time_code)
 {
@@ -22,44 +45,60 @@ long	gettime(t_time_code time_code)
 }
 
 /**
- * precise usleep, the real one suck
+ * @brief Sleeps precisely for a given time, checking simulation status.
  * 
- * why table is simulation finish?
+ * Implements an accurate sleep function in microseconds. It periodically
+ * checks whether the simulation should end, and avoids using a full `usleep`
+ * if the remaining time is small, switching to active spinning for precision.
  * 
- * 1) usleep the majorty of time, not CPU intensive
- * 2) refine last microsec with spinlock
- *                    (ինչքան միկրովարկյան քնել, ընդհանուր ստրուկտուրա)
+ * This prevents the thread from sleeping too long and missing critical events
+ * like a philosopher dying.
+ * 
+ * @param usec Time to sleep in microseconds.
+ * @param table Pointer to the simulation table, used to check simulation status.
+ * 
+ * @note For large sleep durations, it halves the delay and uses `usleep()`;
+ * for small remaining times, it switches to a spin-wait loop.
+ * 
+ * @see simulation_finish(), gettime(), usleep()
  */
 void	precise_usleep(long usec, t_table *table)
 {
-	long	start;		// սպասման ժամանակի մեկնարկային կետը (միկրովարկյաններով)
-	long	elapsed;	// ինչքան ժամանակ է անցել մեկնարկից սկսած
-	long	rem;		// remaining ինչքան է դեռ մնացել սպասելու
+	long	start;
+	long	elapsed;
+	long	rem;
 
 	start = gettime(MICROSECOND);
-	// ցիկլը աշխատում է քանի դեռ մեկնարկից չի անցել քնելու չափ ժամանակ
 	while (gettime(MICROSECOND) - start < usec)
 	{
-		// եթե քնելու ընթացքում սիմուլացիան ավարտվել է, դուրս գալ ցիկլից
 		if (simulation_finish(table))
 			break ;
-		// ինչքան է անցել մեկնարկից հետո
 		elapsed = gettime(MICROSECOND) - start;
-		// ինչքան է մնացել դեռ քնելու
 		rem = usec - elapsed;
-
-		// Եթե մնացել է սպասելու ավելի քան 1000 միկրովարկյան ազատում ենք cpy 
 		if (rem > 1e3)
 			usleep(rem / 2);
 		else
 		{
-			// SPINLOCK - ակտիվ սպասողական վիճակ
 			while (gettime(MICROSECOND) - start < usec)
 				;
 		}
 	}
 }
 
+/**
+ * @brief Frees all allocated resources and destroys all mutexes.
+ * 
+ * Iterates through each philosopher and destroys their individual mutex.
+ * Then destroys global simulation mutexes (`write_mutex`, `table_mutex`) and
+ * frees the dynamically allocated memory for philosophers and forks.
+ * 
+ * @param table Pointer to the simulation table containing all resources.
+ * 
+ * @note Should be called once the simulation is finished to avoid memory leaks
+ * or dangling mutexes.
+ * 
+ * @see safe_mutex_handle(), free()
+ */
 void	clean(t_table *table)
 {
 	t_philo	*philo;
@@ -77,6 +116,19 @@ void	clean(t_table *table)
 	free(table->philos);
 }
 
+/**
+ * @brief Prints an error message in red and exits the program.
+ * 
+ * Outputs the provided error message to standard output using red color
+ * formatting, then immediately terminates the program with `EXIT_FAILURE`.
+ * 
+ * @param error The error message to display before exiting.
+ * 
+ * @note This function does not return. It is used to handle fatal errors
+ * such as failed memory allocation or threading issues.
+ * 
+ * @see exit(), printf()
+ */
 void	error_exit(const char *error)
 {
 	printf(RED"%s\n"RST, error);
