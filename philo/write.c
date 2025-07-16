@@ -13,18 +13,22 @@
 #include "philo.h"
 
 /**
- * @brief Prints detailed, color-coded debug information about philosopher actions.
+ * @brief Prints detailed, color-coded debug information about philosopher 
+ * actions.
  * 
- * Outputs the current state of a philosopher (taking forks, eating, sleeping, thinking, died)
- * with timestamps, fork numbers, and meal counters, all formatted with ANSI colors for clarity.
+ * Outputs the current state of a philosopher (taking forks, eating, sleeping, 
+ * thinking, died) with timestamps, fork numbers, and meal counters, all 
+ * formatted with ANSI colors for clarity.
  * 
- * This function is used for debugging and is typically enabled via a debug flag or macro.
+ * This function is used for debugging and is typically enabled via a debug flag
+ * or macro.
  * 
- * @param status Current status of the philosopher (e.g., EATING, SLEEPING, etc.).
+ * @param status Current status of the philosopher (e.g., EATING, SLEEPING, etc)
  * @param philo Pointer to the philosopher structure performing the action.
  * @param elapsed Time elapsed since simulation start, in milliseconds.
  * 
- * @note This function skips printing if the simulation has already finished, except when reporting DIED.
+ * @note This function skips printing if the simulation has already finished, 
+ * except when reporting DIED.
  * 
  * @see simulation_finish(), t_status
  */
@@ -59,8 +63,8 @@ static void	write_status_debug(t_status status, t_philo *philo, long elapsed)
  * - In debug mode, shows detailed information (fork number, meal count, etc.).
  * - In normal mode, prints simple human-readable status messages.
  * 
- * The function checks whether the simulation has ended or the philosopher is full
- * before printing, except in the case of a DIED status.
+ * The function checks whether the simulation has ended or the philosopher is 
+ * full before printing, except in the case of a DIED status.
  * 
  * @param status The current status of the philosopher (EATING, SLEEPING, etc.).
  * @param philo Pointer to the philosopher struct.

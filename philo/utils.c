@@ -55,7 +55,7 @@ long	gettime(t_time_code time_code)
  * like a philosopher dying.
  * 
  * @param usec Time to sleep in microseconds.
- * @param table Pointer to the simulation table, used to check simulation status.
+ * @param table Pointer to the simulation table, used to check simulation status
  * 
  * @note For large sleep durations, it halves the delay and uses `usleep()`;
  * for small remaining times, it switches to a spin-wait loop.
