@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 23:40:17 by root              #+#    #+#             */
-/*   Updated: 2025/07/15 23:40:18 by root             ###   ########.fr       */
+/*   Updated: 2025/07/16 20:32:57 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	set_bool(t_mtx *mutex, bool *dest, bool value)
 /**
  * @brief Safely reads a boolean value with mutex protection.
  * 
- * Locks the given mutex, reads the target boolean variable, and unlocks the mutex.
+ * Locks the given mutex, reads the target boolean variable, and unlocks 
+ * the mutex.
  * Guarantees thread-safe access to shared boolean flags in the simulation.
  * 
  * @param mutex Pointer to the mutex protecting the boolean variable.
@@ -69,7 +70,8 @@ bool	get_bool(t_mtx *mutex, bool *value)
  * @param dest Pointer to the long variable to modify.
  * @param value New value to assign to the target variable.
  * 
- * @note Typically used to update `last_meal_time` or shared counters between threads.
+ * @note Typically used to update `last_meal_time` or shared counters 
+ * between threads.
  * 
  * @see safe_mutex_handle(), get_long()
  */

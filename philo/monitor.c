@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 23:40:17 by root              #+#    #+#             */
-/*   Updated: 2025/07/15 23:40:18 by root             ###   ########.fr       */
+/*   Updated: 2025/07/16 20:21:33 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static bool	philo_died(t_philo *philo)
 	if (get_bool(&philo->philo_mutex, &philo->full))
 		return (false);
 	elapsed = gettime(MILLISECOND) - get_long(&philo->philo_mutex,
-		&philo->last_meal_time);
+			&philo->last_meal_time);
 	t_to_die = philo->table->time_to_die / 1e3;
 	if (elapsed > t_to_die)
 		return (true);
@@ -46,7 +46,7 @@ static bool	philo_died(t_philo *philo)
  * 
  * This function runs in a separate thread and continuously checks if any
  * philosopher has died from starvation. It waits until all philosopher threads 
- * are running before starting monitoring. The loop terminates once the simulation
+ * are running before starting monitoring The loop terminates once the simulation
  * is marked as finished.
  * 
  * Access to shared variables is protected by mutexes to ensure thread safety.
@@ -62,11 +62,12 @@ static bool	philo_died(t_philo *philo)
 void	monitor_dinner(void *data)
 {
 	int		i;
-	t_table *table;
+	t_table	*table;
 
 	i = -1;
 	table = (t_table *)data;
-	while (!all_threads_running(&table->table_mutex, &table->threads_running_number,
+	while (!all_threads_running(&table->table_mutex,
+			&table->threads_running_number,
 			table->philo_nbr))
 		;
 	while (!simulation_finish(table))

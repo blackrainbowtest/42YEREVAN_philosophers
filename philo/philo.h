@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:24:45 by root              #+#    #+#             */
-/*   Updated: 2025/07/13 01:27:12 by root             ###   ########.fr       */
+/*   Updated: 2025/07/16 20:20:25 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	clean(t_table *table);
 void	*safe_malloc(size_t bytes);
 void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
 void	safe_thread_handle(pthread_t *thread, void *(*foo)(void *),
-		void *data, t_opcode opcode);
+			void *data, t_opcode opcode);
 
 // ========== init.c ==========
 void	data_init(t_table *table);

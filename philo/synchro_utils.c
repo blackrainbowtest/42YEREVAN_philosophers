@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 23:40:17 by root              #+#    #+#             */
-/*   Updated: 2025/07/15 23:40:18 by root             ###   ########.fr       */
+/*   Updated: 2025/07/16 20:34:39 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,12 @@ void	increase_long(t_mtx *mutex, long *value)
 /**
  * @brief Desynchronizes philosopher threads to prevent contention.
  * 
- * Applies a small delay to certain philosophers at the beginning of the simulation
- * to avoid all of them trying to grab forks at the same time, which may cause
- * deadlocks or excessive contention.
+ * Applies a small delay to certain philosophers at the beginning of the 
+ * simulation to avoid all of them trying to grab forks at the same time,
+ * which may cause deadlocks or excessive contention.
  * 
- * - If the number of philosophers is even: even-numbered philosophers sleep briefly.
+ * - If the number of philosophers is even: even-numbered philosophers 
+ * sleep briefly.
  * - If the number is odd: odd-numbered philosophers enter thinking state first.
  * 
  * @param philo Pointer to the philosopher structure.

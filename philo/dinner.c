@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 23:40:17 by root              #+#    #+#             */
-/*   Updated: 2025/07/15 23:40:18 by root             ###   ########.fr       */
+/*   Updated: 2025/07/16 20:34:06 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,21 @@
  * @brief Handles the philosopher's thinking phase with optional delay.
  * 
  * Logs the THINKING status (if simulation has started) and optionally performs a
- * calculated pause to help balance the timing of eating/sleeping when the number of
- * philosophers is odd.
+ * calculated pause to help balance the timing of eating/sleeping when the 
+ * number of philosophers is odd.
  * 
  * - For even philosopher counts: returns immediately with no delay.
- * - For odd counts: calculates thinking time as (2 * time_to_eat - time_to_sleep),
+ * - For odd counts: calculates thinking time as (2 * time_to_eat - 
+ * time_to_sleep),
  *   adjusted by a 0.42 coefficient for simulation balance.
  * 
  * @param philo Pointer to the philosopher structure.
- * @param pre_simulation Set to true if this is called before the simulation starts.
+ * @param pre_simulation Set to true if this is called before the simulation 
+ * starts.
  *                       In this case, status is not printed.
  * 
- * @note This function helps desynchronize philosopher actions in odd-numbered simulations.
+ * @note This function helps desynchronize philosopher actions in odd-numbered 
+ * simulations.
  * 
  * @see write_status(), precise_usleep(), simulation_finish()
  */
@@ -67,7 +70,8 @@ void	thinking(t_philo *philo, bool pre_simulation)
  * @param arg Pointer to the `t_philo` structure (cast from `void*`).
  * @return Always returns NULL.
  * 
- * @note This function is launched in its own thread for the lone philosopher case.
+ * @note This function is launched in its own thread for the lone 
+ * philosopher case.
  * 
  * @see wait_all_threads(), simulation_finish(), write_status()
  */
@@ -78,7 +82,8 @@ void	*lone_philo(void *arg)
 	philo = (t_philo *)arg;
 	wait_all_threads(philo->table);
 	set_long(&philo->philo_mutex, &philo->last_meal_time, gettime(MILLISECOND));
-	increase_long(&philo->table->table_mutex, &philo->table->threads_running_number);
+	increase_long(&philo->table->table_mutex,
+		&philo->table->threads_running_number);
 	write_status(TAKE_FIRST_FORK, philo, DEBUG_MODE);
 	while (!simulation_finish(philo->table))
 		usleep(200);
@@ -147,7 +152,7 @@ static void	*dinner_simulation(void *data)
 	set_long(&philo->philo_mutex, &philo->last_meal_time,
 		gettime(MILLISECOND));
 	increase_long(&philo->table->table_mutex,
-			&philo->table->threads_running_number);
+		&philo->table->threads_running_number);
 	de_synchronize_philos(philo);
 	while (!simulation_finish(philo->table))
 	{

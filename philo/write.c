@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 19:26:55 by aramarak          #+#    #+#             */
-/*   Updated: 2025/07/13 00:29:14 by root             ###   ########.fr       */
+/*   Updated: 2025/07/16 20:22:17 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,21 @@ static void	write_status_debug(t_status status, t_philo *philo, long elapsed)
 {
 	if (TAKE_FIRST_FORK == status && !simulation_finish(philo->table))
 		printf(W"%6ld"RST" %d has taken the 1 fork"
-				"   NO:"B"%d\n"RST, elapsed, philo->id,
-				philo->first_fork->fork_id);
+			"   NO:"B"%d\n"RST, elapsed, philo->id,
+			philo->first_fork->fork_id);
 	else if (TAKE_SECOND_FORK == status && !simulation_finish(philo->table))
 		printf(W"%6ld"RST" %d has taken the 2 fork"
-				"   NO:"B"%d\n"RST, elapsed, philo->id,
-				philo->second_fork->fork_id);
+			"   NO:"B"%d\n"RST, elapsed, philo->id,
+			philo->second_fork->fork_id);
 	else if (EATING == status && !simulation_finish(philo->table))
-			printf(W"%6ld"C" %d is eating"
+		printf(W"%6ld"C" %d is eating"
 			"   "Y"%ld\n"RST, elapsed, philo->id, philo->meals_counter);
 	else if (SLEEPING == status && !simulation_finish(philo->table))
-			printf(W"%6ld"C" %d is sleeping\n"RST, elapsed, philo->id);
+		printf(W"%6ld"C" %d is sleeping\n"RST, elapsed, philo->id);
 	else if (THINKING == status && !simulation_finish(philo->table))
-			printf(W"%6ld"C" %d is thinking\n"RST, elapsed, philo->id);
+		printf(W"%6ld"C" %d is thinking\n"RST, elapsed, philo->id);
 	else if (DIED == status)
-			printf(RED"%6ld %d is died\n"RST, elapsed, philo->id);
+		printf(RED"%6ld %d is died\n"RST, elapsed, philo->id);
 }
 
 /**
