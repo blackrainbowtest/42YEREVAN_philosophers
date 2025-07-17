@@ -1,6 +1,38 @@
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <sys/wait.h>
 // #include <sched.h>
+
+
+/**
+ * wait(&status) — ждёт любого ребёнка.
+ *
+ * WIFEXITED(status) — проверяет, завершился ли нормально.
+ *
+ * WEXITSTATUS(status) — возвращает код выхода из exit().
+ */
+int	main(void)
+{
+	pid_t pid = fork();
+
+	if (pid == 0)
+	{
+		printf("Child: work 2 seconds ...\n");
+		sleep(2);
+		printf("Child: ending process\n");
+		exit(42);
+	}
+	else
+	{
+		int status;
+		wait(&status);
+		printf("Parent: child end his work\n");
+		if (WIFEXITED(status))
+			printf("Child exit code: %d\n", WEXITSTATUS(status));
+	}
+	return (0);
+}
 
 /**
  * fork() запускает копию текущего процесса.
