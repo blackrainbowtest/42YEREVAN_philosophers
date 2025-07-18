@@ -3,36 +3,88 @@
 #include <semaphore.h>
 #include <sys/wait.h>
 #include <stdlib.h>
+#include <fcntl.h>
+
+#define SEM_NAME "/philo_sem"
 
 int	main(void)
 {
-	sem_t	sem;
-	pid_t	pid;
-
-	// 1 — для межпроцессного использования, 1 — начальное значение
-	sem_init(&sem, 1, 1);
-	pid = fork();
-	if (pid == 0)
+	sem_t	*sem;
+	
+	sem_unlink(SEM_NAME);
+	sem = sem_open(SEM_NAME, O_CREAT | O_EXCL, 0644, 1);
+	if (sem == SEM_FAILED)
 	{
-		sem_wait(&sem);
-		printf("Child enter in critical section\n");
+		perror("sem_open (create)");
+		exit (1);
+	}
+	pid_t	pid = fork();
+	if (0 == pid)
+	{
+		// Ребёнок — философ 1
+		sem = sem_open(SEM_NAME, 0);
+		sem_wait(sem);
+		printf("Philosopher 1 is eating\n");
 		sleep(2);
-		printf("Child exit\n");
-		sem_post(&sem);
+		printf("Philosopher 1 done eating\n");
+		sem_post(sem);
 		exit(0);
 	}
 	else
 	{
-		sem_wait(&sem);
-		printf("Parent enter in critical section\n");
+		// Родитель — философ 2
+		sem_wait(sem);
+		printf("Philosopher 2 is eating\n");
 		sleep(2);
-		printf("Parent exit\n");
-		sem_post(&sem);
-		wait(NULL);
-		sem_destroy(&sem);
+		printf("Philosopher 2 done eating\n");
+		sem_post(sem);
+
+		wait(NULL); // дождаться философа 1
+		sem_close(sem);
+		sem_unlink(SEM_NAME);
 	}
 	return (0);
 }
+
+
+// int	main(void)
+// {
+// 	sem_t	*sem;
+// 	pid_t	pid;
+
+// 	sem_unlink(SEM_NAME);
+// 	sem = sem_open(SEM_NAME, O_CREAT | O_EXCL, 0644, 1);
+// 	if (sem == SEM_FAILED)
+// 	{
+// 		perror("sem_open");
+// 		exit(1);
+// 	}
+// 	pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		sem = sem_open(SEM_NAME, 0);
+// 		sem_wait(sem);
+// 		printf("Child enter in critical section\n");
+// 		sleep(2);
+// 		printf("Child exit\n");
+// 		sem_post(sem);
+// 		exit(0);
+// 	}
+// 	else
+// 	{
+// 		sem_wait(sem);
+// 		printf("Parent enter in critical section\n");
+// 		sleep(2);
+// 		printf("Parent exit\n");
+// 		sem_post(sem);
+
+// 		wait(NULL);
+
+// 		sem_close(sem);
+// 		sem_unlink(SEM_NAME);
+// 	}
+// 	return (0);
+// }
 
 /**
  * wait(&status) — ждёт любого ребёнка.
