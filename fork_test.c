@@ -1,9 +1,38 @@
-#include <unistd.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <unistd.h>
+#include <semaphore.h>
 #include <sys/wait.h>
-// #include <sched.h>
+#include <stdlib.h>
 
+int	main(void)
+{
+	sem_t	sem;
+	pid_t	pid;
+
+	// 1 — для межпроцессного использования, 1 — начальное значение
+	sem_init(&sem, 1, 1);
+	pid = fork();
+	if (pid == 0)
+	{
+		sem_wait(&sem);
+		printf("Child enter in critical section\n");
+		sleep(2);
+		printf("Child exit\n");
+		sem_post(&sem);
+		exit(0);
+	}
+	else
+	{
+		sem_wait(&sem);
+		printf("Parent enter in critical section\n");
+		sleep(2);
+		printf("Parent exit\n");
+		sem_post(&sem);
+		wait(NULL);
+		sem_destroy(&sem);
+	}
+	return (0);
+}
 
 /**
  * wait(&status) — ждёт любого ребёнка.
@@ -12,6 +41,7 @@
  *
  * WEXITSTATUS(status) — возвращает код выхода из exit().
  */
+/**
 int	main(void)
 {
 	pid_t pid = fork();
@@ -33,6 +63,7 @@ int	main(void)
 	}
 	return (0);
 }
+*/
 
 /**
  * fork() запускает копию текущего процесса.
