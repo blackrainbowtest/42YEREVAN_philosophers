@@ -4,6 +4,17 @@
 
 # include <semaphore.h>
 
+struct s_table;
+
+typedef struct s_philo
+{
+	pid_t				pid;
+	int					id;
+	long				last_meal_time;
+	int					meals_eaten;
+	struct s_table		*table;
+}	t_philo;
+
 typedef struct s_table
 {
 	int				philo_count;
@@ -12,19 +23,14 @@ typedef struct s_table
 	int				time_to_sleep;
 	int				must_eat_count;
 
+	long			start_time;
+	pid_t			*pids;
+
 	sem_t			*forks;
 	sem_t			*write_lock;
 	sem_t			*meal_check;
-
-	long			start_time;
-	pid_t			*pids;
+	sem_t			*finish;
 }	t_table;
 
-typedef struct s_philo
-{
-	int				id;
-	long			last_meal_time;
-	int				meals_eaten;
-	t_table			*table;
-}	t_philo;
+
 #endif
