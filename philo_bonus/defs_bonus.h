@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:24:45 by root              #+#    #+#             */
-/*   Updated: 2025/07/19 02:20:18 by root             ###   ########.fr       */
+/*   Updated: 2025/07/19 23:33:59 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ typedef enum e_status
 	EATING,
 	SLEEPING,
 	THINKING,
-	TAKE_FIRST_FORK,
-	TAKE_SECOND_FORK,
+	TAKE_FORK,
 	DIED,
 }	t_status;
 

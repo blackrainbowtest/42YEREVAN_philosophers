@@ -12,6 +12,7 @@ typedef struct s_philo
 	int					id;
 	long				last_meal_time;
 	int					meals_counter;
+	bool				full;
 	struct s_table		*table;
 }	t_philo;
 
@@ -34,6 +35,5 @@ typedef struct s_table
 
 	t_philo			*philos;
 }	t_table;
-
 
 #endif

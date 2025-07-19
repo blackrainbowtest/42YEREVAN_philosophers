@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 12:58:34 by root              #+#    #+#             */
-/*   Updated: 2025/07/19 17:28:16 by root             ###   ########.fr       */
+/*   Updated: 2025/07/19 22:43:26 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static void	init_philosophers(t_table *table)
 		philo->meals_counter = 0;
 		philo->last_meal_time = 0;
 		philo->table = table;
+		philo->full = false;
 	}
 }
 

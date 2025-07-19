@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 12:36:32 by root              #+#    #+#             */
-/*   Updated: 2025/07/19 17:28:47 by root             ###   ########.fr       */
+/*   Updated: 2025/07/19 19:54:04 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc, char **argv)
 	{
 		parse_input(&table, argv);
 		data_init(&table);
-		// dinner_start(&table);//TODO
+		dinner_start(&table);
 		clean(&table);
 	}
 	else
