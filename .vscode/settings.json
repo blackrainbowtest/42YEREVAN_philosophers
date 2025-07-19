@@ -1,6 +1,11 @@
 {
 	"files.associations": {
 		"philo.h": "c",
+<<<<<<< HEAD
 		"errno.h": "c"
+=======
+		"errno.h": "c",
+		"limits.h": "c"
+>>>>>>> origin/master
 	}
 }
