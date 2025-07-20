@@ -29,6 +29,7 @@ typedef struct s_table
 	pid_t			*pids;
 
 	sem_t			*forks;
+	sem_t			*table_sem;
 	sem_t			*write_lock;
 	sem_t			*meal_check;
 	sem_t			*finish;
