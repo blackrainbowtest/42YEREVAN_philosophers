@@ -19,6 +19,7 @@ SRCS := clean_bonus.c\
 		parsing_bonus.c\
 		philo_bonus.c\
 		safe_functions_bonus.c\
+		synchro_utiles_bonus.c\
 		utils_bonus.c\
 		write_bonus.c
 

@@ -47,6 +47,11 @@ void	safe_sem_handle(sem_t **sem, t_opcode opcode);
 sem_t	*safe_sem_open(const char *name, int oflag, mode_t mode, unsigned int value);
 void	safe_sem_unlink(const char *name);
 
+// safe_functions_bonus.c
+void    wait_all_processes(t_table *table);
+bool    all_processes_running(sem_t **sem, long *processes, long philo_nbr);
+void    increment_long(sem_t **sem, long *value);
+
 // utils_bonus.c
 long	gettime(t_time_code time_code);
 

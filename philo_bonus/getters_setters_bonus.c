@@ -36,5 +36,5 @@ long	get_long(sem_t **sem, long *value)
 
 bool	simulation_finish(t_table *table)
 {
-	return (get_bool(&table->table_mutex, &table->end_simulation));
+	return (get_bool(&table->sync_lock, &table->end_simulation));
 }

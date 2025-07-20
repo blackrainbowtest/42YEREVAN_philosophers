@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   types_bonus.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/20 15:54:01 by aramarak          #+#    #+#             */
+/*   Updated: 2025/07/20 16:24:35 by aramarak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef TYPES_BONUS_H
 # define TYPES_BONUS_H
@@ -11,31 +22,32 @@ typedef struct s_philo
 	pid_t				pid;
 	int					id;
 	long				last_meal_time;
-	int					meals_counter;
+	long				meals_counter;
 	bool				full;
 	struct s_table		*table;
 }	t_philo;
 
 typedef struct s_table
 {
-	int				philo_nbr;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				number_of_limit_meals;
+	long				philo_nbr;
+	long				time_to_die;
+	long				time_to_eat;
+	long				time_to_sleep;
+	long				number_of_limit_meals;
 
-	long			start_time;
-	bool			end_simulation;
-	bool			all_threads_ready;
-	pid_t			*pids;
+	long				start_time;
+	bool				end_simulation;
+	long				ready_count;
+	bool				all_processes_ready;
+	pid_t				*pids;
 
-	sem_t			*forks;
-	sem_t			*table_mutex;
-	sem_t			*write_lock;
-	sem_t			*meal_check;
-	sem_t			*finish;
+	sem_t				*forks;
+	sem_t				*sync_lock;
+	sem_t				*write_lock;
+	sem_t				*meal_check;
+	sem_t				*finish;
 
-	t_philo			*philos;
+	t_philo				*philos;
 }	t_table;
 
 #endif

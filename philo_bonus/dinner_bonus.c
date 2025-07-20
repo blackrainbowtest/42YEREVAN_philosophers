@@ -3,18 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   dinner_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 19:56:53 by root              #+#    #+#             */
-/*   Updated: 2025/07/20 13:23:12 by root             ###   ########.fr       */
+/*   Updated: 2025/07/20 16:20:40 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static void philo_routine(t_philo *philo)
+static void philo_routine(void *data)
 {
-    // philo->last_meal_time = gettime(MILLISECOND);
+    t_philo	*philo;
+
+	philo = (t_philo *)data;
+	increment_long(&philo->table->sync_lock, &philo->table->ready_count);
+	write_status(SLEEPING, philo, true);
+	wait_all_processes(philo->table);
+	write_status(THINKING, philo, true);
+	// philo->last_meal_time = gettime(MILLISECOND);
 
     while (!simulation_finish(philo->table))
     {
@@ -56,6 +63,8 @@ void	dinner_start(t_table *table)
 			usleep(100);
 		}
 	}
+	while (!all_processes_running(&table->sync_lock, &table->ready_count, table->philo_nbr))
+		usleep(100);
 	table->start_time = gettime(MILLISECOND);
-	set_bool(&table->table_mutex, &table->all_threads_ready, true);
+	set_bool(&table->sync_lock, &table->all_processes_ready, true);
 }

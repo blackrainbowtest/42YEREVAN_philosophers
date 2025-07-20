@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defs_bonus.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:24:45 by root              #+#    #+#             */
-/*   Updated: 2025/07/19 23:33:59 by root             ###   ########.fr       */
+/*   Updated: 2025/07/20 16:20:47 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,11 @@ typedef enum e_time_code
 	MILLISECOND,
 	MICROSECOND,
 }	t_time_code;
+
+# define FORKS "/forks"
+# define LOCK "/write_lock"
+# define CHECK "/meal_check"
+# define FINISH "/finish"
+# define SYNCLOCK "/sync_lock"
 
 #endif
