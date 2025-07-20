@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 12:58:34 by root              #+#    #+#             */
-/*   Updated: 2025/07/20 10:43:38 by root             ###   ########.fr       */
+/*   Updated: 2025/07/20 12:01:17 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ static void	init_semaphores(t_table *table)
 	table->write_lock = sem_open("/write_lock", O_CREAT | O_EXCL, 0644, 1);
 	table->meal_check = sem_open("/meal_check", O_CREAT | O_EXCL, 0644, 1);
 	table->finish = sem_open("/finish", O_CREAT | O_EXCL, 0644, 0);
-	table->table_sem = sem_open("/table_sem", O_CREAT | O_EXCL, 0644, 1);
+	table->table_mutex = sem_open("/table_mutex", O_CREAT | O_EXCL, 0644, 1);
+	table->all_threads_ready = false;
+	table->end_simulation = false;
 	if (table->forks == SEM_FAILED || table->write_lock == SEM_FAILED
 		|| table->meal_check == SEM_FAILED || table->finish == SEM_FAILED)
 		error_exit("sem_open failed");

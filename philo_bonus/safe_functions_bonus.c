@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 16:32:00 by root              #+#    #+#             */
-/*   Updated: 2025/07/19 23:34:26 by root             ###   ########.fr       */
+/*   Updated: 2025/07/20 12:47:06 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,14 @@ static void	handle_sem_error(int status, t_opcode opcode)
 
 void	safe_sem_handle(sem_t **sem, t_opcode opcode)
 {
-	int	status;
-
-	if (!sem || !*sem)
-		error_exit("safe_sem_handle: invalid semaphore");
-
-	errno = 0;
-	if (opcode == WAIT)
-		status = sem_wait(*sem);
-	else if (opcode == POST)
-		status = sem_post(*sem);
-	else if (opcode == CLOSE)
-		status = sem_close(*sem);
+	if (WAIT == opcode)
+		handle_sem_error(sem_wait(*sem), opcode);
+	else if (POST == opcode)
+		handle_sem_error(sem_post(*sem), opcode);
+	else if (CLOSE == opcode)
+		handle_sem_error(sem_close(*sem), opcode);
 	else
 		error_exit("safe_sem_handle: unknown opcode");
-
-	if (status == -1)
-		handle_sem_error(errno, opcode);
 }
 
 sem_t	*safe_sem_open(const char *name, int oflag, mode_t mode, unsigned int value)

@@ -11,8 +11,16 @@ RM := rm -f
 QUIET = $(if $(filter 0,$(VERBOSE)),@,)
 
 # Files
-SRCS := clean_bonus.c error_bonus.c init_bonus.c parsing_bonus.c philo_bonus.c safe_functions_bonus.c utils_bonus.c dinner_bonus.c\
-		getters_setters_bonus.c
+SRCS := clean_bonus.c\
+		dinner_bonus.c\
+		error_bonus.c\
+		getters_setters_bonus.c\
+		init_bonus.c\
+		parsing_bonus.c\
+		philo_bonus.c\
+		safe_functions_bonus.c\
+		utils_bonus.c\
+		write_bonus.c
 
 OBJS := $(SRCS:.c=.o)
 

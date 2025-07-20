@@ -26,10 +26,11 @@ typedef struct s_table
 
 	long			start_time;
 	bool			end_simulation;
+	bool			all_threads_ready;
 	pid_t			*pids;
 
 	sem_t			*forks;
-	sem_t			*table_sem;
+	sem_t			*table_mutex;
 	sem_t			*write_lock;
 	sem_t			*meal_check;
 	sem_t			*finish;
