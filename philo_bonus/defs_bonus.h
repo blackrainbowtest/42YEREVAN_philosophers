@@ -6,7 +6,7 @@
 /*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:24:45 by root              #+#    #+#             */
-/*   Updated: 2025/07/20 16:20:47 by aramarak         ###   ########.fr       */
+/*   Updated: 2025/07/20 16:55:42 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ typedef enum e_time_code
 # define CHECK "/meal_check"
 # define FINISH "/finish"
 # define SYNCLOCK "/sync_lock"
+# define READYCOUNT "/ready_count"
 
 #endif

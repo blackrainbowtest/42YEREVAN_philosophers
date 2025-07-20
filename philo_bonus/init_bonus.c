@@ -6,7 +6,7 @@
 /*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 12:58:34 by root              #+#    #+#             */
-/*   Updated: 2025/07/20 16:22:52 by aramarak         ###   ########.fr       */
+/*   Updated: 2025/07/20 16:57:14 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ static void	init_philosophers(t_table *table)
 static void	init_semaphores(t_table *table)
 {
 	cleanup_semaphores();
-	table->ready_count = 0;
 	table->forks = sem_open(FORKS, O_CREAT | O_EXCL, 0644, table->philo_nbr);
 	table->write_lock = sem_open(LOCK, O_CREAT | O_EXCL, 0644, 1);
 	table->meal_check = sem_open(CHECK, O_CREAT | O_EXCL, 0644, 1);
 	table->finish = sem_open(FINISH, O_CREAT | O_EXCL, 0644, 0);
 	table->sync_lock = sem_open(SYNCLOCK, O_CREAT | O_EXCL, 0644, 1);
+	table->ready_count = sem_open(READYCOUNT, O_CREAT | O_EXCL, 0644, 0);
 	table->all_processes_ready = false;
 	table->end_simulation = false;
 	if (table->forks == SEM_FAILED || table->write_lock == SEM_FAILED

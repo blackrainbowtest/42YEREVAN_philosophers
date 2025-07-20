@@ -6,7 +6,7 @@
 /*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 19:56:53 by root              #+#    #+#             */
-/*   Updated: 2025/07/20 16:20:40 by aramarak         ###   ########.fr       */
+/*   Updated: 2025/07/20 17:05:24 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void philo_routine(void *data)
     t_philo	*philo;
 
 	philo = (t_philo *)data;
-	increment_long(&philo->table->sync_lock, &philo->table->ready_count);
+	sem_post(philo->table->ready_count);
 	write_status(SLEEPING, philo, true);
 	wait_all_processes(philo->table);
 	write_status(THINKING, philo, true);
@@ -49,6 +49,7 @@ void	dinner_start(t_table *table)
 		;
 	else
 	{
+		table->start_time = gettime(MILLISECOND);
 		while (++i < table->philo_nbr)
 		{
 			pid = fork();
@@ -63,8 +64,11 @@ void	dinner_start(t_table *table)
 			usleep(100);
 		}
 	}
-	while (!all_processes_running(&table->sync_lock, &table->ready_count, table->philo_nbr))
-		usleep(100);
-	table->start_time = gettime(MILLISECOND);
+	long j = 0;
+	while (j < table->philo_nbr)
+	{
+		sem_wait(table->ready_count);
+		j++;
+	}
 	set_bool(&table->sync_lock, &table->all_processes_ready, true);
 }

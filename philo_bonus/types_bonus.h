@@ -6,7 +6,7 @@
 /*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 15:54:01 by aramarak          #+#    #+#             */
-/*   Updated: 2025/07/20 16:24:35 by aramarak         ###   ########.fr       */
+/*   Updated: 2025/07/20 16:57:32 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef struct s_table
 
 	long				start_time;
 	bool				end_simulation;
-	long				ready_count;
 	bool				all_processes_ready;
 	pid_t				*pids;
 
@@ -46,6 +45,7 @@ typedef struct s_table
 	sem_t				*write_lock;
 	sem_t				*meal_check;
 	sem_t				*finish;
+	sem_t				*ready_count;
 
 	t_philo				*philos;
 }	t_table;

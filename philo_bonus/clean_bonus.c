@@ -6,7 +6,7 @@
 /*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 16:48:02 by root              #+#    #+#             */
-/*   Updated: 2025/07/20 16:19:59 by aramarak         ###   ########.fr       */
+/*   Updated: 2025/07/20 16:56:09 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	cleanup_semaphores(void)
 	sem_unlink(CHECK);
 	sem_unlink(FINISH);
 	sem_unlink(SYNCLOCK);
+	sem_unlink(READYCOUNT);
 }
 
 void	clean(t_table *table)
