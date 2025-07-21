@@ -2,12 +2,16 @@
 
 int	main(int argc, char **argv)
 {
-	// t_engine	*engine;
-
-	// check_args(argc, argv);
-	// engine = init_engine(ft_atoi(argv[1]));
-	// init_philos(engine, argv, engine->philo_count);
-	// launcher(engine, engine->philo_count);
-	// destroy_all(engine, NULL, true, EXIT_SUCCESS);
+	t_table	*p_table;
+	
+	if (argc == 5 || argc == 6)
+	{
+		parse_input(&p_table, argv);//TODO
+		data_init(&p_table);//TODO
+		simulation_start(&p_table);//TODO
+		clean_exit(&p_table, NULL, true, EXIT_SUCCESS);//TODO p_table, msg, isParent, code
+	}
+	else
+		error_exit(W"Wrong input:\n"G"Correct is ./philo 5 800 200 200 "M"[5]"RST);
 	return (0);
 }
