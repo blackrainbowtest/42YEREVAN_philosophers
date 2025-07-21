@@ -8,8 +8,8 @@ static inline bool	any_semaphore_failed_to_open(t_sem *sem)
 
 static inline bool	any_semaphore_failed_to_unlink(void)
 {
-	return (sem_unlink(DIE) == -1 || sem_unlink(FORK) == -1
-		|| sem_unlink(MEAL) == -1 || sem_unlink(WRITE) == -1);
+	return (sem_unlink(SEM_DIE) == -1 || sem_unlink(SEM_FORK) == -1
+		|| sem_unlink(SEM_MEAL) == -1 || sem_unlink(SEM_WRITE) == -1);
 }
 
 static void	init_philosophers(t_table *p_table)

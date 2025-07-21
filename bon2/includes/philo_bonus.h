@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 19:40:52 by root              #+#    #+#             */
-/*   Updated: 2025/07/21 00:01:06 by root             ###   ########.fr       */
+/*   Updated: 2025/07/21 22:09:48 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,20 @@
 # include "types_bonus.h"
 
 /*====init_bonus.c====*/
+void	data_init(t_table *p_table);
 
+/*====parse_bonus.c====*/
+void	parse_input(t_table *p_table, char **argv);
 
+/*====utils_clean_bonus.c====*/
+void	cleanup_semaphores(void);
+void	error_exit(const char *error);
+void	clean_exit(t_table *table, const char *msg, bool is_parent, int exit_code);
+
+/*====utils_safe_bonus.c====*/
+void	*safe_malloc(size_t bytes);
+
+/*====utils_time_bonus.c====*/
+long	get_time(t_table *p_table, t_time_code time_code);
 
 #endif	/* PHILO_BONUS_H */
