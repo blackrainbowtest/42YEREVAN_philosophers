@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/22 00:32:04 by root              #+#    #+#             */
+/*   Updated: 2025/07/22 00:32:04 by root             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
 static inline bool	is_digit(char c)
@@ -30,7 +42,7 @@ static const char	*valid_input(const char *p_str)
 	while (is_digit(*p_str))
 	{
 		++len;
-		++p_str;	
+		++p_str;
 	}
 	if (len > 10)
 		error_exit("The value is too big, INT_MAX is the limit. "

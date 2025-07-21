@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_clean_bonus.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/22 00:32:08 by root              #+#    #+#             */
+/*   Updated: 2025/07/22 00:32:08 by root             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
 void	cleanup_semaphores(void)
@@ -14,10 +26,23 @@ void	error_exit(const char *error)
 	exit(EXIT_FAILURE);
 }
 
-void	clean_exit(t_table *table, const char *msg, bool is_parent, int exit_code)
+static void	free_table(t_table *table)
+{
+	if (table->pid)
+		free(table->pid);
+	if (table->time)
+		free(table->time);
+	if (table->sem)
+		free(table->sem);
+}
+
+void	clean_exit(t_table *table, const char *msg,
+		bool is_parent, int exit_code)
 {
 	long	i;
 
+	if (!table)
+		exit(exit_code);
 	if (is_parent && table->pid)
 	{
 		i = -1;
@@ -26,10 +51,6 @@ void	clean_exit(t_table *table, const char *msg, bool is_parent, int exit_code)
 			if (table->pid[i] > 0)
 				kill(table->pid[i], SIGKILL);
 		}
-	}
-	if (table->sem)
-	{
-
 	}
 	if (table->philos)
 	{
@@ -41,10 +62,8 @@ void	clean_exit(t_table *table, const char *msg, bool is_parent, int exit_code)
 		}
 		free(table->philos);
 	}
-	if (table->pid)
-		free(table->pid);
-	free(table->time);
+	free_table(table);
 	if (msg)
-		printf("%s", msg);
+		printf(RED"%s\n"RST, msg);
 	exit(exit_code);
 }

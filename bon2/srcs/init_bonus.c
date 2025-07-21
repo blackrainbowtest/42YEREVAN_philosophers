@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_bonus.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/22 00:31:47 by root              #+#    #+#             */
+/*   Updated: 2025/07/22 00:31:47 by root             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
 static inline bool	any_semaphore_failed_to_open(t_sem *sem)
 {
 	return (sem->die_sem == SEM_FAILED || sem->fork_sem == SEM_FAILED
-			|| sem->meal_sem == SEM_FAILED || sem->write_sem == SEM_FAILED);
+		|| sem->meal_sem == SEM_FAILED || sem->write_sem == SEM_FAILED);
 }
 
 static inline bool	any_semaphore_failed_to_unlink(void)
@@ -18,7 +30,8 @@ static void	init_philosophers(t_table *p_table)
 	long	i;
 	long	now;
 
-	p_philos = (t_philo **)safe_malloc(sizeof(t_philo *) * p_table->philo_count);
+	p_philos = (t_philo **)safe_malloc(sizeof(t_philo *)
+			* p_table->philo_count);
 	now = get_time(p_table, MILLISECOND);
 	i = -1;
 	while (++i < p_table->philo_count)
@@ -41,13 +54,16 @@ static void	init_semaphores(t_table *p_table)
 	sem = (t_sem *)safe_malloc(sizeof(t_sem));
 	memset(sem, 0, sizeof(t_sem));
 	sem->die_sem = sem_open(SEM_DIE, O_CREAT | O_EXCL, 0644, 1);
-	sem->fork_sem = sem_open(SEM_FORK, O_CREAT | O_EXCL, 0644, p_table->philo_count);
+	sem->fork_sem = sem_open(SEM_FORK, O_CREAT | O_EXCL, 0644,
+			p_table->philo_count);
 	sem->meal_sem = sem_open(SEM_MEAL, O_CREAT | O_EXCL, 0644, 0);
 	sem->write_sem = sem_open(SEM_WRITE, O_CREAT | O_EXCL, 0644, 1);
 	if (any_semaphore_failed_to_open(sem))
-		clean_exit(p_table, "Semaphore "RED"OPEN"RST" Error\n", true, EXIT_FAILURE);
+		clean_exit(p_table, "Semaphore "RED"OPEN"RST
+			" Error\n", true, EXIT_FAILURE);
 	if (any_semaphore_failed_to_unlink())
-		clean_exit(p_table, "Semaphore "RED"UNLINK"RST" Error\n", true, EXIT_FAILURE);
+		clean_exit(p_table, "Semaphore "RED"UNLINK"RST
+			" Error\n", true, EXIT_FAILURE);
 	p_table->sem = sem;
 }
 
