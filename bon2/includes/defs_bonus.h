@@ -38,4 +38,12 @@
 /*====DEBUG====*/
 # define DEBUG_MODE 0
 
+/*====TIME TYPES====*/
+typedef enum e_time_code
+{
+	SECOND,
+	MILLISECOND,
+	MICROSECOND,
+}	t_time_code;
+
 #endif	/* DEFS_BONUS_H */
