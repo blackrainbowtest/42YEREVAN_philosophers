@@ -35,12 +35,16 @@ void	clean_exit(t_table *table, const char *msg, bool is_parent, int exit_code)
 	{
 		i = -1;
 		while (++i < table->philo_count)
-			free(table->philos[i]);
+		{
+			if (table->philos[i])
+				free(table->philos[i]);
+		}
 		free(table->philos);
 	}
-	free(table->pid);
+	if (table->pid)
+		free(table->pid);
 	free(table->time);
 	if (msg)
-		printf(stderr, "%s", msg);
+		printf("%s", msg);
 	exit(exit_code);
 }

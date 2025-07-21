@@ -2,7 +2,7 @@
 
 int	main(int argc, char **argv)
 {
-	t_table	*p_table;
+	t_table	p_table;
 	
 	if (argc == 5 || argc == 6)
 	{

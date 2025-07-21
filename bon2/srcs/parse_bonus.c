@@ -69,4 +69,5 @@ void	parse_input(t_table *p_table, char **argv)
 		p_table->meals_limit = ft_atol(argv[5]);
 	else
 		p_table->meals_limit = -1;
+	p_table->pid = NULL;
 }

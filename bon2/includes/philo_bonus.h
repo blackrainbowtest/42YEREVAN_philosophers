@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 19:40:52 by root              #+#    #+#             */
-/*   Updated: 2025/07/21 22:09:48 by root             ###   ########.fr       */
+/*   Updated: 2025/07/21 22:11:37 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/time.h>
+# include <string.h>
 # include <limits.h>
 
 # include "defs_bonus.h"
