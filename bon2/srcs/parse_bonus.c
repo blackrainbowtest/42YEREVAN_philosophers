@@ -55,6 +55,8 @@ static long	ft_atol(const char *p_str)
 void	parse_input(t_table *p_table, char **argv)
 {
 	p_table->philo_count = ft_atol(argv[1]);
+	p_table->time = safe_malloc(sizeof(t_time));
+	memset(p_table->time, 0, sizeof(t_time));
 	p_table->time->time_to_die = ft_atol(argv[2]) * 1e3;
 	p_table->time->time_to_eat = ft_atol(argv[3]) * 1e3;
 	p_table->time->time_to_sleep = ft_atol(argv[4]) * 1e3;

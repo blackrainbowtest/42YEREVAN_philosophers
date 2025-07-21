@@ -23,7 +23,7 @@ typedef struct s_sem
 	//"/die_sem"
 	sem_t	*die_sem;
 	//"/fork_sem"
-	sem_t	*form_sem;
+	sem_t	*fork_sem;
 	//"/meal_sem"
 	sem_t	*meal_sem;
 	//"/write_sem"
@@ -63,6 +63,7 @@ typedef struct s_table
 	t_philo			**philo;
 	t_time			*time;
 	t_sem			*sem;
+	pid_t			*pid;
 }	t_table;
 
 #endif	/* TYPES_BONUS_H */
