@@ -60,7 +60,6 @@ void	parse_input(t_table *p_table, char **argv)
 	p_table->time->time_to_die = ft_atol(argv[2]) * 1e3;
 	p_table->time->time_to_eat = ft_atol(argv[3]) * 1e3;
 	p_table->time->time_to_sleep = ft_atol(argv[4]) * 1e3;
-	p_table->time->time_last_meal = -1;
 	p_table->time->time_to_start = -1;
 	if (p_table->time->time_to_die < 6e4
 		|| p_table->time->time_to_eat < 6e4

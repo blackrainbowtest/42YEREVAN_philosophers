@@ -39,8 +39,6 @@ typedef struct s_time
 	long	time_to_eat;
 	//time_to_sleep;
 	long	time_to_sleep;
-	//time_last_meal;
-	long	time_last_meal;
 	//time_to_start;
 	long	time_to_start;
 }	t_time;
@@ -50,8 +48,8 @@ typedef struct s_philo
 {
 	long			id;
 	long			meals_eaten;
-	t_time			*time;
-	t_sem			*sem;
+	long			time_born;
+	long			time_last_meal;
 	struct s_table	*table;
 }	t_philo;
 
@@ -60,7 +58,7 @@ typedef struct s_table
 {
 	long			philo_count;
 	long			meals_limit;
-	t_philo			**philo;
+	t_philo			**philos;
 	t_time			*time;
 	t_sem			*sem;
 	pid_t			*pid;
