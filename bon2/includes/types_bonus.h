@@ -36,7 +36,7 @@ typedef struct s_time
 	//time_to_die
 	long	time_to_die;
 	//time_to_eat
-	long	time_to_sleep;
+	long	time_to_eat;
 	//time_to_sleep;
 	long	time_to_sleep;
 	//time_last_meal;

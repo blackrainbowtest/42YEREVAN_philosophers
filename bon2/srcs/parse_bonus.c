@@ -54,16 +54,18 @@ static long	ft_atol(const char *p_str)
 
 void	parse_input(t_table *p_table, char **argv)
 {
-	p_table->philo_nbr = ft_atol(argv[1]);
-	p_table->time_to_die = ft_atol(argv[2]) * 1e3;
-	p_table->time_to_eat = ft_atol(argv[3]) * 1e3;
-	p_table->time_to_sleep = ft_atol(argv[4]) * 1e3;
-	if (p_table->time_to_die < 6e4
-		|| p_table->time_to_eat < 6e4
-		|| p_table->time_to_sleep < 6e4)
+	p_table->philo_count = ft_atol(argv[1]);
+	p_table->time->time_to_die = ft_atol(argv[2]) * 1e3;
+	p_table->time->time_to_eat = ft_atol(argv[3]) * 1e3;
+	p_table->time->time_to_sleep = ft_atol(argv[4]) * 1e3;
+	p_table->time->time_last_meal = -1;
+	p_table->time->time_to_start = -1;
+	if (p_table->time->time_to_die < 6e4
+		|| p_table->time->time_to_eat < 6e4
+		|| p_table->time->time_to_sleep < 6e4)
 		error_exit("Time to die, eat or sleep must be more than 60ms.");
 	if (argv[5])
-		p_table->number_of_limit_meals = ft_atol(argv[5]);
+		p_table->meals_limit = ft_atol(argv[5]);
 	else
-		p_table->number_of_limit_meals = -1;
+		p_table->meals_limit = -1;
 }
