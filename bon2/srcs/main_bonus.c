@@ -7,7 +7,7 @@ int	main(int argc, char **argv)
 	if (argc == 5 || argc == 6)
 	{
 		parse_input(&p_table, argv);
-		data_init(&p_table);//TODO
+		data_init(&p_table);
 		simulation_start(&p_table);//TODO
 		clean_exit(&p_table, NULL, true, EXIT_SUCCESS);//TODO p_table, msg, isParent, code
 	}
