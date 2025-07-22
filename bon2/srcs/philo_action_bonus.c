@@ -2,9 +2,9 @@
 
 void	take_forks(t_philo *philo)
 {
-	safe_sem_handle(&philo->table->sem->forks, WAIT);
+	safe_sem_handle(&philo->table->sem->fork_sem, WAIT);
 	write_status(TAKE_FORK, philo, DEBUG_MODE);
-	safe_sem_handle(&philo->table->sem->forks, WAIT);
+	safe_sem_handle(&philo->table->sem->fork_sem, WAIT);
 	write_status(TAKE_FORK, philo, DEBUG_MODE);
 }
 
@@ -15,9 +15,9 @@ void	philo_eat(t_philo *philo)
 	time_to_eat = philo->table->time->time_to_eat;
 	philo->time_last_meal = get_time(philo->table, MILLISECOND);
 	write_status(EATING, philo, DEBUG_MODE);
-	philo->meals_counter++;
-	if (philo->table->max_meals > 0
-		&& philo->meals_counter >= philo->table->max_meals)
+	philo->meals_eaten++;
+	if (philo->table->meals_limit > 0
+		&& philo->meals_eaten >= philo->table->meals_limit)
 	{
 		philo->full = true;
 		safe_sem_handle(&philo->table->sem->meal_sem, POST);
@@ -27,8 +27,8 @@ void	philo_eat(t_philo *philo)
 
 void	drop_forks(t_philo *philo)
 {
-	safe_sem_handle(&philo->table->sem->forks, POST);
-	safe_sem_handle(&philo->table->sem->forks, POST);
+	safe_sem_handle(&philo->table->sem->fork_sem, POST);
+	safe_sem_handle(&philo->table->sem->fork_sem, POST);
 }
 
 void	philo_sleep(t_philo *philo)
@@ -42,7 +42,7 @@ void	philo_sleep(t_philo *philo)
 	precise_usleep(time_to_sleep * 1e3, philo->table);
 }
 
-void	philo_thinking(t_philo *philo)
+void	philo_think(t_philo *philo)
 {
 	long	t_eat;
 	long	t_sleep;
@@ -51,4 +51,9 @@ void	philo_thinking(t_philo *philo)
 	if (!simulation_finish(philo->table))
 		write_status(THINKING, philo, DEBUG_MODE);
 	t_eat = philo->table->time->time_to_eat;
+	t_sleep = philo->table->time->time_to_sleep;
+	t_think = t_eat * 2 - t_sleep;
+	if (t_think < 0)
+		t_think = 0;
+	precise_usleep(t_think * 0.42, philo->table);
 }

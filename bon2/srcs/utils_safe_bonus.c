@@ -22,6 +22,24 @@ void	*safe_malloc(size_t bytes)
 	return (p_ret);
 }
 
+static void	handle_sem_error(int status, t_opcode opcode)
+{
+	if (status == 0)
+		return ;
+	if (status == EINVAL && (WAIT == opcode || POST == opcode))
+		error_exit("Semaphore is not valid or not initialized.");
+	else if (status == EINVAL && CREATE == opcode)
+		error_exit("Semaphore attribute or name is invalid.");
+	else if (status == EINTR && WAIT == opcode)
+		error_exit("Semaphore wait was interrupted by a signal.");
+	else if (status == EACCES)
+		error_exit("Permission denied to access the semaphore.");
+	else if (status == EOVERFLOW)
+		error_exit("Semaphore value exceeds SEM_VALUE_MAX.");
+	else
+		error_exit("Unexpected semaphore error.");
+}
+
 void	safe_sem_handle(sem_t **sem, t_opcode opcode)
 {
 	if (WAIT == opcode)

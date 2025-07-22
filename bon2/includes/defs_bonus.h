@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 22:04:53 by root              #+#    #+#             */
-/*   Updated: 2025/07/22 22:57:36 by root             ###   ########.fr       */
+/*   Updated: 2025/07/23 00:24:23 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef enum e_time_code
 
 typedef enum e_opcode
 {
+	CREATE,
 	WAIT,
 	POST,
 	CLOSE,

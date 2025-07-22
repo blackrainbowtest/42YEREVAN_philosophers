@@ -8,7 +8,7 @@ void	*die_checker_routine(void *arg)
 	long	time_to_die;
 
 	philo = (t_philo *)arg;
-	time_to_die = philo->time->time_to_die;
+	time_to_die = philo->table->time->time_to_die;
 	while (true)
 	{
 		usleep(1000);
@@ -25,20 +25,8 @@ void	*die_checker_routine(void *arg)
 
 void	philo_routine(t_philo *philo)
 {
-	pthread_t	die_checker;
-
-	philo->time->born_time = get_time(philo->table, MILLISECOND);
-	philo->last_meal = philo->time->born_time;
-
-	// TODO: add die checker thread
-	if (pthread_create(&die_checker, NULL, &die_checker_routine, philo) != 0)
-	{
-		safe_sem_handle(&philo->table->sem->write_sem, WAIT);
-		printf(RED"Thread creation failed\n"RST);
-		safe_sem_handle(&philo->table->sem->write_sem, POST);
-		exit(EXIT_FAILURE);
-	}
-	pthread_detach(die_checker);
+	philo->time_born = get_time(philo->table, MILLISECOND);
+	philo->time_last_meal = philo->time_born;
 
 	while (true)
 	{

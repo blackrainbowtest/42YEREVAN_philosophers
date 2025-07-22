@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 20:18:39 by root              #+#    #+#             */
-/*   Updated: 2025/07/22 23:00:18 by root             ###   ########.fr       */
+/*   Updated: 2025/07/22 23:45:02 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_philo
 	long			meals_eaten;
 	long			time_born;
 	long			time_last_meal;
+	bool			full;
 	struct s_table	*table;
 }	t_philo;
 

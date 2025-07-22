@@ -44,6 +44,7 @@ static void	init_philosophers(t_table *p_table)
 		p_philos[i]->meals_eaten = 0;
 		p_philos[i]->time_born = now;
 		p_philos[i]->time_last_meal = now;
+		p_philos[i]->full = false;
 	}
 	p_table->philos = p_philos;
 }
