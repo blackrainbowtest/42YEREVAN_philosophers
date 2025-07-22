@@ -1,4 +1,3 @@
-// getters_setters_bonus.c
 #include "philo_bonus.h"
 
 void	set_bool(sem_t **sem, bool *dest, bool value)

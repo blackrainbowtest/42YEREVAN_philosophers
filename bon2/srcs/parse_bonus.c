@@ -82,4 +82,5 @@ void	parse_input(t_table *p_table, char **argv)
 	else
 		p_table->meals_limit = -1;
 	p_table->pid = NULL;
+	p_table->end_simulation = false;
 }

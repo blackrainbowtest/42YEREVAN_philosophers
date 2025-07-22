@@ -41,3 +41,14 @@ void	philo_sleep(t_philo *philo)
 	write_status(SLEEPING, philo, DEBUG_MODE);
 	precise_usleep(time_to_sleep * 1e3, philo->table);
 }
+
+void	philo_thinking(t_philo *philo)
+{
+	long	t_eat;
+	long	t_sleep;
+	long	t_think;
+
+	if (!simulation_finish(philo->table))
+		write_status(THINKING, philo, DEBUG_MODE);
+	t_eat = philo->table->time->time_to_eat;
+}

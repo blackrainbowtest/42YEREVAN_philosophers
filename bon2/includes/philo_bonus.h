@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 19:40:52 by root              #+#    #+#             */
-/*   Updated: 2025/07/21 22:11:37 by root             ###   ########.fr       */
+/*   Updated: 2025/07/22 23:00:13 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdbool.h>
 
 # include <fcntl.h>
 # include <sys/wait.h>

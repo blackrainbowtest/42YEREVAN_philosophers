@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 20:18:39 by root              #+#    #+#             */
-/*   Updated: 2025/07/20 23:46:51 by root             ###   ########.fr       */
+/*   Updated: 2025/07/22 23:00:18 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define TYPES_BONUS_H
 
 # include <semaphore.h>
+# include <stdbool.h>
 
 struct s_table;
 
@@ -64,6 +65,7 @@ typedef struct s_table
 	t_time			*time;
 	t_sem			*sem;
 	pid_t			*pid;
+	bool			end_simulation;
 }	t_table;
 
 #endif	/* TYPES_BONUS_H */

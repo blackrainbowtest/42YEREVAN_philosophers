@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 22:04:53 by root              #+#    #+#             */
-/*   Updated: 2025/07/20 22:07:21 by root             ###   ########.fr       */
+/*   Updated: 2025/07/22 22:57:36 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,12 @@ typedef enum e_time_code
 	MILLISECOND,
 	MICROSECOND,
 }	t_time_code;
+
+typedef enum e_opcode
+{
+	WAIT,
+	POST,
+	CLOSE,
+}	t_opcode;
 
 #endif	/* DEFS_BONUS_H */
