@@ -40,6 +40,7 @@ void	parse_input(t_table *p_table, char **argv);
 void	take_forks(t_philo *philo);
 void	philo_eat(t_philo *philo);
 void	drop_forks(t_philo *philo);
+void	philo_sleep(t_philo *philo);
 
 /*====philo_routine_bonus.c====*/
 void	*die_checker_routine(void *arg);
