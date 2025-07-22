@@ -21,3 +21,9 @@ void	philo_eat(t_philo *philo)
 	}
 	precise_usleep(philo->table->time->time_to_eat * 1e3, philo->table);
 }
+
+void	drop_forks(t_philo *philo)
+{
+	safe_sem_handle(&philo->table->sem->forks, POST);
+	safe_sem_handle(&philo->table->sem->forks, POST);
+}

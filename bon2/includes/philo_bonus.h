@@ -36,9 +36,17 @@ void	data_init(t_table *p_table);
 /*====parse_bonus.c====*/
 void	parse_input(t_table *p_table, char **argv);
 
+/*====philo_action_bonus.c====*/
+void	take_forks(t_philo *philo);
+void	philo_eat(t_philo *philo);
+void	drop_forks(t_philo *philo);
+
 /*====philo_routine_bonus.c====*/
 void	*die_checker_routine(void *arg);
 void	philo_routine(t_philo *philo);
+
+/*====simulation_bonus.c====*/
+void	simulation_start(t_table *table);
 
 /*====utils_clean_bonus.c====*/
 void	cleanup_semaphores(void);
