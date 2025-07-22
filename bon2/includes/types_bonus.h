@@ -28,6 +28,8 @@ typedef struct s_sem
 	sem_t	*meal_sem;
 	//"/write_sem"
 	sem_t	*write_sem;
+	//"/sync_sem"
+	sem_t	*sync_sem;
 }	t_sem;
 
 // time counters

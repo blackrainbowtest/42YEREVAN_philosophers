@@ -14,10 +14,11 @@
 # define DEFS_BONUS_H
 
 /*====SEMAPHORE NAMES====*/
-# define SEM_DIE "/die_sem"
-# define SEM_FORK "/fork_sem"
-# define SEM_MEAL "/meal_sem"
-# define SEM_WRITE "/write_sem"
+# define SEM_DIE	"/die_sem"
+# define SEM_FORK	"/fork_sem"
+# define SEM_MEAL	"/meal_sem"
+# define SEM_WRITE	"/write_sem"
+# define SEM_SYNC	"/sync_sem"
 
 /*====PHILO LIMITS====*/
 # define MAX_PHILO_COUNT 200

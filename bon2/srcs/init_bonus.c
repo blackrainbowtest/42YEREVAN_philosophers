@@ -15,13 +15,15 @@
 static inline bool	any_semaphore_failed_to_open(t_sem *sem)
 {
 	return (sem->die_sem == SEM_FAILED || sem->fork_sem == SEM_FAILED
-		|| sem->meal_sem == SEM_FAILED || sem->write_sem == SEM_FAILED);
+		|| sem->meal_sem == SEM_FAILED || sem->write_sem == SEM_FAILED
+		|| sem->sync_sem == SEM_FAILED);
 }
 
 static inline bool	any_semaphore_failed_to_unlink(void)
 {
 	return (sem_unlink(SEM_DIE) == -1 || sem_unlink(SEM_FORK) == -1
-		|| sem_unlink(SEM_MEAL) == -1 || sem_unlink(SEM_WRITE) == -1);
+		|| sem_unlink(SEM_MEAL) == -1 || sem_unlink(SEM_WRITE) == -1
+		|| sem_unlink(SEM_SYNC) == -1);
 }
 
 static void	init_philosophers(t_table *p_table)
@@ -58,6 +60,7 @@ static void	init_semaphores(t_table *p_table)
 			p_table->philo_count);
 	sem->meal_sem = sem_open(SEM_MEAL, O_CREAT | O_EXCL, 0644, 0);
 	sem->write_sem = sem_open(SEM_WRITE, O_CREAT | O_EXCL, 0644, 1);
+	sem->sync_sem = sem_open(SEM_SYNC, O_CREAT | O_EXCL, 0644, 1);
 	if (any_semaphore_failed_to_open(sem))
 		clean_exit(p_table, "Semaphore "RED"OPEN"RST
 			" Error\n", true, EXIT_FAILURE);

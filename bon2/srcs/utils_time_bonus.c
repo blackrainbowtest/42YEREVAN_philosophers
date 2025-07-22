@@ -28,3 +28,26 @@ long	get_time(t_table *p_table, t_time_code time_code)
 		clean_exit(p_table, "Wrong input to "RED"GETTIME"RST" Error\n", true, EXIT_FAILURE);
 	return (42);
 }
+
+void	precise_usleep(long usec, t_table *table)
+{
+	long	start;
+	long	elapsed;
+	long	rem;
+
+	start = get_time(table, MICROSECOND);
+	while (get_time(table, MICROSECOND) - start < usec)
+	{
+		if (simulation_finish(table))
+			break ;
+		elapsed = get_time(table, MICROSECOND) - start;
+		rem = usec - elapsed;
+		if (rem > 1e3)
+			usleep(rem / 2);
+		else
+		{
+			while (get_time(table, MICROSECOND) - start < usec)
+				;
+		}
+	}
+}

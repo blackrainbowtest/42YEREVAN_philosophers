@@ -8,16 +8,15 @@ void	*die_checker_routine(void *arg)
 	long	time_to_die;
 
 	philo = (t_philo *)arg;
-	last_meal = philo->time_last_meal;
 	time_to_die = philo->time->time_to_die;
 	while (true)
 	{
 		usleep(1000);
 		now = get_time(philo->table, MILLISECOND);
+		last_meal = philo->time_last_meal;
 		if (now - last_meal > time_to_die)
 		{
 			write_status(DIED, philo, true);
-
 			sem_post(philo->table->sem->die_sem);
 		}
 	}
@@ -34,21 +33,20 @@ void	philo_routine(t_philo *philo)
 	// TODO: add die checker thread
 	if (pthread_create(&die_checker, NULL, &die_checker_routine, philo) != 0)
 	{
-		sem_wait(philo->table->sem[SEM_WRITE]);
+		safe_sem_handle(&philo->table->sem->write_sem, WAIT);
 		printf(RED"Thread creation failed\n"RST);
-		sem_post(philo->table->sem[SEM_WRITE]);
+		safe_sem_handle(&philo->table->sem->write_sem, POST);
 		exit(EXIT_FAILURE);
 	}
 	pthread_detach(die_checker);
 
 	while (true)
 	{
-		// TODO take fork1
-		// TODO take fork2
-		// TODO meal
-		// TODO drop fork1
-		// TODO drop fork2
-		// TODO sleep
-		// TODO thinking
+		/* TODO */
+		take_forks(philo);
+		philo_eat(philo);
+		drop_forks(philo);
+		philo_sleep(philo);
+		philo_think(philo);
 	}
 }
