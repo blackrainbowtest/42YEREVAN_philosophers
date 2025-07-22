@@ -36,6 +36,10 @@ void	data_init(t_table *p_table);
 /*====parse_bonus.c====*/
 void	parse_input(t_table *p_table, char **argv);
 
+/*====philo_routine_bonus.c====*/
+void	*die_checker_routine(void *arg);
+void	philo_routine(t_philo *philo);
+
 /*====utils_clean_bonus.c====*/
 void	cleanup_semaphores(void);
 void	error_exit(const char *error);
@@ -43,8 +47,12 @@ void	clean_exit(t_table *table, const char *msg, bool is_parent, int exit_code);
 
 /*====utils_safe_bonus.c====*/
 void	*safe_malloc(size_t bytes);
+void	safe_sem_handle(sem_t **sem, t_opcode opcode);
 
 /*====utils_time_bonus.c====*/
 long	get_time(t_table *p_table, t_time_code time_code);
+
+/*====write_bonus.c====*/
+void	write_status(t_status status, t_philo *philo, bool debug);
 
 #endif	/* PHILO_BONUS_H */

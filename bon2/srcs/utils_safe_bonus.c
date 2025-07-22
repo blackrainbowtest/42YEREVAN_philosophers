@@ -21,3 +21,15 @@ void	*safe_malloc(size_t bytes)
 		error_exit("Error with the malloc");
 	return (p_ret);
 }
+
+void	safe_sem_handle(sem_t **sem, t_opcode opcode)
+{
+	if (WAIT == opcode)
+		handle_sem_error(sem_wait(*sem), opcode);
+	else if (POST == opcode)
+		handle_sem_error(sem_post(*sem), opcode);
+	else if (CLOSE == opcode)
+		handle_sem_error(sem_close(*sem), opcode);
+	else
+		error_exit("safe_sem_handle: unknown opcode");
+}

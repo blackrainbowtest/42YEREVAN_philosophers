@@ -38,6 +38,16 @@
 /*====DEBUG====*/
 # define DEBUG_MODE 0
 
+/*====WRITE ACTIONS====*/
+typedef enum e_status
+{
+	EATING,
+	SLEEPING,
+	THINKING,
+	TAKE_FORK,
+	DIED,
+}	t_status;
+
 /*====TIME TYPES====*/
 typedef enum e_time_code
 {
