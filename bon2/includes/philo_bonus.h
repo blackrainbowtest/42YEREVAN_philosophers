@@ -27,6 +27,9 @@
 # include "defs_bonus.h"
 # include "types_bonus.h"
 
+/*====dinner_bonus.c====*/
+void	dinner_start(t_table *table);
+
 /*====init_bonus.c====*/
 void	data_init(t_table *p_table);
 
