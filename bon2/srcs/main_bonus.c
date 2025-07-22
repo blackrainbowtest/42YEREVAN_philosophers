@@ -21,7 +21,6 @@ int	main(int argc, char **argv)
 		parse_input(&p_table, argv);
 		data_init(&p_table);
 		dinner_start(&p_table);//TODO
-		simulation_start(&p_table);//TODO
 		clean_exit(&p_table, NULL, true, EXIT_SUCCESS);
 	}
 	else

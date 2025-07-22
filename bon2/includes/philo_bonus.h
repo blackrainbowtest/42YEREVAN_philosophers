@@ -45,9 +45,6 @@ void	drop_forks(t_philo *philo);
 void	*die_checker_routine(void *arg);
 void	philo_routine(t_philo *philo);
 
-/*====simulation_bonus.c====*/
-void	simulation_start(t_table *table);
-
 /*====utils_clean_bonus.c====*/
 void	cleanup_semaphores(void);
 void	error_exit(const char *error);
