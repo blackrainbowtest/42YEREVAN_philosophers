@@ -13,9 +13,8 @@ void	dinner_start(t_table *table)
 			clean_exit(table, RED"Fork failed\n"RST, true, EXIT_FAILURE);
 		else if (table->pid[i] == 0)
 		{
-			philo_routine(table->philos[i]);//TODO
+			philo_routine(table->philos[i]);
 			exit(EXIT_SUCCESS);
 		}
 	}
-
 }
