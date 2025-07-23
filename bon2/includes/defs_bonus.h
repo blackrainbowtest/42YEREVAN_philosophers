@@ -40,6 +40,9 @@
 /*====DEBUG====*/
 # define DEBUG_MODE 0
 
+/*====MONITOR COUNT====*/
+#define MONITOR_COUNT 2
+
 /*====WRITE ACTIONS====*/
 typedef enum e_status
 {

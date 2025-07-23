@@ -68,6 +68,7 @@ typedef struct s_table
 	t_time			*time;
 	t_sem			*sem;
 	pid_t			*pid;
+	pid_t			monitor_pid[MONITOR_COUNT];
 	bool			end_simulation;
 }	t_table;
 
