@@ -17,7 +17,7 @@ void	*die_checker_routine(void *arg)
 		if (now - last_meal > time_to_die)
 		{
 			write_status(DIED, philo, true);
-			sem_post(philo->table->sem->die_sem);
+			safe_sem_handle(&philo->table->sem->fork_sem, POST);
 		}
 	}
 	return (NULL);

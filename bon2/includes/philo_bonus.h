@@ -40,6 +40,9 @@ bool	simulation_finish(t_table *table);
 /*====init_bonus.c====*/
 void	data_init(t_table *p_table);
 
+/*====monitor_bonus.c====*/
+void	start_monitors(t_table *table);
+
 /*====parse_bonus.c====*/
 void	parse_input(t_table *p_table, char **argv);
 

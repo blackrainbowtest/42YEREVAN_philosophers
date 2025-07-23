@@ -15,6 +15,7 @@
 
 /*====SEMAPHORE NAMES====*/
 # define SEM_DIE	"/die_sem"
+# define SEM_END	"/end_sem"
 # define SEM_FORK	"/fork_sem"
 # define SEM_MEAL	"/meal_sem"
 # define SEM_WRITE	"/write_sem"

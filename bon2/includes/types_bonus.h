@@ -23,6 +23,8 @@ typedef struct s_sem
 {
 	//"/die_sem"
 	sem_t	*die_sem;
+	//"/end_sem"
+	sem_t	*end_sem;
 	//"/fork_sem"
 	sem_t	*fork_sem;
 	//"/meal_sem"

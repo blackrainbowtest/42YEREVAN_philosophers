@@ -56,7 +56,8 @@ static void	init_semaphores(t_table *p_table)
 	cleanup_semaphores();
 	sem = (t_sem *)safe_malloc(sizeof(t_sem));
 	memset(sem, 0, sizeof(t_sem));
-	sem->die_sem = sem_open(SEM_DIE, O_CREAT | O_EXCL, 0644, 1);
+	sem->die_sem = sem_open(SEM_DIE, O_CREAT | O_EXCL, 0644, 0);
+	sem->end_sem = sem_open(SEM_END, O_CREAT | O_EXCL, 0644, 0);
 	sem->fork_sem = sem_open(SEM_FORK, O_CREAT | O_EXCL, 0644,
 			p_table->philo_count);
 	sem->meal_sem = sem_open(SEM_MEAL, O_CREAT | O_EXCL, 0644, 0);

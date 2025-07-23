@@ -15,9 +15,11 @@
 void	cleanup_semaphores(void)
 {
 	sem_unlink(SEM_DIE);
+	sem_unlink(SEM_END);
 	sem_unlink(SEM_FORK);
 	sem_unlink(SEM_MEAL);
 	sem_unlink(SEM_WRITE);
+	sem_unlink(SEM_SYNC);
 }
 
 void	error_exit(const char *error)
