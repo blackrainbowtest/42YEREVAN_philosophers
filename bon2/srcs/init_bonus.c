@@ -64,11 +64,14 @@ static void	init_semaphores(t_table *p_table)
 	sem->write_sem = sem_open(SEM_WRITE, O_CREAT | O_EXCL, 0644, 1);
 	sem->sync_sem = sem_open(SEM_SYNC, O_CREAT | O_EXCL, 0644, 1);
 	if (any_semaphore_failed_to_open(sem))
+	{
+		cleanup_semaphores();
 		clean_exit(p_table, "Semaphore "RED"OPEN"RST
 			" Error\n", true, EXIT_FAILURE);
-	if (any_semaphore_failed_to_unlink())
-		clean_exit(p_table, "Semaphore "RED"UNLINK"RST
-			" Error\n", true, EXIT_FAILURE);
+	}
+	// if (any_semaphore_failed_to_unlink())
+	// 	clean_exit(p_table, "Semaphore "RED"UNLINK"RST
+	// 		" Error\n", true, EXIT_FAILURE);
 	p_table->sem = sem;
 }
 
