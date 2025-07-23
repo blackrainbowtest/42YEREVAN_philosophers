@@ -30,7 +30,7 @@ void	philo_routine(t_philo *philo)
 
 	while (true)
 	{
-		/* TODO */
+		printf("working");
 		take_forks(philo);
 		philo_eat(philo);
 		drop_forks(philo);

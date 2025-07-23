@@ -53,6 +53,7 @@ void	clean_exit(t_table *table, const char *msg,
 			if (table->pid[i] > 0)
 				kill(table->pid[i], SIGKILL);
 		}
+		free(table->pid);
 	}
 	if (table->philos)
 	{
