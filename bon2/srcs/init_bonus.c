@@ -16,14 +16,14 @@ static inline bool	any_semaphore_failed_to_open(t_sem *sem)
 {
 	return (sem->die_sem == SEM_FAILED || sem->fork_sem == SEM_FAILED
 		|| sem->meal_sem == SEM_FAILED || sem->write_sem == SEM_FAILED
-		|| sem->sync_sem == SEM_FAILED);
+		|| sem->sync_sem == SEM_FAILED || sem->die_sem == SEM_FAILED);
 }
 
 static inline bool	any_semaphore_failed_to_unlink(void)
 {
 	return (sem_unlink(SEM_DIE) == -1 || sem_unlink(SEM_FORK) == -1
 		|| sem_unlink(SEM_MEAL) == -1 || sem_unlink(SEM_WRITE) == -1
-		|| sem_unlink(SEM_SYNC) == -1);
+		|| sem_unlink(SEM_SYNC) == -1 || sem_unlink(SEM_DIE) == -1);
 }
 
 static void	init_philosophers(t_table *p_table)
