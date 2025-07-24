@@ -63,9 +63,8 @@ void	clean_exit(t_table *table, const char *msg,
 {
 	long	i;
 
-	printf("Exiting with code: %d\n", exit_code);
-	// if (!table)
-	// 	exit(exit_code);
+	if (!table)
+		exit(exit_code);
 	// if (is_parent && table->pid)
 	// {
 	// 	i = -1;
@@ -84,8 +83,8 @@ void	clean_exit(t_table *table, const char *msg,
 				free(table->philos[i]);
 		}
 	}
-	cleanup_semaphores();
-	close_semaphores(table->sem);
+	cleanup_semaphores();// OK NO LEAK NO ZOMBIE
+	close_semaphores(table->sem);// OK NO LEAK NO ZOMBIE
 	free_table(table);// OK NO LEAK NO ZOMBIE
 	if (msg)
 		printf(RED"%s\n"RST, msg);
