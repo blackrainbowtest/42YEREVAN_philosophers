@@ -56,10 +56,22 @@ fclean: clean
 
 re: fclean all
 
+val:
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./philo_bonus 4 800 200 200
+
 cp:
 	mkdir -p srcs includes
 	@echo "Copying source files..."
 	cp *.c srcs/
 	cp *.h includes/
+
+gv:
+	make cp
+	make all
+	clear
+	make val
+
+rmf:
+	rm -rf srcs includes objs
 
 .PHONY: all clean fclean re

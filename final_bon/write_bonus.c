@@ -21,7 +21,7 @@ void	write_status(t_status status, t_philo *philo, bool debug)
 {
 	long	elapsed;
 
-	elapsed = get_time(philo->table, MILLISECOND) - philo->table->time->time_to_start;
+	elapsed = get_time(philo->table, MILLISECOND) - philo->time_born;
 	if (philo->full)
 		return ;
 	safe_sem_handle(&philo->table->sem->write_sem, WAIT);

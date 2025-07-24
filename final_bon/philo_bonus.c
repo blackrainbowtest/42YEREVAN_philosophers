@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
+/*   philo_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 00:31:59 by root              #+#    #+#             */
-/*   Updated: 2025/07/24 17:44:32 by root             ###   ########.fr       */
+/*   Updated: 2025/07/24 19:13:38 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ int	main(int argc, char **argv)
 
 	if (argc == 5 || argc == 6)
 	{
+		memset(&table, 0, sizeof(t_table));
 		parse_input(&table, argv);
-		data_init(&table);
+		// data_init(&table);
 		// dinner_start(&table);
 		clean_exit(&table, NULL, true, EXIT_SUCCESS);
 	}

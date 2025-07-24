@@ -40,11 +40,11 @@ static void	init_philosophers(t_table *p_table)
 	{
 		p_philos[i] = (t_philo *)safe_malloc(sizeof(t_philo));
 		p_philos[i]->id = i + 1;
-		p_philos[i]->table = p_table;
 		p_philos[i]->meals_eaten = 0;
 		p_philos[i]->time_born = now;
 		p_philos[i]->time_last_meal = now;
 		p_philos[i]->full = false;
+		p_philos[i]->table = p_table;
 	}
 	p_table->philos = p_philos;
 }
@@ -55,7 +55,6 @@ static void	init_semaphores(t_table *p_table)
 
 	cleanup_semaphores();
 	sem = (t_sem *)safe_malloc(sizeof(t_sem));
-	memset(sem, 0, sizeof(t_sem));
 	sem->die_sem = sem_open(SEM_DIE, O_CREAT | O_EXCL, 0644, 0);
 	sem->end_sem = sem_open(SEM_END, O_CREAT | O_EXCL, 0644, 0);
 	sem->fork_sem = sem_open(SEM_FORK, O_CREAT | O_EXCL, 0644,

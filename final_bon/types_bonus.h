@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 20:18:39 by root              #+#    #+#             */
-/*   Updated: 2025/07/22 23:45:02 by root             ###   ########.fr       */
+/*   Updated: 2025/07/24 19:38:24 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ typedef struct s_time
 	long	time_to_eat;
 	//time_to_sleep;
 	long	time_to_sleep;
-	//time_to_start;
-	long	time_to_start;
 }	t_time;
 
 // philo

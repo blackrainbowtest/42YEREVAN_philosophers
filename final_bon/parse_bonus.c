@@ -64,23 +64,21 @@ static long	ft_atol(const char *p_str)
 	return (num);
 }
 
-void	parse_input(t_table *p_table, char **argv)
+void	parse_input(t_table *table, char **argv)
 {
-	p_table->philo_count = ft_atol(argv[1]);
-	p_table->time = (t_time *)safe_malloc(sizeof(t_time));
-	memset(p_table->time, 0, sizeof(t_time));
-	p_table->time->time_to_die = ft_atol(argv[2]) * 1e3;
-	p_table->time->time_to_eat = ft_atol(argv[3]) * 1e3;
-	p_table->time->time_to_sleep = ft_atol(argv[4]) * 1e3;
-	p_table->time->time_to_start = -1;
-	if (p_table->time->time_to_die < 6e4
-		|| p_table->time->time_to_eat < 6e4
-		|| p_table->time->time_to_sleep < 6e4)
-		error_exit("Time to die, eat or sleep must be more than 60ms.");
+	table->philo_count = ft_atol(argv[1]);
+	table->meals_limit = -1;
 	if (argv[5])
-		p_table->meals_limit = ft_atol(argv[5]);
-	else
-		p_table->meals_limit = -1;
-	p_table->pid = malloc(sizeof(pid_t) * p_table->philo_count);
-	p_table->end_simulation = false;
+		table->meals_limit = ft_atol(argv[5]);
+	table->philos = (t_philo **)safe_malloc(sizeof(t_philo *) * table->philo_count);
+	
+	table->time = (t_time *)safe_malloc(sizeof(t_time));
+	table->time->time_to_die = ft_atol(argv[2]) * 1e3;
+	table->time->time_to_eat = ft_atol(argv[3]) * 1e3;
+	table->time->time_to_sleep = ft_atol(argv[4]) * 1e3;
+	if (table->time->time_to_die < 6e4
+		|| table->time->time_to_eat < 6e4
+		|| table->time->time_to_sleep < 6e4)
+		error_exit("Time to die, eat or sleep must be more than 60ms.");
+	table->end_simulation = false;
 }

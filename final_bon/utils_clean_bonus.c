@@ -30,6 +30,8 @@ void	error_exit(const char *error)
 
 static void	free_table(t_table *table)
 {
+	if (!table)
+		return;
 	if (table->pid)
 		free(table->pid);
 	if (table->time)
@@ -50,7 +52,7 @@ void	clean_exit(t_table *table, const char *msg,
 		i = -1;
 		while (++i < table->philo_count)
 		{
-			if (table->pid[i] > 0)
+			if (table->pid && table->pid[i] > 0)
 				kill(table->pid[i], SIGKILL);
 		}
 	}
@@ -59,7 +61,7 @@ void	clean_exit(t_table *table, const char *msg,
 		i = -1;
 		while (++i < table->philo_count)
 		{
-			if (table->philos[i])
+			if (table->philos && table->philos[i])
 				free(table->philos[i]);
 		}
 		free(table->philos);
