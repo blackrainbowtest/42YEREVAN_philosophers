@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 19:40:52 by root              #+#    #+#             */
-/*   Updated: 2025/07/23 22:01:16 by root             ###   ########.fr       */
+/*   Updated: 2025/07/23 23:22:41 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <string.h>
 # include <pthread.h>
 # include <limits.h>
+#include <signal.h>
 
 # include "defs_bonus.h"
 # include "types_bonus.h"

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 00:31:59 by root              #+#    #+#             */
-/*   Updated: 2025/07/23 22:04:39 by root             ###   ########.fr       */
+/*   Updated: 2025/07/23 22:42:02 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ int	main(int argc, char **argv)
 	{
 		parse_input(&table, argv);
 		data_init(&table);
-		// start_monitors(&table);
-		// dinner_start(&table);
-		// safe_sem_handle(&table.sem->end_sem, WAIT);
+		dinner_start(&table);
 		clean_exit(&table, NULL, true, EXIT_SUCCESS);
 	}
 	else
