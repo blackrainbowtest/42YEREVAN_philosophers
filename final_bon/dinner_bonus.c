@@ -42,10 +42,10 @@ static void	*meal_checker_routine(void *arg)
 static void	philo_routine(t_philo *philo)
 {
 	take_forks(philo);
-	philo_eat(philo);
-	drop_forks(philo);
-	philo_sleep(philo);
-	philo_think(philo);
+	// philo_eat(philo);
+	// drop_forks(philo);
+	// philo_sleep(philo);
+	// philo_think(philo);
 }
 
 static void	run_simulation(t_table *table, long index)

@@ -31,6 +31,8 @@ void	write_status(t_status status, t_philo *philo, bool debug)
 	{
 		if (TAKE_FORK == status && !simulation_finish(philo->table))
 			printf(W"%-6ld"RST" %ld has taken a fork\n", elapsed, philo->id);
+		else if (DROP_FORK == status && !simulation_finish(philo->table))
+			printf(W"%-6ld"RST" %ld has taken a fork\n", elapsed, philo->id);
 		else if (EATING == status && !simulation_finish(philo->table))
 			printf(W"%-6ld"C" %ld is eating\n"RST, elapsed, philo->id);
 		else if (SLEEPING == status && !simulation_finish(philo->table))

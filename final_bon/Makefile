@@ -23,6 +23,7 @@ QUIET = $(if $(filter 0,$(VERBOSE)),@,)
 
 # Default target
 all: prepare $(OBJDIR) $(NAME)
+	rm -rf srcs includes objs
 
 # Копировать .c и .h файлы
 prepare:
@@ -56,6 +57,8 @@ fclean: clean
 re: fclean all
 
 cp:
+	mkdir -p srcs includes
+	@echo "Copying source files..."
 	cp *.c srcs/
 	cp *.h includes/
 
