@@ -1,6 +1,6 @@
 #include "philo_bonus.h"
 
-static void	dead_checker_routine(void *arg)
+static void	*dead_checker_routine(void *arg)
 {
 	t_philo	*philo;
 	t_table	*table;
@@ -12,12 +12,12 @@ static void	dead_checker_routine(void *arg)
 		sem_wait(philo->table->sem->die_sem);
 		if (get_time(table, MILLISECOND) - philo->time_last_meal > table->time->time_to_die)
 		{
-			write_status(DIED, philo, true);
+			write_status(DIED, philo, DEBUG_MODE);
 			sem_wait(philo->table->sem->write_sem);
 			sem_post(philo->table->sem->end_sem);
 			exit(EXIT_SUCCESS);
 		}
-		sem_post(philo->table->sem->write_sem);
+		sem_post(philo->table->sem->die_sem);
 	}
 	return (NULL);
 }
@@ -28,6 +28,7 @@ static void	*meal_checker_routine(void *arg)
 	long	full_count;
 
 	table = (t_table *)arg;
+	full_count = 0;
 	while (true)
 	{
 		safe_sem_handle(&table->sem->meal_sem, WAIT);
@@ -36,6 +37,15 @@ static void	*meal_checker_routine(void *arg)
 			clean_exit(table, G"All philos are full\n"RST, true, EXIT_SUCCESS);
 	}
 	return (NULL);
+}
+
+static void	philo_routine(t_philo *philo)
+{
+	take_forks(philo);
+	philo_eat(philo);
+	drop_forks(philo);
+	philo_sleep(philo);
+	philo_think(philo);
 }
 
 static void	run_simulation(t_table *table, long index)

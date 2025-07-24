@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 19:40:52 by root              #+#    #+#             */
-/*   Updated: 2025/07/24 08:43:41 by root             ###   ########.fr       */
+/*   Updated: 2025/07/24 09:22:49 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,13 @@ void	start_monitors(t_table *table);
 
 /*====parse_bonus.c====*/
 void	parse_input(t_table *p_table, char **argv);
+
+/*====philo_action_bonus.c====*/
+void	take_forks(t_philo *philo);
+void	philo_eat(t_philo *philo);
+void	drop_forks(t_philo *philo);
+void	philo_sleep(t_philo *philo);
+void	philo_think(t_philo *philo);
 
 /*====utils_clean_bonus.c====*/
 void	cleanup_semaphores(void);

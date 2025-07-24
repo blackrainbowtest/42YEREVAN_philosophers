@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 19:40:52 by root              #+#    #+#             */
-/*   Updated: 2025/07/23 22:01:16 by root             ###   ########.fr       */
+/*   Updated: 2025/07/24 09:22:49 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <string.h>
 # include <pthread.h>
 # include <limits.h>
+#include <signal.h>
 
 # include "defs_bonus.h"
 # include "types_bonus.h"
@@ -53,10 +54,6 @@ void	philo_eat(t_philo *philo);
 void	drop_forks(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 void	philo_think(t_philo *philo);
-
-/*====philo_routine_bonus.c====*/
-void	*die_checker_routine(void *arg);
-void	philo_routine(t_philo *philo);
 
 /*====utils_clean_bonus.c====*/
 void	cleanup_semaphores(void);
