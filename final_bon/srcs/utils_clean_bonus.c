@@ -22,6 +22,22 @@ void	cleanup_semaphores(void)
 	sem_unlink(SEM_SYNC);
 }
 
+static void	close_semaphores(t_sem *sem)
+{
+	if (sem->die_sem)
+		sem_close(sem->die_sem);
+	if (sem->end_sem)
+		sem_close(sem->end_sem);
+	if (sem->fork_sem)
+		sem_close(sem->fork_sem);
+	if (sem->meal_sem)
+		sem_close(sem->meal_sem);
+	if (sem->write_sem)
+		sem_close(sem->write_sem);
+	if (sem->sync_sem)
+		sem_close(sem->sync_sem);
+}
+
 void	error_exit(const char *error)
 {
 	printf(RED"%s\n"RST, error);
@@ -47,6 +63,7 @@ void	clean_exit(t_table *table, const char *msg,
 {
 	long	i;
 
+	printf("Exiting with code: %d\n", exit_code);
 	// if (!table)
 	// 	exit(exit_code);
 	// if (is_parent && table->pid)
@@ -68,7 +85,9 @@ void	clean_exit(t_table *table, const char *msg,
 	// 	}
 	// 	free(table->philos);
 	// }
-	free_table(table);
+	cleanup_semaphores();
+	close_semaphores(table->sem);
+	free_table(table);// OK NO LEAK NO ZOMBIE
 	// if (msg)
 	// 	printf(RED"%s\n"RST, msg);
 	exit(exit_code);
