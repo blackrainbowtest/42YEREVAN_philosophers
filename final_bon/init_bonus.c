@@ -71,5 +71,5 @@ static void	init_semaphores(t_table *table)
 void	data_init(t_table *table)
 {
 	init_semaphores(table);
-	// init_philosophers(table);
+	init_philosophers(table);
 }

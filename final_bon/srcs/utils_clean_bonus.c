@@ -75,20 +75,19 @@ void	clean_exit(t_table *table, const char *msg,
 	// 			kill(table->pid[i], SIGKILL);
 	// 	}
 	// }
-	// if (table->philos)
-	// {
-	// 	i = -1;
-	// 	while (++i < table->philo_count)
-	// 	{
-	// 		if (table->philos && table->philos[i])
-	// 			free(table->philos[i]);
-	// 	}
-	// 	free(table->philos);
-	// }
+	if (table->philos)
+	{
+		i = -1;
+		while (++i < table->philo_count)
+		{
+			if (table->philos && table->philos[i])
+				free(table->philos[i]);
+		}
+	}
 	cleanup_semaphores();
 	close_semaphores(table->sem);
 	free_table(table);// OK NO LEAK NO ZOMBIE
-	// if (msg)
-	// 	printf(RED"%s\n"RST, msg);
+	if (msg)
+		printf(RED"%s\n"RST, msg);
 	exit(exit_code);
 }
