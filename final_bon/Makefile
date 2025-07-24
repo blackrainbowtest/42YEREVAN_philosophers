@@ -7,7 +7,7 @@ NAME := philo_bonus
 
 # Compiler
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -Iincludes
+CFLAGS := -Iincludes #-Wall -Wextra -Werror
 RM := rm -f
 
 # Folders
@@ -23,7 +23,6 @@ QUIET = $(if $(filter 0,$(VERBOSE)),@,)
 
 # Default target
 all: prepare $(OBJDIR) $(NAME)
-	rm -rf srcs includes objs
 
 # Копировать .c и .h файлы
 prepare:
