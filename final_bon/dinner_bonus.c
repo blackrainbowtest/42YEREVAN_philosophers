@@ -31,7 +31,7 @@ static void	*meal_checker_routine(void *arg)
 		safe_sem_handle(&table->sem->meal_sem, WAIT);
 		++full_count;
 		if (full_count >= table->philo_count)
-			sem_post(philo->table->sem->end_sem);
+			safe_sem_handle(&table->sem->end_sem, POST);
 	}
 	return (NULL);
 }
@@ -58,9 +58,15 @@ static void	run_simulation(t_table *table, long index)
 	philo = table->philos[index];
 	philo->time_born = get_time(table, MILLISECOND);
 	philo->time_last_meal = get_time(table, MILLISECOND);
-	pthread_create(&dead_checker, NULL, dead_checker_routine, philo);
-	pthread_detach(dead_checker);
-	philo_routine(philo);
+	safe_sem_handle(&table->sem->sync_sem, WAIT);
+	printf(G"Philosopher %ld is born at %ld ms\n"RST, philo->id, philo->time_born);
+	safe_sem_handle(&table->sem->sync_sem, POST);
+	// pthread_create(&dead_checker, NULL, dead_checker_routine, philo);
+	// pthread_detach(dead_checker);
+	// philo_routine(philo);
+	usleep(1000500); // give time for all philosophers to be born
+	safe_sem_handle(&table->sem->end_sem, POST);
+	exit(EXIT_SUCCESS);
 }
 
 void	dinner_start(t_table *table)
@@ -70,7 +76,7 @@ void	dinner_start(t_table *table)
 	pthread_t	meal_checker;
 	
 	count = table->philo_count;
-	if (table->meals_limit > 0)// If we have meals_limit (not -1) we need one more thread to continue monitoring philo full
+	if (table->meals_limit > 0)
 	{
 		if(pthread_create(&meal_checker, NULL, meal_checker_routine, table) != 0)
 			clean_exit(table, C"pthread_create"RED" failed\n"RST, true, EXIT_FAILURE);
@@ -84,7 +90,7 @@ void	dinner_start(t_table *table)
 		if (table->pid[i] < 0)
 			clean_exit(table, C"Fork"RED" failed\n"RST, true, EXIT_FAILURE);
 		if (table->pid[i] == 0)
-			run_simulation(table, i);// RUN if its parent
+			run_simulation(table, i);
 	}
 	sem_wait(table->sem->end_sem);
 	set_bool(&table->sem->sync_sem, &table->end_simulation, true);
@@ -94,4 +100,5 @@ void	dinner_start(t_table *table)
 	i = -1;
 	while (++i < count)
 		waitpid(table->pid[i], NULL, 0);
+	printf(G"Philosophers finished eating!\n"RST);
 }

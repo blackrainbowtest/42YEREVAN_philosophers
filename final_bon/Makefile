@@ -70,6 +70,12 @@ gv:
 	clear
 	make val
 
+nv:
+	make cp
+	make all
+	clear
+	./philo_bonus 4 800 200 200
+
 rmf:
 	rm -rf srcs includes objs
 
