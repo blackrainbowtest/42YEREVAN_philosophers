@@ -3,21 +3,18 @@
 static void	*dead_checker_routine(void *arg)
 {
 	t_philo	*philo;
-	t_table	*table;
 
 	philo = (t_philo *)arg;
-	table = philo->table;
-	while (true)
+	while (!simulation_finish(philo->table))
 	{
-		sem_wait(philo->table->sem->die_sem);
-		if (get_time(table, MILLISECOND) - philo->time_last_meal > table->time->time_to_die)
+		if (get_time(philo->table, MILLISECOND) - get_long(&philo->table->sem->sync_sem, &philo->time_last_meal)
+			> philo->table->time->time_to_die)
 		{
 			write_status(DIED, philo, DEBUG_MODE);
-			sem_wait(philo->table->sem->write_sem);
 			sem_post(philo->table->sem->end_sem);
-			exit(EXIT_SUCCESS);
+			break ;
 		}
-		sem_post(philo->table->sem->die_sem);
+		usleep(1000);// чуть-чуть ждём
 	}
 	return (NULL);
 }
@@ -34,18 +31,23 @@ static void	*meal_checker_routine(void *arg)
 		safe_sem_handle(&table->sem->meal_sem, WAIT);
 		++full_count;
 		if (full_count >= table->philo_count)
-			clean_exit(table, G"All philos are full\n"RST, true, EXIT_SUCCESS);
+			sem_post(philo->table->sem->end_sem);
 	}
 	return (NULL);
 }
 
 static void	philo_routine(t_philo *philo)
 {
-	take_forks(philo);
-	// philo_eat(philo);
-	// drop_forks(philo);
-	// philo_sleep(philo);
-	// philo_think(philo);
+	while (true)
+	{
+		take_forks(philo);
+		dead_checker_routine(philo);
+		philo_eat(philo);
+		drop_forks(philo);
+		philo_sleep(philo);
+		philo_think(philo);
+
+	}
 }
 
 static void	run_simulation(t_table *table, long index)
@@ -54,38 +56,42 @@ static void	run_simulation(t_table *table, long index)
 	t_philo		*philo;
 
 	philo = table->philos[index];
-	if(pthread_create(&dead_checker, NULL, dead_checker_routine, philo) != 0)
-		clean_exit(table, C"pthread_create"RED" failed\n"RST, true, EXIT_FAILURE);
-	if (pthread_detach(dead_checker))
-		clean_exit(table, C"pthread_detach"RED" failed\n"RST, true, EXIT_FAILURE);
-	
 	philo->time_born = get_time(table, MILLISECOND);
 	philo->time_last_meal = get_time(table, MILLISECOND);
-	while (true)
-		philo_routine(philo);
+	pthread_create(&dead_checker, NULL, dead_checker_routine, philo);
+	pthread_detach(dead_checker);
+	philo_routine(philo);
 }
 
 void	dinner_start(t_table *table)
 {
 	long		i;
+	long		count;
 	pthread_t	meal_checker;
 	
-	if (table->meals_limit > 0)
+	count = table->philo_count;
+	if (table->meals_limit > 0)// If we have meals_limit (not -1) we need one more thread to continue monitoring philo full
 	{
 		if(pthread_create(&meal_checker, NULL, meal_checker_routine, table) != 0)
 			clean_exit(table, C"pthread_create"RED" failed\n"RST, true, EXIT_FAILURE);
-		if (pthread_detach(meal_checker))
+		if (pthread_detach(meal_checker) != 0)
 			clean_exit(table, C"pthread_detach"RED" failed\n"RST, true, EXIT_FAILURE);
 	}
-	// new thread watch for end_sem if end_sem is posted, then exit
 	i = -1;
-	while (++i < table->philo_count)
+	while (++i < count)
 	{
 		table->pid[i] = fork();
 		if (table->pid[i] < 0)
 			clean_exit(table, C"Fork"RED" failed\n"RST, true, EXIT_FAILURE);
 		if (table->pid[i] == 0)
-			run_simulation(table, i);
+			run_simulation(table, i);// RUN if its parent
 	}
-	waitpid(-1, NULL, 0);
+	sem_wait(table->sem->end_sem);
+	set_bool(&table->sem->sync_sem, &table->end_simulation, true);
+	i = -1;
+	while (++i < count)
+		kill(table->pid[i], SIGKILL);
+	i = -1;
+	while (++i < count)
+		waitpid(table->pid[i], NULL, 0);
 }

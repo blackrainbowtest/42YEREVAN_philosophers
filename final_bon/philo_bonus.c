@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 		memset(&table, 0, sizeof(t_table));
 		parse_input(&table, argv);//OK NO LEAK NO ZOMBIE
 		data_init(&table);//OK NO LEAK NO ZOMBIE
-		// dinner_start(&table);
+		dinner_start(&table);
 		clean_exit(&table, NULL, true, EXIT_SUCCESS);//OK NO LEAK NO ZOMBIE
 	}
 	else

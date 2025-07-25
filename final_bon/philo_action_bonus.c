@@ -2,12 +2,13 @@
 
 void	take_forks(t_philo *philo)
 {
+	if (simulation_finish(philo->table))
+		return ;
 	safe_sem_handle(&philo->table->sem->sync_sem, WAIT);
-	printf("Philosopher %ld is trying to take forks\n", philo->id);
 	safe_sem_handle(&philo->table->sem->fork_sem, WAIT);
-	printf("Philosopher %ld has taken the second fork\n", philo->id);
 	write_status(TAKE_FORK, philo, DEBUG_MODE);
 	safe_sem_handle(&philo->table->sem->sync_sem, POST);
+
 	safe_sem_handle(&philo->table->sem->sync_sem, WAIT);
 	safe_sem_handle(&philo->table->sem->fork_sem, WAIT);
 	write_status(TAKE_FORK, philo, DEBUG_MODE);
@@ -16,12 +17,12 @@ void	take_forks(t_philo *philo)
 
 void	philo_eat(t_philo *philo)//TODO
 {
-	if (philo->full || simulation_finish(philo->table))
+	if (simulation_finish(philo->table))
 		return ;
 	safe_sem_handle(&philo->table->sem->sync_sem, WAIT);
 	write_status(EATING, philo, DEBUG_MODE);
 	// safe_sem_handle(&philo->table->sem->die_sem, WAIT);
-	philo->time_last_meal = get_time(philo->table, MILLISECOND);
+	philo->time_last_meal = get_time(philo->table, MILLISECOND);//TODO add setter-getter to avoid race conditions
 	philo->meals_eaten++;
 	// safe_sem_handle(&philo->table->sem->die_sem, POST);
 	if (philo->table->meals_limit > 0
@@ -36,7 +37,6 @@ void	philo_eat(t_philo *philo)//TODO
 void	drop_forks(t_philo *philo)
 {
 	safe_sem_handle(&philo->table->sem->fork_sem, POST);
-	write_status(DROP_FORK, philo, DEBUG_MODE);
 	safe_sem_handle(&philo->table->sem->fork_sem, POST);
 	write_status(DROP_FORK, philo, DEBUG_MODE);
 }
@@ -58,6 +58,8 @@ void	philo_think(t_philo *philo)
 	long	t_sleep;
 	long	t_think;
 
+	if (philo->full || simulation_finish(philo->table))
+		return ;
 	if (!simulation_finish(philo->table))
 		write_status(THINKING, philo, DEBUG_MODE);
 	t_eat = philo->table->time->time_to_eat;
