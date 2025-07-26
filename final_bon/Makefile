@@ -64,17 +64,23 @@ cp:
 	cp *.c srcs/
 	cp *.h includes/
 
-gv:
+vr:
 	make cp
 	make all
 	clear
 	make val
 
-nv:
+nr:
 	make cp
 	make all
 	clear
 	./philo_bonus 4 800 200 200
+
+nrl:
+	make cp
+	make all
+	clear
+	./philo_bonus 4 800 200 200 5
 
 rmf:
 	rm -rf srcs includes objs

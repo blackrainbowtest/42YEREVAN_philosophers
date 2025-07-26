@@ -32,7 +32,7 @@ static void	*meal_checker_routine(void *arg)
 		safe_sem_handle(&table->sem->meal_sem, WAIT);
 		++full_count;
 		if (full_count >= table->philo_count)
-			safe_sem_handle(&table->sem->end_sem, POST);
+			safe_sem_handle(&table->sem->end_sem, POST);// TODO maybe need turn off write_sem here IDK
 	}
 	return (NULL);
 }
@@ -44,12 +44,12 @@ static void	philo_routine(t_philo *philo)
 	{
 		safe_sem_handle(&philo->table->sem->sem_eat_slots, WAIT);
 		take_forks(philo);
-		// philo_eat(philo);//TODO
+		philo_eat(philo);//TODO
 		drop_forks(philo);
 		safe_sem_handle(&philo->table->sem->sem_eat_slots, POST);
 		// philo_sleep(philo);//TODO
 		// philo_think(philo);//TODO
-		precise_usleep(1000, philo->table);
+		precise_usleep(1000, philo);
 	}
 }
 

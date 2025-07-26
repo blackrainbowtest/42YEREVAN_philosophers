@@ -29,24 +29,22 @@ long	get_time(t_table *p_table, t_time_code time_code)
 	return (42);
 }
 
-void	precise_usleep(long usec, t_table *table)
+void	precise_usleep(long usec, t_philo *philo)
 {
 	long	start;
 	long	elapsed;
 	long	rem;
 
-	start = get_time(table, MICROSECOND);
-	while (get_time(table, MICROSECOND) - start < usec)
+	start = get_time(philo->table, MICROSECOND);
+	while (get_time(philo->table, MICROSECOND) - start < usec)
 	{
-		if (simulation_finish(table))
-			break ;
-		elapsed = get_time(table, MICROSECOND) - start;
+		elapsed = get_time(philo->table, MICROSECOND) - start;
 		rem = usec - elapsed;
 		if (rem > 1e3)
 			usleep(rem / 2);
 		else
 		{
-			while (get_time(table, MICROSECOND) - start < usec)
+			while (get_time(philo->table, MICROSECOND) - start < usec)
 				;
 		}
 	}
