@@ -8,8 +8,8 @@ static void	*dead_checker_routine(void *arg)//NO LEAK HERE
 	while (true)
 	{
 		safe_sem_handle(&philo->table->sem->die_sem, WAIT);
-		if (get_time(philo->table, MILLISECOND) - philo->time_last_meal
-			> philo->table->time->time_to_die / 1e3)
+		if (get_time(philo->table, MICROSECOND) - philo->time_last_meal
+			> philo->table->time->time_to_die)
 		{
 			write_status(DIED, philo, DEBUG_MODE, true);
 			sem_post(philo->table->sem->end_sem);
@@ -44,12 +44,12 @@ static void	philo_routine(t_philo *philo)
 	{
 		safe_sem_handle(&philo->table->sem->sem_eat_slots, WAIT);
 		take_forks(philo);
-		philo_eat(philo);//TODO
+		philo_eat(philo);
 		drop_forks(philo);
 		safe_sem_handle(&philo->table->sem->sem_eat_slots, POST);
-		// philo_sleep(philo);//TODO
-		// philo_think(philo);//TODO
-		precise_usleep(1000, philo);
+		philo_sleep(philo);
+		if (philo->table->philo_count % 2 != 0)
+			philo_think(philo);
 	}
 }
 
@@ -60,7 +60,7 @@ static void	run_simulation(t_table *table, long index)//NO LEAK HERE
 
 	philo = table->philos[index];
 	philo->time_born = get_time(table, MILLISECOND);
-	philo->time_last_meal = get_time(table, MILLISECOND);
+	philo->time_last_meal = get_time(table, MICROSECOND);
 	if (pthread_create(&dead_checker, NULL, dead_checker_routine, philo) != 0)
 		clean_exit(table, C"pthread_create"RED" failed\n"RST, true, EXIT_FAILURE);
 	if (pthread_detach(dead_checker) != 0)
