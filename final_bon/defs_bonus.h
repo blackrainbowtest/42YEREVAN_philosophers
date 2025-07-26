@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 22:04:53 by root              #+#    #+#             */
-/*   Updated: 2025/07/24 16:37:36 by root             ###   ########.fr       */
+/*   Updated: 2025/07/26 11:12:57 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define SEM_MEAL	"/meal_sem"
 # define SEM_WRITE	"/write_sem"
 # define SEM_SYNC	"/sync_sem"
+# define EAT_SLOTS_SYNC	"/sem_eat_slots"
 
 /*====PHILO LIMITS====*/
 # define MAX_PHILO_COUNT 200

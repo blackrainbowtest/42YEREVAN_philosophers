@@ -51,7 +51,7 @@ clean:
 
 fclean: clean
 	$(QUIET)$(RM) $(NAME)
-	rm -rf objs
+	rm -rf objs includes srcs
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 19:40:52 by root              #+#    #+#             */
-/*   Updated: 2025/07/24 21:17:04 by root             ###   ########.fr       */
+/*   Updated: 2025/07/26 12:22:30 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ long	get_time(t_table *p_table, t_time_code time_code);
 void	precise_usleep(long usec, t_table *table);
 
 /*====write_bonus.c====*/
-void	write_status(t_status status, t_philo *philo, bool debug);
+void	write_status(t_status status, t_philo *philo, bool debug, bool is_ending);
 
 #endif	/* PHILO_BONUS_H */

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 20:18:39 by root              #+#    #+#             */
-/*   Updated: 2025/07/24 21:10:56 by root             ###   ########.fr       */
+/*   Updated: 2025/07/26 11:15:14 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef struct s_sem
 	sem_t	*write_sem;
 	//"/sync_sem"
 	sem_t	*sync_sem;
+	//"/sem_eat_slots"
+	sem_t	*sem_eat_slots;
 }	t_sem;
 
 // time counters

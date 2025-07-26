@@ -53,13 +53,14 @@ static void	init_semaphores(t_table *table)
 
 	cleanup_semaphores();
 	sem = table->sem;
-	sem->die_sem = sem_open(SEM_DIE, O_CREAT | O_EXCL, 0644, 0);
+	sem->die_sem = sem_open(SEM_DIE, O_CREAT | O_EXCL, 0644, 1);
 	sem->end_sem = sem_open(SEM_END, O_CREAT | O_EXCL, 0644, 0);
 	sem->fork_sem = sem_open(SEM_FORK, O_CREAT | O_EXCL, 0644,
 			table->philo_count);
 	sem->meal_sem = sem_open(SEM_MEAL, O_CREAT | O_EXCL, 0644, 0);
 	sem->write_sem = sem_open(SEM_WRITE, O_CREAT | O_EXCL, 0644, 1);
 	sem->sync_sem = sem_open(SEM_SYNC, O_CREAT | O_EXCL, 0644, table->philo_count - 1);
+	sem->sem_eat_slots = sem_open(EAT_SLOTS_SYNC, O_CREAT | O_EXCL, 0644, table->philo_count / 2);
 	if (any_semaphore_failed_to_open(sem))
 		clean_exit(table, "Semaphore "RED"OPEN"RST
 			" Error\n", true, EXIT_FAILURE);

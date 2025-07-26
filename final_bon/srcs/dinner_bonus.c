@@ -5,16 +5,17 @@ static void	*dead_checker_routine(void *arg)//NO LEAK HERE
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (!simulation_finish(philo->table))
+	while (true)
 	{
-		if (get_time(philo->table, MILLISECOND) - get_long(&philo->table->sem->die_sem, &philo->time_last_meal)
-			> philo->table->time->time_to_die / 1000)
+		safe_sem_handle(&philo->table->sem->die_sem, WAIT);
+		if (get_time(philo->table, MILLISECOND) - philo->time_last_meal
+			> philo->table->time->time_to_die / 1e3)
 		{
-			write_status(DIED, philo, DEBUG_MODE);
+			write_status(DIED, philo, DEBUG_MODE, true);
 			sem_post(philo->table->sem->end_sem);
 			break ;
 		}
-		precise_usleep(1000, philo->table);
+		safe_sem_handle(&philo->table->sem->die_sem, POST);
 	}
 	return (NULL);
 }
@@ -41,14 +42,13 @@ static void	philo_routine(t_philo *philo)
 	long	time_to_eat;
 	while (true)
 	{
-		safe_sem_handle(&philo->table->sem->sync_sem, WAIT);
+		safe_sem_handle(&philo->table->sem->sem_eat_slots, WAIT);
 		take_forks(philo);
-		safe_sem_handle(&philo->table->sem->sync_sem, POST);
-		// dead_checker_routine(philo);
-		// philo_eat(philo);
-		// drop_forks(philo);
-		// philo_sleep(philo);
-		// philo_think(philo);
+		// philo_eat(philo);//TODO
+		drop_forks(philo);
+		safe_sem_handle(&philo->table->sem->sem_eat_slots, POST);
+		// philo_sleep(philo);//TODO
+		// philo_think(philo);//TODO
 		precise_usleep(1000, philo->table);
 	}
 }

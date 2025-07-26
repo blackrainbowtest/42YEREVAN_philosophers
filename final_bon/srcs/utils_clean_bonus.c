@@ -20,6 +20,7 @@ void	cleanup_semaphores(void)
 	sem_unlink(SEM_MEAL);
 	sem_unlink(SEM_WRITE);
 	sem_unlink(SEM_SYNC);
+	sem_unlink(EAT_SLOTS_SYNC);
 }
 
 static void	close_semaphores(t_sem *sem)
@@ -36,6 +37,8 @@ static void	close_semaphores(t_sem *sem)
 		sem_close(sem->write_sem);
 	if (sem->sync_sem)
 		sem_close(sem->sync_sem);
+	if (sem->sem_eat_slots)
+		sem_close(sem->sem_eat_slots);
 }
 
 void	error_exit(const char *error)
