@@ -2,17 +2,10 @@
 
 void	take_forks(t_philo *philo)
 {
-	if (simulation_finish(philo->table))
-		return ;
-	safe_sem_handle(&philo->table->sem->sync_sem, WAIT);
-	safe_sem_handle(&philo->table->sem->fork_sem, WAIT);
-	write_status(TAKE_FORK, philo, DEBUG_MODE);
-	safe_sem_handle(&philo->table->sem->sync_sem, POST);
-
-	safe_sem_handle(&philo->table->sem->sync_sem, WAIT);
-	safe_sem_handle(&philo->table->sem->fork_sem, WAIT);
-	write_status(TAKE_FORK, philo, DEBUG_MODE);
-	safe_sem_handle(&philo->table->sem->sync_sem, POST);
+    safe_sem_handle(&philo->table->sem->fork_sem, WAIT);
+    write_status(TAKE_FORK, philo, DEBUG_MODE);
+    safe_sem_handle(&philo->table->sem->fork_sem, WAIT);
+    write_status(TAKE_FORK, philo, DEBUG_MODE);
 }
 
 void	philo_eat(t_philo *philo)//TODO

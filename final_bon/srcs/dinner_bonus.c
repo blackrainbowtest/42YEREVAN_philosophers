@@ -1,20 +1,20 @@
 #include "philo_bonus.h"
 
-static void	*dead_checker_routine(void *arg)
+static void	*dead_checker_routine(void *arg)//NO LEAK HERE
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
 	while (!simulation_finish(philo->table))
 	{
-		if (get_time(philo->table, MILLISECOND) - get_long(&philo->table->sem->sync_sem, &philo->time_last_meal)
-			> philo->table->time->time_to_die)
+		if (get_time(philo->table, MILLISECOND) - get_long(&philo->table->sem->die_sem, &philo->time_last_meal)
+			> philo->table->time->time_to_die / 1000)
 		{
 			write_status(DIED, philo, DEBUG_MODE);
 			sem_post(philo->table->sem->end_sem);
 			break ;
 		}
-		usleep(1000);// чуть-чуть ждём
+		precise_usleep(1000, philo->table);
 	}
 	return (NULL);
 }
@@ -38,19 +38,22 @@ static void	*meal_checker_routine(void *arg)
 
 static void	philo_routine(t_philo *philo)
 {
+	long	time_to_eat;
 	while (true)
 	{
+		safe_sem_handle(&philo->table->sem->sync_sem, WAIT);
 		take_forks(philo);
-		dead_checker_routine(philo);
-		philo_eat(philo);
-		drop_forks(philo);
-		philo_sleep(philo);
-		philo_think(philo);
-
+		safe_sem_handle(&philo->table->sem->sync_sem, POST);
+		// dead_checker_routine(philo);
+		// philo_eat(philo);
+		// drop_forks(philo);
+		// philo_sleep(philo);
+		// philo_think(philo);
+		precise_usleep(1000, philo->table);
 	}
 }
 
-static void	run_simulation(t_table *table, long index)
+static void	run_simulation(t_table *table, long index)//NO LEAK HERE
 {
 	pthread_t	dead_checker;
 	t_philo		*philo;
@@ -58,13 +61,11 @@ static void	run_simulation(t_table *table, long index)
 	philo = table->philos[index];
 	philo->time_born = get_time(table, MILLISECOND);
 	philo->time_last_meal = get_time(table, MILLISECOND);
-	safe_sem_handle(&table->sem->sync_sem, WAIT);
-	printf(G"Philosopher %ld is born at %ld ms\n"RST, philo->id, philo->time_born);
-	safe_sem_handle(&table->sem->sync_sem, POST);
-	// pthread_create(&dead_checker, NULL, dead_checker_routine, philo);
-	// pthread_detach(dead_checker);
-	// philo_routine(philo);
-	usleep(1000500); // give time for all philosophers to be born
+	if (pthread_create(&dead_checker, NULL, dead_checker_routine, philo) != 0)
+		clean_exit(table, C"pthread_create"RED" failed\n"RST, true, EXIT_FAILURE);
+	if (pthread_detach(dead_checker) != 0)
+		clean_exit(table, C"pthread_detach"RED" failed\n"RST, true, EXIT_FAILURE);
+	philo_routine(philo);
 	safe_sem_handle(&table->sem->end_sem, POST);
 	exit(EXIT_SUCCESS);
 }
@@ -76,14 +77,13 @@ void	dinner_start(t_table *table)
 	pthread_t	meal_checker;
 	
 	count = table->philo_count;
-	if (table->meals_limit > 0)// If we have meals_limit (not -1) we need one more thread to continue monitoring philo full
+	if (table->meals_limit > 0)
 	{
-		if(pthread_create(&meal_checker, NULL, meal_checker_routine, table) != 0)
+		if (pthread_create(&meal_checker, NULL, meal_checker_routine, table) != 0)
 			clean_exit(table, C"pthread_create"RED" failed\n"RST, true, EXIT_FAILURE);
 		if (pthread_detach(meal_checker) != 0)
 			clean_exit(table, C"pthread_detach"RED" failed\n"RST, true, EXIT_FAILURE);
 	}
-	printf(G"Philosophers are starting to eat!\n"RST);
 	i = -1;
 	while (++i < count)
 	{

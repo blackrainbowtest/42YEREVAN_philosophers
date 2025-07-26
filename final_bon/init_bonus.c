@@ -59,7 +59,7 @@ static void	init_semaphores(t_table *table)
 			table->philo_count);
 	sem->meal_sem = sem_open(SEM_MEAL, O_CREAT | O_EXCL, 0644, 0);
 	sem->write_sem = sem_open(SEM_WRITE, O_CREAT | O_EXCL, 0644, 1);
-	sem->sync_sem = sem_open(SEM_SYNC, O_CREAT | O_EXCL, 0644, 1);
+	sem->sync_sem = sem_open(SEM_SYNC, O_CREAT | O_EXCL, 0644, table->philo_count - 1);
 	if (any_semaphore_failed_to_open(sem))
 		clean_exit(table, "Semaphore "RED"OPEN"RST
 			" Error\n", true, EXIT_FAILURE);
