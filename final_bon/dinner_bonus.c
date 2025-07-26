@@ -101,5 +101,4 @@ void	dinner_start(t_table *table)
 	i = -1;
 	while (++i < count)
 		waitpid(table->pid[i], NULL, 0);
-	printf(G"Philosophers finished eating!\n"RST);
 }

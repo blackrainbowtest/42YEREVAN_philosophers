@@ -35,7 +35,6 @@ void	precise_usleep(long usec, t_philo *philo)
 	long	elapsed;
 	long	rem;
 
-	printf("Philo  %ld last meal time: %ld\n", philo->id, get_time(philo->table, MICROSECOND) - philo->time_last_meal);
 	start = get_time(philo->table, MICROSECOND);
 	while (get_time(philo->table, MICROSECOND) - start < usec)
 	{
@@ -49,6 +48,4 @@ void	precise_usleep(long usec, t_philo *philo)
 				;
 		}
 	}
-	printf(C"Philo"W"  %ld last meal time: %ld\n", philo->id, get_time(philo->table, MICROSECOND) - philo->time_last_meal);
-
 }

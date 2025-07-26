@@ -80,7 +80,7 @@ nrl:
 	make cp
 	make all
 	clear
-	./philo_bonus 4 800 200 200 5
+	./philo_bonus 105 800 200 200
 
 rmf:
 	rm -rf srcs includes objs

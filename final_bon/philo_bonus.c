@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 00:31:59 by root              #+#    #+#             */
-/*   Updated: 2025/07/25 00:44:08 by root             ###   ########.fr       */
+/*   Updated: 2025/07/26 21:45:37 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ int	main(int argc, char **argv)
 	else
 		error_exit(W"Wrong input:\n"G"Correct is ./philo 5 800 200 200 "
 			M"[5]"RST);
-	return (0);
+	return (EXIT_SUCCESS);
 }

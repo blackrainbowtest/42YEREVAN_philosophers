@@ -40,19 +40,35 @@ void	philo_sleep(t_philo *philo)
 	precise_usleep(time_to_sleep, philo);
 }
 
+static void	wait_until(long until, t_philo *philo)
+{
+	long	current_time;
+
+	while (true)
+	{
+		current_time = get_time(philo->table, MICROSECOND);
+		if (current_time >= until)
+			break ;
+		usleep(100); // Sleep for a short duration to avoid busy waiting
+	}
+}
+
 void	philo_think(t_philo *philo)
 {
-	long	t_eat;
-	long	t_sleep;
-	long	t_think;
+	long	think_until;
 
 	if (philo->full)
 		return ;
+
 	write_status(THINKING, philo, DEBUG_MODE, false);
-	t_eat = philo->table->time->time_to_eat;
-	t_sleep = philo->table->time->time_to_sleep;
-	t_think = t_eat * 2 - t_sleep;
-	if (t_think < 0)
-		t_think = 0;
-	precise_usleep(t_think * 0.42, philo);
+
+	think_until = philo->time_last_meal
+		+ philo->table->time->time_to_eat
+		+ philo->table->time->time_to_sleep
+		+ (philo->table->time->time_to_eat * 2
+			- philo->table->time->time_to_sleep);
+
+	if (get_time(philo->table, MICROSECOND) < think_until)
+		wait_until(think_until, philo);
 }
+
