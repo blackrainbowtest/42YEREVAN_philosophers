@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   simulate.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/27 15:48:43 by root              #+#    #+#             */
-/*   Updated: 2025/07/27 21:54:36 by root             ###   ########.fr       */
+/*   Created: 2025/07/27 21:53:15 by root              #+#    #+#             */
+/*   Updated: 2025/07/27 23:31:45 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/**https://github.com/Gaspachow/philosophers-42 */
 #include "philo.h"
 
-int	main(int argc, char **argv)
+int	ft_simulate(t_table *table)
 {
-	t_table	table;
-	int		status;
+	long	i;
+	t_philo	*philo;
 
-	if (argc == 5 || argc == 6)
-	{
-		status = ft_init(&table, argv);
-		if (status != EXIT_SUCCESS)
-			return (error_manager(status));
-		status = ft_simulate(&table);
-		if (status != EXIT_SUCCESS)
-			return (error_manager(status));
-	}
-	else
-		return (error_manager(EXIT_INVALID_ARG));
-	return (EXIT_SUCCESS);
+	
 }
