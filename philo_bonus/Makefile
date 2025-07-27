@@ -3,7 +3,7 @@ RST = "\033[0m"
 G   = "\033[32m"
 
 # Project
-NAME := philo
+NAME := philo_bonus
 
 # Compiler
 CC := cc
@@ -56,7 +56,7 @@ fclean: clean
 re: fclean all
 
 val:
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./philo 4 800 200 200
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./philo_bonus 4 800 200 200
 
 cp:
 	mkdir -p srcs includes
@@ -74,13 +74,13 @@ nr:
 	make cp
 	make all
 	clear
-	./philo 4 800 200 200
+	./philo_bonus 4 800 200 200
 
 nrl:
 	make cp
 	make all
 	clear
-	./philo 105 800 200 200
+	./philo_bonus 105 800 200 200
 
 rmf:
 	rm -rf srcs includes objs

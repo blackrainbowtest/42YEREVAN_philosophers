@@ -3,18 +3,18 @@
 static void	write_status_debug(t_status status, t_philo *philo, long elapsed)
 {
 	if (TAKE_FORK == status)
-		printf(W"%6ld"RST" %ld has taken the fork"
+		printf(W"%ld"RST" %ld has taken the fork"
 			"   NO:"B"%d\n"RST, elapsed, philo->id,
 			42);
 	else if (EATING == status)
-		printf(W"%6ld"C" %ld is eating"
+		printf(W"%ld"C" %ld is eating"
 			"   "Y"%ld\n"RST, elapsed, philo->id, philo-> meals_eaten);
 	else if (SLEEPING == status)
-		printf(W"%6ld"C" %ld is sleeping\n"RST, elapsed, philo->id);
+		printf(W"%ld"C" %ld is sleeping\n"RST, elapsed, philo->id);
 	else if (THINKING == status)
-		printf(W"%6ld"C" %ld is thinking\n"RST, elapsed, philo->id);
+		printf(W"%ld"C" %ld is thinking\n"RST, elapsed, philo->id);
 	else if (DIED == status)
-		printf(RED"%6ld %ld is died\n"RST, elapsed, philo->id);
+		printf(RED"%ld %ld is died\n"RST, elapsed, philo->id);
 }
 
 void	write_status(t_status status, t_philo *philo, bool debug, bool is_end)
@@ -30,17 +30,17 @@ void	write_status(t_status status, t_philo *philo, bool debug, bool is_end)
 	else
 	{
 		if (TAKE_FORK == status)
-			printf(W"%-6ld"RST" %ld has taken a fork\n", elapsed, philo->id);
+			printf(W"%-ld"RST" %ld has taken a fork\n", elapsed, philo->id);
 		else if (DROP_FORK == status)
-			printf(C"%-6ld"RST" %ld has drop a fork\n", elapsed, philo->id);
+			printf(C"%-ld"RST" %ld has drop a fork\n", elapsed, philo->id);
 		else if (EATING == status)
-			printf(W"%-6ld"C" %ld is eating\n"RST, elapsed, philo->id);
+			printf(W"%-ld"C" %ld is eating\n"RST, elapsed, philo->id);
 		else if (SLEEPING == status)
-			printf(W"%-6ld"RST" %ld is sleeping\n", elapsed, philo->id);
+			printf(W"%-ld"RST" %ld is sleeping\n", elapsed, philo->id);
 		else if (THINKING == status)
-			printf(W"%-6ld"RST" %ld is thinking\n", elapsed, philo->id);
+			printf(W"%-ld"RST" %ld is thinking\n", elapsed, philo->id);
 		else if (DIED == status)
-			printf(RED"%-6ld %ld died\n"RST, elapsed, philo->id);
+			printf(RED"%-ld %ld died\n"RST, elapsed, philo->id);
 	}
 	if (!is_end)
 		safe_sem_handle(&philo->table->sem->write_sem, POST);

@@ -5,114 +5,81 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/14 23:12:04 by root              #+#    #+#             */
-/*   Updated: 2025/07/14 23:14:34 by root             ###   ########.fr       */
+/*   Created: 2025/07/27 17:06:26 by root              #+#    #+#             */
+/*   Updated: 2025/07/27 21:32:46 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/**
- * @brief Assigns forks to a philosopher in a specific order to prevent 
- * deadlocks.
- * 
- * This function sets the pointers to the left and right forks for the given
- * philosopher. The order of fork acquisition is reversed for even-numbered
- * philosophers to break circular wait conditions and avoid deadlocks.
- * 
- * - Odd philosophers take the right fork first, then the left.
- * - Even philosophers take the left fork first, then the right.
- * 
- * @param philo Pointer to the philosopher being initialized.
- * @param forks Array of all fork mutex structures.
- * @param philo_position Index of the philosopher in the array (0-based).
- * 
- * @note This fork-ordering strategy is a classic solution to the Dining
- * Philosophers problem for avoiding deadlocks.
- */
-static void	assign_fork(t_philo *philo, t_fork *forks,
-		int philo_position)
+static	int	ft_init_philos(t_table *table)
 {
-	int	philo_nbr;
-
-	philo_nbr = philo->table->philo_nbr;
-	philo->first_fork = &forks[(philo_position + 1) % philo_nbr];
-	philo->second_fork = &forks[philo_position];
-	if (philo->id % 2 == 0)
-	{
-		philo->first_fork = &forks[philo_position];
-		philo->second_fork = &forks[(philo_position + 1) % philo_nbr];
-	}
-}
-
-/**
- * @brief Initializes each philosopher in the simulation.
- * 
- * Sets up the internal state of each philosopher, including their unique ID,
- * meal counters, and reference to the main table structure. Also initializes
- * a per-philosopher mutex to protect individual data and assigns forks in a
- * deadlock-safe order.
- * 
- * @param table Pointer to the main simulation table containing all philosophers.
- * 
- * @note This function should be called after memory allocation and table
- * parameter parsing, but before starting the simulation.
- * 
- * @see assign_fork(), safe_mutex_handle()
- */
-static void	philo_init(t_table *table)
-{
-	int		i;
-	t_philo	*philo;
+	long	i;
 
 	i = -1;
-	while (++i < table->philo_nbr)
+	while (++i < table->philo_count)
 	{
-		philo = table->philos + i;
-		philo->id = i + 1;
-		philo->full = false;
-		philo->meals_counter = 0;
-		philo->table = table;
-		safe_mutex_handle(&philo->philo_mutex, INIT);
-		assign_fork(philo, table->forks, i);
+		table->philos[i].id = i + 1;
+		table->philos[i].meals_eaten = 0;
+		table->philos[i].first_fork = i;
+		table->philos[i].second_fork = (i + 1) % table->philo_count;
+		table->philos[i].last_meal_time = 0;
+		table->philos[i].table = table;
 	}
+	return (EXIT_SUCCESS);
 }
 
-/**
- * @brief Initializes core simulation data structures.
- * 
- * Allocates memory for philosophers and forks, initializes mutexes for 
- * table-level and fork-level synchronization, and sets initial flags and 
- * counters.
- * 
- * Each fork receives a unique ID and a mutex for access control. After 
- * setting up shared structures, the individual philosopher structures 
- * are initialized as well.
- * 
- * @param table Pointer to the main simulation table.
- * 
- * @note This function must be called before launching any threads. All mutexes
- * are created using `safe_mutex_handle`, and memory is allocated via 
- * `safe_malloc`.
- * 
- * @see philo_init(), safe_malloc(), safe_mutex_handle()
- */
-void	data_init(t_table *table)
+static	int	ft_init_mutexses(t_table *table)
 {
-	int	i;
+	long	i;
 
 	i = -1;
-	table->end_simulation = false;
-	table->all_threads_ready = false;
-	table->threads_running_number = 0;
-	table->philos = safe_malloc(sizeof(t_philo) * table->philo_nbr);
-	safe_mutex_handle(&table->table_mutex, INIT);
-	safe_mutex_handle(&table->write_mutex, INIT);
-	table->forks = safe_malloc(sizeof(t_fork) * table->philo_nbr);
-	while (++i < table->philo_nbr)
+	while (++i < table->philo_count)
 	{
-		safe_mutex_handle(&table->forks[i].fork, INIT);
-		table->forks[i].fork_id = i;
+		if (pthread_mutex_init(&(table->mtx_forks[i]), NULL))
+			return (EXIT_FAILURE);
 	}
-	philo_init(table);
+	if (pthread_mutex_init(&(table->mtx_meal_check), NULL))
+		return (EXIT_FAILURE);
+	if (pthread_mutex_init(&(table->mtx_print), NULL))
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
+static	int	ft_init_table(t_table *table, char **argv)
+{
+	table->philo_count = ft_atol(argv[1]);
+	table->time_to_die = ft_atol(argv[2]);
+	table->time_to_eat = ft_atol(argv[3]);
+	table->time_to_die = ft_atol(argv[4]);
+	table->meals_count = 0;
+	table->someone_died = false;
+	table->all_philos_ate = false;
+	if (table->philo_count < 2 || table->time_to_die < 0
+		|| table->time_to_eat < 0 || table->time_to_sleep < 0
+		|| table->philo_count > MAX_PHILOS)
+		return (EXIT_FAILURE);
+	if (argv[5])
+	{
+		table->meals_count = ft_atol(argv[5]);
+		if (table->meals_count <= 0)
+			return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
+
+int	ft_init(t_table *table, char **argv)
+{
+	int	exit_code;
+
+	exit_code = ft_init_table(table, argv);
+	if (exit_code != EXIT_SUCCESS)
+		return (EXIT_TABLE_INIT);
+	exit_code = ft_init_mutexses(table);
+	if (exit_code != EXIT_SUCCESS)
+		return (EXIT_MUTEX);
+	exit_code = ft_init_philos(table);
+	if (exit_code != EXIT_SUCCESS)
+		return (EXIT_PHILO_INIT);
+	return (EXIT_SUCCESS);
 }

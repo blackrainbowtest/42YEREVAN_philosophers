@@ -3,9 +3,9 @@
 void	take_forks(t_philo *philo)
 {
     safe_sem_handle(&philo->table->sem->fork_sem, WAIT);
-    write_status(TAKE_FORK, philo, DEBUG_MODE, false);
+    // write_status(TAKE_FORK, philo, DEBUG_MODE, false);
     safe_sem_handle(&philo->table->sem->fork_sem, WAIT);
-    write_status(TAKE_FORK, philo, DEBUG_MODE, false);
+    // write_status(TAKE_FORK, philo, DEBUG_MODE, false);
 }
 
 void	philo_eat(t_philo *philo)
@@ -31,13 +31,31 @@ void	drop_forks(t_philo *philo)
 	safe_sem_handle(&philo->table->sem->fork_sem, POST);
 }
 
+// void	philo_sleep(t_philo *philo)
+// {
+// 	long	time_to_sleep;
+
+// 	time_to_sleep = philo->table->time->time_to_sleep;
+// 	write_status(SLEEPING, philo, DEBUG_MODE, false);
+// 	precise_usleep(time_to_sleep, philo);
+// }
 void	philo_sleep(t_philo *philo)
 {
+	long	time_to_eat;
 	long	time_to_sleep;
+	long	elapsed_since_meal;
+	long	sleep_duration;
 
+	time_to_eat = philo->table->time->time_to_eat;
 	time_to_sleep = philo->table->time->time_to_sleep;
+
 	write_status(SLEEPING, philo, DEBUG_MODE, false);
-	precise_usleep(time_to_sleep, philo);
+
+	elapsed_since_meal = get_time(philo->table, MICROSECOND) - philo->time_last_meal;
+	sleep_duration = time_to_eat + time_to_sleep - elapsed_since_meal;
+
+	if (sleep_duration > 0)
+		precise_usleep(sleep_duration, philo);
 }
 
 void	philo_think(t_philo *philo)
