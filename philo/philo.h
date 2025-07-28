@@ -22,6 +22,7 @@
 # include <limits.h>
 
 # define MAX_PHILOS 200
+# define NONE -1
 
 struct					s_table;
 typedef pthread_mutex_t	t_mutex;

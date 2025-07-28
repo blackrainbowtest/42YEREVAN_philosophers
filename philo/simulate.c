@@ -13,13 +13,37 @@
 /**https://github.com/Gaspachow/philosophers-42 */
 #include "philo.h"
 
-static void	ft_death_monitor(t_table *table)
+long long	ft_time_from_last_meal(long long past, long long pres)
+{
+	return (pres - past);
+}
+
+static void	ft_monitor(t_table *table)
 {
 	long			i;
 
 	while (!(table->all_philos_ate))
 	{
-		
+		i = -1;
+		while (++i < table->philo_count && !(table->someone_died))
+		{
+			pthread_mutex_lock(&(table->mtx_meal_check));
+			if (ft_time_from_last_meal(table->philos[i].last_meal_time, get_time()) > table->time_to_die)
+			{
+				write_message(table, i, "died");
+				table->someone_died = true;
+			}
+			pthread_mutex_unlock(&(table->mtx_meal_check));
+			usleep(100);
+		}
+		if (table->someone_died)
+			break;
+		i = 0;
+		while (table->meals_count != -1 && i < table.philo_count
+				&& table->meals_count <= table->philos[i].meals_eaten)
+			++i;
+		if (i >= table->philo_count)
+			table->all_philos_ate = true;
 	}
 }
 
@@ -57,7 +81,7 @@ int	ft_simulate(t_table *table)
 		philos[i].last_meal_time = get_time();
 		++i;
 	}
-	ft_death_monitor(table);
+	ft_monitor(table);
 	ft_end_simulation(table);
 	return (EXIT_SUCCESS);
 }

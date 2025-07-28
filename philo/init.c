@@ -19,7 +19,7 @@ static	int	ft_init_philos(t_table *table)
 	i = -1;
 	while (++i < table->philo_count)
 	{
-		table->philos[i].id = i + 1;
+		table->philos[i].id = i;
 		table->philos[i].meals_eaten = 0;
 		table->philos[i].first_fork = i;
 		table->philos[i].second_fork = (i + 1) % table->philo_count;

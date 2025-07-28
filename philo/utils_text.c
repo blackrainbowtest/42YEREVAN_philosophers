@@ -63,3 +63,16 @@ long	ft_atol(const char *p_str)
 			"Use less than 10 digits.");
 	return (num);
 }
+
+void		write_message(t_table *table, long id, char *msg)
+{
+	pthread_mutex_lock(&(table->mtx_print));
+	if (!(table->someone_died))
+	{
+		printf("%lli ", get_time() - table->start_time);
+		printf("%i ", id + 1);
+		printf("%s\n", msg);
+	}
+	pthread_mutex_unlock(&(table->mtx_print));
+	return ;
+}
