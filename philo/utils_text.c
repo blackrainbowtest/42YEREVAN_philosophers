@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:36:16 by root              #+#    #+#             */
-/*   Updated: 2025/07/27 21:42:07 by root             ###   ########.fr       */
+/*   Updated: 2025/07/28 23:33:56 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void		write_message(t_table *table, long id, char *msg)
 	if (!(table->someone_died))
 	{
 		printf("%lli ", get_time() - table->start_time);
-		printf("%i ", id + 1);
+		printf("%ld ", id + 1);
 		printf("%s\n", msg);
 	}
 	pthread_mutex_unlock(&(table->mtx_print));
