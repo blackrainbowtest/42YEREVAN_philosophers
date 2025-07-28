@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 17:06:26 by root              #+#    #+#             */
-/*   Updated: 2025/07/29 00:01:32 by root             ###   ########.fr       */
+/*   Updated: 2025/07/29 00:21:30 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static	int	ft_init_table(t_table *table, char **argv)
 	table->philo_count = ft_atol(argv[1]);
 	table->time_to_die = ft_atol(argv[2]);
 	table->time_to_eat = ft_atol(argv[3]);
-	table->time_to_die = ft_atol(argv[4]);
+	table->time_to_sleep = ft_atol(argv[4]);
 	table->meals_count = -1;
 	table->someone_died = false;
 	table->all_philos_ate = false;

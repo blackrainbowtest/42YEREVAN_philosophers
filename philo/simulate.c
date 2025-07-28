@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 21:53:15 by root              #+#    #+#             */
-/*   Updated: 2025/07/29 00:04:50 by root             ###   ########.fr       */
+/*   Updated: 2025/07/29 00:20:24 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ static void	ft_monitor(t_table *table)
 					get_time()) > table->time_to_die)
 			{
 				write_message(table, i, "died");
+				printf("Died philosopher info: id = %li, meals eaten = %li\n",
+					table->philos[i].id + 1, table->philos[i].meals_eaten);
+				printf("\n%lld - %ld\n", ft_time_from_last_meal(table->philos[i].last_meal_time, get_time()), table->time_to_die);
 				table->someone_died = true;
 			}
 			pthread_mutex_unlock(&(table->mtx_meal_check));
@@ -86,8 +89,8 @@ void	*ft_thread(void *arg)
 
 	philo = (t_philo *)arg;
 	table = philo->table;
-	if (philo->id % 2 == 0)
-		usleep(1000);
+	if (philo->id % 2)
+		usleep(15000);
 	while (!(table->someone_died))
 	{
 		meal_simulation(philo);
@@ -110,9 +113,9 @@ int	ft_simulate(t_table *table)
 	table->start_time = get_time();
 	while (i < table->philo_count)
 	{
+		philos[i].last_meal_time = get_time();
 		if (pthread_create(&philos[i].thread_id, NULL, ft_thread, &(philos[i])))
 			return (EXIT_FAILURE);
-		philos[i].last_meal_time = get_time();
 		++i;
 	}
 	ft_monitor(table);
