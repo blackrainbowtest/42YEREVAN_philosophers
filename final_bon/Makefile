@@ -56,7 +56,7 @@ fclean: clean
 re: fclean all
 
 val:
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./philo_bonus 4 800 200 200
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./philo_bonus 4 200 200 200
 
 cp:
 	mkdir -p srcs includes
