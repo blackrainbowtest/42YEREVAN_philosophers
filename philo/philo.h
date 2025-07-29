@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 15:50:17 by root              #+#    #+#             */
-/*   Updated: 2025/07/28 23:42:04 by root             ###   ########.fr       */
+/*   Updated: 2025/07/29 20:41:36 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,29 @@ typedef struct s_table
 /**
  * FILES
  */
-long long	ft_time_from_last_meal(long long past, long long pres);
 
 /*===========init.c=================*/
 int			ft_init(t_table *table, char **argv);
+
 /*===========utils_text.c==============*/
 long		ft_atol(const char *p_str);
+void		write_message(t_table *table, long id, char *msg);
+
 /*===========utils_exit.c==============*/
 int			write_error(const char *msg);
 int			error_manager(int error_code);
-void		write_message(t_table *table, long id, char *msg);
 
-int			ft_simulate(t_table *table);
+/*===========utils_time.c==============*/
 long long	get_time(void);
+long long	ft_time_from_last_meal(long long past, long long pres);
 void		smart_sleep(long long time, t_table *table);
+
+/*===========simulate.c==============*/
+int			ft_simulate(t_table *table);
 void		*ft_thread(void *arg);
+
+/*===========simulate.c==============*/
+void		ft_monitor(t_table *table);
 /**
  * DEFINITIONS
  */

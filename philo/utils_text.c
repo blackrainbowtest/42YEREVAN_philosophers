@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_text.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:36:16 by root              #+#    #+#             */
-/*   Updated: 2025/07/28 23:33:56 by root             ###   ########.fr       */
+/*   Updated: 2025/07/29 19:59:19 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ long	ft_atol(const char *p_str)
 	return (num);
 }
 
-void		write_message(t_table *table, long id, char *msg)
+void	write_message(t_table *table, long id, char *msg)
 {
 	pthread_mutex_lock(&(table->mtx_print));
 	if (!(table->someone_died))
