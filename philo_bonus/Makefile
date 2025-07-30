@@ -7,16 +7,17 @@ NAME := philo_bonus
 
 # Compiler
 CC := cc
-CFLAGS := -Iincludes #-Wall -Wextra -Werror
+CFLAGS := -Iincludes -Wall -Wextra -Werror
 RM := rm -f
 
 # Folders
 SRCDIR := srcs
 OBJDIR := objs
 
-# Files — ленивое вычисление
-SRCS = $(wildcard $(SRCDIR)/*.c)
-OBJS = $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
+# List source files (ЯВНО!)
+SRC_FILES := init.c monitor.c philo_bonus.c simulate.c utils_exit.c utils_text.c utils_text.c utils_time.c
+SRCS := $(addprefix $(SRCDIR)/, $(SRC_FILES))
+OBJS := $(addprefix $(OBJDIR)/, $(SRC_FILES:.c=.o))
 
 # Quiet build
 QUIET = $(if $(filter 0,$(VERBOSE)),@,)
@@ -24,7 +25,7 @@ QUIET = $(if $(filter 0,$(VERBOSE)),@,)
 # Default target
 all: prepare $(OBJDIR) $(NAME)
 
-# Копировать .c и .h файлы
+# Copy raw source/header files (если нужно)
 prepare:
 	@mkdir -p $(SRCDIR) $(OBJDIR) includes
 	@cp raw_src/*.c $(SRCDIR)/ 2>/dev/null || true
@@ -56,7 +57,7 @@ fclean: clean
 re: fclean all
 
 val:
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./philo_bonus 4 800 200 200
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./philo 4 200 200 200
 
 cp:
 	mkdir -p srcs includes
@@ -74,15 +75,15 @@ nr:
 	make cp
 	make all
 	clear
-	./philo_bonus 4 800 200 200
+	./philo 4 800 200 200
 
 nrl:
 	make cp
 	make all
 	clear
-	./philo_bonus 105 800 200 200
+	./philo 105 800 200 200
 
 rmf:
 	rm -rf srcs includes objs
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re val cp vr nr nrl rmf
