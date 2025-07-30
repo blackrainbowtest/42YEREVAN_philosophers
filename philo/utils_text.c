@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:36:16 by root              #+#    #+#             */
-/*   Updated: 2025/07/30 22:21:46 by root             ###   ########.fr       */
+/*   Updated: 2025/07/31 00:09:51 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static const char	*valid_input(const char *p_str)
 	if (*p_str == '+')
 		++p_str;
 	else if (*p_str == '-')
-		write_error("You can't handle negative numbers! Use positive ones.");
+		write_error("");
 	if (*p_str == '\0')
 		write_error("Input is empty or only spaces.");
 	if (!is_digit(*p_str))
@@ -45,8 +45,7 @@ static const char	*valid_input(const char *p_str)
 		++p_str;
 	}
 	if (len > 10)
-		write_error("The value is too big, INT_MAX is the limit. "
-			"Use less than 10 digits.");
+		error_manager(EXIT_INT_ERROR);
 	return (p_number);
 }
 

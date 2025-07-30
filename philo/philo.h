@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 15:50:17 by root              #+#    #+#             */
-/*   Updated: 2025/07/30 22:22:50 by root             ###   ########.fr       */
+/*   Updated: 2025/07/31 00:10:03 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,7 @@ typedef enum e_exit
 }	t_exit;
 
 # define INT_ERROR "The value is too big, INT_MAX is the limit."
+# define THREAD_ERROR "There was an error creating the threads"
+# define NEGATIVE_ERROR "Can't handle negative numbers! Use positive ones."
 
 #endif

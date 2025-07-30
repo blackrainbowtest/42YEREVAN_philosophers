@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 16:04:18 by root              #+#    #+#             */
-/*   Updated: 2025/07/30 22:23:02 by root             ###   ########.fr       */
+/*   Updated: 2025/07/31 00:09:32 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	error_manager(int error_code)
 	if (error_code == EXIT_MUTEX)
 		return (write_error("Fatal error when intializing mutex"));
 	if (error_code == EXIT_THREAD_ERROR)
-		return (write_error("There was an error creating the threads"));
+		return (write_error(THREAD_ERROR));
 	if (error_code == EXIT_INT_ERROR)
 		return (write_error(INT_ERROR));
 	return (EXIT_FAILURE);
