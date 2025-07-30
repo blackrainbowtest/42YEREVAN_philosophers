@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 15:50:17 by root              #+#    #+#             */
-/*   Updated: 2025/07/30 22:22:50 by root             ###   ########.fr       */
+/*   Updated: 2025/07/29 20:41:36 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,11 @@ void		ft_monitor(t_table *table);
  */
 typedef enum e_exit
 {
-	EXIT_THREAD_ERROR = 2,
+	EXIT_THREAD = 2,
 	EXIT_INVALID_ARG,
 	EXIT_MALLOC_FAIL,
 	EXIT_MUTEX,
 	EXIT_TABLE_INIT,
 	EXIT_PHILO_INIT,
-	EXIT_INT_ERROR,
 }	t_exit;
-
-# define INT_ERROR "The value is too big, INT_MAX is the limit."
-
 #endif

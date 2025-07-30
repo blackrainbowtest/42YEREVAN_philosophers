@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_text.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:36:16 by root              #+#    #+#             */
-/*   Updated: 2025/07/30 22:21:46 by root             ###   ########.fr       */
+/*   Updated: 2025/07/29 19:59:19 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ long	ft_atol(const char *p_str)
 	while (is_digit(*p_str))
 		num = (num * 10) + (*p_str++ - '0');
 	if (num > INT_MAX)
-		error_manager(EXIT_INT_ERROR);
+		write_error("The value is too big, INT_MAX is the limit. "
+			"Use less than 10 digits.");
 	return (num);
 }
 
