@@ -43,7 +43,14 @@ static void	close_semaphores(t_sem *sem)
 
 void	error_exit(const char *error)
 {
-	printf(RED"%s\n"RST, error);
+	int	len;
+
+	len = 0;
+	while (error[len])
+		len++;
+	write(2, "Error:", 7);
+	write(2, error, len);
+	write(2, "\n", 1);
 	exit(EXIT_FAILURE);
 }
 

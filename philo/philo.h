@@ -106,4 +106,4 @@ typedef enum e_exit
 # define MALLOC_FAIL "Failed to allocate memory for table."
 # define MUTEX_ERROR "Fatal error when intializing mutex."
 
-#endif
+#endif /* PHILO_H */
