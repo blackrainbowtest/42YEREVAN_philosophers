@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 17:06:26 by root              #+#    #+#             */
-/*   Updated: 2025/07/31 19:27:59 by aramarak         ###   ########.fr       */
+/*   Updated: 2025/07/31 23:09:13 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,16 @@ static	int	ft_init_table(t_table *table, char **argv)
 	table->all_philos_ate = false;
 	if (table->philo_count < 1 || table->time_to_die < 0
 		|| table->time_to_eat < 0 || table->time_to_sleep < 0
-		|| table->philo_count > MAX_PHILOS)
-		return (EXIT_FAILURE);
+		|| table->philo_count > MAX_PHILOS
+		|| table->time_to_die < MIN_TIME
+		|| table->time_to_die < MIN_TIME
+		|| table->time_to_sleep < MIN_TIME)
+		error_manager(EXIT_UNKNOWN_ERROR);
 	if (argv[5])
 	{
 		table->meals_count = ft_atol(argv[5]);
 		if (table->meals_count <= 0)
-			return (EXIT_FAILURE);
+			error_manager(EXIT_ZERO_ERROR);
 	}
 	return (EXIT_SUCCESS);
 }

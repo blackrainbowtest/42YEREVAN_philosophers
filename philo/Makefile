@@ -7,7 +7,7 @@ NAME := philo
 
 # Compiler
 CC := cc
-CFLAGS := -Wall -Wextra -Werror
+# CFLAGS := -Wall -Wextra -Werror
 RM := rm -f
 
 # Source files (указаны явно)

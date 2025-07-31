@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulate.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 21:53:15 by root              #+#    #+#             */
-/*   Updated: 2025/07/31 19:35:52 by aramarak         ###   ########.fr       */
+/*   Updated: 2025/08/01 00:28:29 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	ft_end_simulation(t_table *table)
 	while (++i < table->philo_count)
 		pthread_mutex_destroy(&(table->mtx_forks[i]));
 	pthread_mutex_destroy(&(table->mtx_print));
-	exit (EXIT_SUCCESS);
+	pthread_mutex_destroy(&(table->mtx_meal_check));
+	return ;
 }
 
 static void	meal_simulation(t_philo *philo)
@@ -35,6 +36,12 @@ static void	meal_simulation(t_philo *philo)
 	table = philo->table;
 	pthread_mutex_lock(&(table->mtx_forks[philo->first_fork]));
 	write_message(table, philo->id, "has taken a fork");
+	if (table->philo_count == 1)
+	{
+		precise_usleep(table->time_to_die);
+		pthread_mutex_unlock(&(table->mtx_forks[philo->first_fork]));
+		return ;
+	}
 	pthread_mutex_lock(&(table->mtx_forks[philo->second_fork]));
 	write_message(table, philo->id, "has taken a fork");
 	pthread_mutex_lock(&(table->mtx_meal_check));
@@ -61,7 +68,8 @@ void	*ft_thread(void *arg)
 		meal_simulation(philo);
 		if (table->all_philos_ate)
 			break ;
-		write_message(table, philo->id, "is sleeping");
+		if (philo->first_fork != philo->second_fork)
+			write_message(table, philo->id, "is sleeping");
 		smart_sleep(table->time_to_sleep, table);
 		write_message(table, philo->id, "is thinking");
 	}
@@ -80,7 +88,11 @@ int	ft_simulate(t_table *table)
 	{
 		philos[i].last_meal_time = get_time();
 		if (pthread_create(&philos[i].thread_id, NULL, ft_thread, &(philos[i])))
+		{
+			table->someone_died = true;
+			ft_end_simulation(table);
 			return (EXIT_FAILURE);
+		}
 		++i;
 	}
 	ft_monitor(table);

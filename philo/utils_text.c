@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:36:16 by root              #+#    #+#             */
-/*   Updated: 2025/07/31 00:09:51 by root             ###   ########.fr       */
+/*   Updated: 2025/07/31 23:55:27 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ long	ft_atol(const char *p_str)
 		num = (num * 10) + (*p_str++ - '0');
 	if (num > INT_MAX)
 		error_manager(EXIT_INT_ERROR);
+	if (num == 0)
+		error_manager(EXIT_ZERO_ERROR);
 	return (num);
 }
 

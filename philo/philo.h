@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 15:50:17 by root              #+#    #+#             */
-/*   Updated: 2025/07/31 19:36:09 by aramarak         ###   ########.fr       */
+/*   Updated: 2025/08/01 00:07:00 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <limits.h>
 
 # define MAX_PHILOS 200
+# define MIN_TIME 60
 # define NONE -1
 
 struct					s_table;
@@ -73,6 +74,7 @@ int			error_manager(int error_code);
 long long	get_time(void);
 long long	ft_time_from_last_meal(long long past, long long pres);
 void		smart_sleep(long long time, t_table *table);
+void		precise_usleep(long usec);
 
 /*===========simulate.c==============*/
 int			ft_simulate(t_table *table);
@@ -96,15 +98,21 @@ typedef enum e_exit
 	EXIT_INPUT_ERROR,
 	EXIT_EMPTY_ERROR,
 	EXIT_NEGATIVE_ERROR,
+	EXIT_ZERO_ERROR,
+	EXIT_MINIMUM_ERROR,
+	EXIT_UNKNOWN_ERROR,
 }	t_exit;
 
 # define INT_ERROR "The value is too big, INT_MAX is the limit."
-# define THREAD_ERROR "There was an error creating the threads"
+# define THREAD_ERROR "There was an error creating the threads."
 # define INPUT_ERROR "Incorrect input! Use only digits."
 # define EMPTY_ERROR "Input is empty or only spaces."
 # define NEGATIVE_ERROR "Can't handle negative numbers! Use positive ones."
 # define INVALID_ARG "A least one invalid argument."
 # define MALLOC_FAIL "Failed to allocate memory for table."
 # define MUTEX_ERROR "Fatal error when intializing mutex."
+# define ZERO_ERROR "Cant use zero count."
+# define MINIMUM_ERROR "Need use bigger value."
+# define UNKNOWN_ERROR "Unknown error type."
 
 #endif /* PHILO_H */

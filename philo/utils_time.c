@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 23:33:49 by root              #+#    #+#             */
-/*   Updated: 2025/07/28 20:34:28 by root             ###   ########.fr       */
+/*   Updated: 2025/08/01 00:06:45 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,26 @@ void	smart_sleep(long long time, t_table *table)
 		if (ft_time_from_last_meal(i, get_time()) >= time)
 			break ;
 		usleep(50);
+	}
+}
+
+void	precise_usleep(long usec)
+{
+	long	start;
+	long	elapsed;
+	long	rem;
+
+	start = get_time();
+	while (get_time() - start < usec)
+	{
+		elapsed = get_time() - start;
+		rem = usec - elapsed;
+		if (rem > 1e3)
+			usleep(rem / 2);
+		else
+		{
+			while (get_time() - start < usec)
+				;
+		}
 	}
 }
