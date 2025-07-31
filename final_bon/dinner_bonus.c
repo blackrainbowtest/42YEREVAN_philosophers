@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dinner_bonus.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/31 19:21:36 by aramarak          #+#    #+#             */
+/*   Updated: 2025/07/31 19:21:36 by aramarak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
 static void	*dead_checker_routine(void *arg)//NO LEAK HERE
@@ -32,14 +44,13 @@ static void	*meal_checker_routine(void *arg)
 		safe_sem_handle(&table->sem->meal_sem, WAIT);
 		++full_count;
 		if (full_count >= table->philo_count)
-			safe_sem_handle(&table->sem->end_sem, POST);// TODO maybe need turn off write_sem here IDK
+			safe_sem_handle(&table->sem->end_sem, POST);
 	}
 	return (NULL);
 }
 
 static void	philo_routine(t_philo *philo)
 {
-	long	time_to_eat;
 	while (true)
 	{
 		safe_sem_handle(&philo->table->sem->sem_eat_slots, WAIT);
@@ -53,7 +64,7 @@ static void	philo_routine(t_philo *philo)
 	}
 }
 
-static void	run_simulation(t_table *table, long index)//NO LEAK HERE
+static void	run_simulation(t_table *table, long index)
 {
 	pthread_t	dead_checker;
 	t_philo		*philo;
@@ -62,9 +73,9 @@ static void	run_simulation(t_table *table, long index)//NO LEAK HERE
 	philo->time_born = get_time(table, MILLISECOND);
 	philo->time_last_meal = get_time(table, MICROSECOND);
 	if (pthread_create(&dead_checker, NULL, dead_checker_routine, philo) != 0)
-		clean_exit(table, C"pthread_create"RED" failed\n"RST, true, EXIT_FAILURE);
+		clean_exit(table, C"pthread_create"RED" failed\n"RST, EXIT_FAILURE);
 	if (pthread_detach(dead_checker) != 0)
-		clean_exit(table, C"pthread_detach"RED" failed\n"RST, true, EXIT_FAILURE);
+		clean_exit(table, C"pthread_detach"RED" failed\n"RST, EXIT_FAILURE);
 	philo_routine(philo);
 	safe_sem_handle(&table->sem->end_sem, POST);
 	exit(EXIT_SUCCESS);
@@ -75,21 +86,22 @@ void	dinner_start(t_table *table)
 	long		i;
 	long		count;
 	pthread_t	meal_checker;
-	
+
 	count = table->philo_count;
 	if (table->meals_limit > 0)
 	{
-		if (pthread_create(&meal_checker, NULL, meal_checker_routine, table) != 0)
-			clean_exit(table, C"pthread_create"RED" failed\n"RST, true, EXIT_FAILURE);
+		if (pthread_create(&meal_checker, NULL,
+				meal_checker_routine, table) != 0)
+			clean_exit(table, C"pthread_create"RED" failed\n"RST, EXIT_FAILURE);
 		if (pthread_detach(meal_checker) != 0)
-			clean_exit(table, C"pthread_detach"RED" failed\n"RST, true, EXIT_FAILURE);
+			clean_exit(table, C"pthread_detach"RED" failed\n"RST, EXIT_FAILURE);
 	}
 	i = -1;
 	while (++i < count)
 	{
 		table->pid[i] = fork();
 		if (table->pid[i] < 0)
-			clean_exit(table, C"Fork"RED" failed\n"RST, true, EXIT_FAILURE);
+			clean_exit(table, C"Fork"RED" failed\n"RST, EXIT_FAILURE);
 		if (table->pid[i] == 0)
 			run_simulation(table, i);
 	}

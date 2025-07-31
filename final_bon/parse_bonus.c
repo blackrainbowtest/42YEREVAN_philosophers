@@ -12,7 +12,7 @@
 
 #include "philo_bonus.h"
 
-void table_time_init(t_table *table, char **argv)
+void	table_time_init(t_table *table, char **argv)
 {
 	table->time->time_to_die = ft_atol(argv[2]) * 1e3;
 	table->time->time_to_eat = ft_atol(argv[3]) * 1e3;
@@ -29,7 +29,8 @@ void	parse_input(t_table *table, char **argv)
 	table->meals_limit = -1;
 	if (argv[5])
 		table->meals_limit = ft_atol(argv[5]);
-	table->philos = (t_philo **)safe_malloc(sizeof(t_philo *) * table->philo_count);
+	table->philos = (t_philo **)safe_malloc(sizeof(t_philo *)
+			* table->philo_count);
 	table->time = (t_time *)safe_malloc(sizeof(t_time));
 	table->sem = (t_sem *)safe_malloc(sizeof(t_sem));
 	table->pid = (pid_t *)safe_malloc(sizeof(pid_t) * table->philo_count);

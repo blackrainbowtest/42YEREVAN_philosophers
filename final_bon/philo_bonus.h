@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 19:40:52 by root              #+#    #+#             */
-/*   Updated: 2025/07/26 14:38:07 by root             ###   ########.fr       */
+/*   Updated: 2025/07/31 19:45:55 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <string.h>
 # include <pthread.h>
 # include <limits.h>
-#include <signal.h>
+# include <signal.h>
 
 # include "defs_bonus.h"
 # include "types_bonus.h"
@@ -55,7 +55,7 @@ void	philo_think(t_philo *philo);
 /*====utils_clean_bonus.c====*/
 void	cleanup_semaphores(void);
 void	error_exit(const char *error);
-void	clean_exit(t_table *table, const char *msg, bool is_parent, int exit_code);
+void	clean_exit(t_table *table, const char *msg, int exit_code);
 
 /*====utils_safe_bonus.c====*/
 void	*safe_malloc(size_t bytes);
@@ -69,6 +69,7 @@ long	get_time(t_table *p_table, t_time_code time_code);
 void	precise_usleep(long usec, t_philo *philo);
 
 /*====write_bonus.c====*/
-void	write_status(t_status status, t_philo *philo, bool debug, bool is_ending);
+void	write_status(t_status status, t_philo *philo,
+			bool debug, bool is_ending);
 
 #endif	/* PHILO_BONUS_H */

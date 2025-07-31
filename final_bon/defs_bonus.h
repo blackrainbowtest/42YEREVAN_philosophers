@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defs_bonus.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 22:04:53 by root              #+#    #+#             */
-/*   Updated: 2025/07/26 11:12:57 by root             ###   ########.fr       */
+/*   Updated: 2025/07/31 19:46:47 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define DEBUG_MODE 0
 
 /*====MONITOR COUNT====*/
-#define MONITOR_COUNT 2
+# define MONITOR_COUNT 2
 
 /*====WRITE ACTIONS====*/
 typedef enum e_status

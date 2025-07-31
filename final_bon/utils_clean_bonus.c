@@ -57,7 +57,7 @@ void	error_exit(const char *error)
 static void	free_table(t_table *table)
 {
 	if (!table)
-		return;
+		return ;
 	if (table->philos)
 		free(table->philos);
 	if (table->time)
@@ -68,22 +68,12 @@ static void	free_table(t_table *table)
 		free(table->pid);
 }
 
-void	clean_exit(t_table *table, const char *msg,
-		bool is_parent, int exit_code)
+void	clean_exit(t_table *table, const char *msg, int exit_code)
 {
 	long	i;
 
 	if (!table)
 		exit(exit_code);
-	// if (is_parent && table->pid)
-	// {
-	// 	i = -1;
-	// 	while (++i < table->philo_count)
-	// 	{
-	// 		if (table->pid && table->pid[i] > 0)
-	// 			kill(table->pid[i], SIGKILL);
-	// 	}
-	// }
 	if (table->philos)
 	{
 		i = -1;
@@ -93,9 +83,9 @@ void	clean_exit(t_table *table, const char *msg,
 				free(table->philos[i]);
 		}
 	}
-	cleanup_semaphores();// OK NO LEAK NO ZOMBIE
-	close_semaphores(table->sem);// OK NO LEAK NO ZOMBIE
-	free_table(table);// OK NO LEAK NO ZOMBIE
+	cleanup_semaphores();
+	close_semaphores(table->sem);
+	free_table(table);
 	if (msg)
 		printf(RED"%s\n"RST, msg);
 	exit(exit_code);

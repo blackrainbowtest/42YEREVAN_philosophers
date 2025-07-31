@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 20:18:39 by root              #+#    #+#             */
-/*   Updated: 2025/07/26 11:15:14 by root             ###   ########.fr       */
+/*   Updated: 2025/07/31 19:46:16 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <semaphore.h>
 # include <stdbool.h>
 
-struct s_table;
+struct	s_table;
 
 // semaphores
 typedef struct s_sem
