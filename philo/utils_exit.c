@@ -28,14 +28,20 @@ int	write_error(const char *msg)
 int	error_manager(int error_code)
 {
 	if (error_code == EXIT_INVALID_ARG)
-		return (write_error("A least one invalid argument."));
+		return (write_error(INVALID_ARG));
 	if (error_code == EXIT_MALLOC_FAIL)
-		return (write_error("Failed to allocate memory for table."));
+		return (write_error(MALLOC_FAIL));
 	if (error_code == EXIT_MUTEX)
-		return (write_error("Fatal error when intializing mutex"));
+		return (write_error(MUTEX_ERROR));
 	if (error_code == EXIT_THREAD_ERROR)
 		return (write_error(THREAD_ERROR));
 	if (error_code == EXIT_INT_ERROR)
 		return (write_error(INT_ERROR));
+	if (error_code == EXIT_INPUT_ERROR)
+		return (write_error(INPUT_ERROR));
+	if (error_code == EXIT_EMPTY_ERROR)
+		return (write_error(EMPTY_ERROR));
+	if (error_code == EXIT_NEGATIVE_ERROR)
+		return (write_error(NEGATIVE_ERROR));
 	return (EXIT_FAILURE);
 }

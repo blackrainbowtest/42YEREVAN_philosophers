@@ -92,10 +92,18 @@ typedef enum e_exit
 	EXIT_TABLE_INIT,
 	EXIT_PHILO_INIT,
 	EXIT_INT_ERROR,
+	EXIT_INPUT_ERROR,
+	EXIT_EMPTY_ERROR,
+	EXIT_NEGATIVE_ERROR,
 }	t_exit;
 
 # define INT_ERROR "The value is too big, INT_MAX is the limit."
 # define THREAD_ERROR "There was an error creating the threads"
+# define INPUT_ERROR "Incorrect input! Use only digits."
+# define EMPTY_ERROR "Input is empty or only spaces."
 # define NEGATIVE_ERROR "Can't handle negative numbers! Use positive ones."
+# define INVALID_ARG "A least one invalid argument."
+# define MALLOC_FAIL "Failed to allocate memory for table."
+# define MUTEX_ERROR "Fatal error when intializing mutex."
 
 #endif

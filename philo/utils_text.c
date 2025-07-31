@@ -33,11 +33,11 @@ static const char	*valid_input(const char *p_str)
 	if (*p_str == '+')
 		++p_str;
 	else if (*p_str == '-')
-		write_error("");
+		error_manager(EXIT_NEGATIVE_ERROR);
 	if (*p_str == '\0')
-		write_error("Input is empty or only spaces.");
+		error_manager(EXIT_EMPTY_ERROR);
 	if (!is_digit(*p_str))
-		write_error("Incorrect input! Use only digits.");
+		error_manager(EXIT_INPUT_ERROR);
 	p_number = p_str;
 	while (is_digit(*p_str))
 	{
