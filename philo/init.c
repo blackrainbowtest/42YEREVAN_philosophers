@@ -6,7 +6,7 @@
 /*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 17:06:26 by root              #+#    #+#             */
-/*   Updated: 2025/07/29 19:48:01 by aramarak         ###   ########.fr       */
+/*   Updated: 2025/07/31 19:27:59 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static	int	ft_init_table(t_table *table, char **argv)
 	table->meals_count = -1;
 	table->someone_died = false;
 	table->all_philos_ate = false;
-	if (table->philo_count < 2 || table->time_to_die < 0
+	if (table->philo_count < 1 || table->time_to_die < 0
 		|| table->time_to_eat < 0 || table->time_to_sleep < 0
 		|| table->philo_count > MAX_PHILOS)
 		return (EXIT_FAILURE);

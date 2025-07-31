@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitor_loop.c                                     :+:      :+:    :+:   */
+/*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 20:40:14 by aramarak          #+#    #+#             */
-/*   Updated: 2025/07/29 20:40:51 by aramarak         ###   ########.fr       */
+/*   Updated: 2025/07/31 19:35:10 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static bool	check_death(t_table *table, int i)
 		write_message(table, i, "died");
 		table->someone_died = true;
 		pthread_mutex_unlock(&(table->mtx_meal_check));
-		return (true);
+		ft_end_simulation(table);
+		exit (EXIT_SUCCESS);
 	}
 	pthread_mutex_unlock(&(table->mtx_meal_check));
 	return (false);

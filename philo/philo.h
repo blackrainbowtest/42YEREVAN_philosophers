@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 15:50:17 by root              #+#    #+#             */
-/*   Updated: 2025/07/31 00:10:03 by root             ###   ########.fr       */
+/*   Updated: 2025/07/31 19:36:09 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void		smart_sleep(long long time, t_table *table);
 /*===========simulate.c==============*/
 int			ft_simulate(t_table *table);
 void		*ft_thread(void *arg);
+void		ft_end_simulation(t_table *table);
 
 /*===========simulate.c==============*/
 void		ft_monitor(t_table *table);

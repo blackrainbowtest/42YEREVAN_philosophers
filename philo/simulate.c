@@ -6,13 +6,13 @@
 /*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 21:53:15 by root              #+#    #+#             */
-/*   Updated: 2025/07/29 20:41:48 by aramarak         ###   ########.fr       */
+/*   Updated: 2025/07/31 19:35:52 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	ft_end_simulation(t_table *table)
+void	ft_end_simulation(t_table *table)
 {
 	long			i;
 	t_philo			*philos;
@@ -25,6 +25,7 @@ static void	ft_end_simulation(t_table *table)
 	while (++i < table->philo_count)
 		pthread_mutex_destroy(&(table->mtx_forks[i]));
 	pthread_mutex_destroy(&(table->mtx_print));
+	exit (EXIT_SUCCESS);
 }
 
 static void	meal_simulation(t_philo *philo)
