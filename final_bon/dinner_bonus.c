@@ -81,23 +81,23 @@ static void	run_simulation(t_table *table, long index)
 	exit(EXIT_SUCCESS);
 }
 
-void	dinner_start(t_table *table)
+static void	start_meal_checker(t_table *table)
 {
-	long		i;
-	long		count;
 	pthread_t	meal_checker;
 
-	count = table->philo_count;
-	if (table->meals_limit > 0)
-	{
-		if (pthread_create(&meal_checker, NULL,
-				meal_checker_routine, table) != 0)
-			clean_exit(table, C"pthread_create"RED" failed\n"RST, EXIT_FAILURE);
-		if (pthread_detach(meal_checker) != 0)
-			clean_exit(table, C"pthread_detach"RED" failed\n"RST, EXIT_FAILURE);
-	}
+	if (pthread_create(&meal_checker, NULL,
+			meal_checker_routine, table) != 0)
+		clean_exit(table, C"pthread_create"RED" failed\n"RST, EXIT_FAILURE);
+	if (pthread_detach(meal_checker) != 0)
+		clean_exit(table, C"pthread_detach"RED" failed\n"RST, EXIT_FAILURE);
+}
+
+static void	start_processes(t_table *table)
+{
+	long	i;
+
 	i = -1;
-	while (++i < count)
+	while (++i < table->philo_count)
 	{
 		table->pid[i] = fork();
 		if (table->pid[i] < 0)
@@ -105,12 +105,27 @@ void	dinner_start(t_table *table)
 		if (table->pid[i] == 0)
 			run_simulation(table, i);
 	}
+}
+
+static void	wait_and_cleanup(t_table *table)
+{
+	long	i;
+
 	sem_wait(table->sem->end_sem);
 	set_bool(&table->sem->sync_sem, &table->end_simulation, true);
 	i = -1;
-	while (++i < count)
+	while (++i < table->philo_count)
 		kill(table->pid[i], SIGKILL);
 	i = -1;
-	while (++i < count)
+	while (++i < table->philo_count)
 		waitpid(table->pid[i], NULL, 0);
 }
+
+void	dinner_start(t_table *table)
+{
+	if (table->meals_limit > 0)
+		start_meal_checker(table);
+	start_processes(table);
+	wait_and_cleanup(table);
+}
+
