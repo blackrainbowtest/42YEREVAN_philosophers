@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 17:06:26 by root              #+#    #+#             */
-/*   Updated: 2025/07/31 23:09:13 by root             ###   ########.fr       */
+/*   Updated: 2025/08/01 20:15:46 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ static	int	ft_init_table(t_table *table, char **argv)
 	if (table->philo_count < 1 || table->time_to_die < 0
 		|| table->time_to_eat < 0 || table->time_to_sleep < 0
 		|| table->philo_count > MAX_PHILOS
-		|| table->time_to_die < MIN_TIME
-		|| table->time_to_die < MIN_TIME
-		|| table->time_to_sleep < MIN_TIME)
+		|| table->time_to_die < MIN_TIME || table->time_to_die > MAX_TIME
+		|| table->time_to_eat < MIN_TIME || table->time_to_eat > MAX_TIME
+		|| table->time_to_sleep < MIN_TIME || table->time_to_sleep > MAX_TIME)
 		error_manager(EXIT_UNKNOWN_ERROR);
 	if (argv[5])
 	{

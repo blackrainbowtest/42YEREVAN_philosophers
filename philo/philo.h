@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 15:50:17 by root              #+#    #+#             */
-/*   Updated: 2025/08/01 00:07:00 by root             ###   ########.fr       */
+/*   Updated: 2025/08/01 20:17:44 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 # define MAX_PHILOS 200
 # define MIN_TIME 60
+# define MAX_TIME 900
 # define NONE -1
 
 struct					s_table;
@@ -111,8 +112,8 @@ typedef enum e_exit
 # define INVALID_ARG "A least one invalid argument."
 # define MALLOC_FAIL "Failed to allocate memory for table."
 # define MUTEX_ERROR "Fatal error when intializing mutex."
-# define ZERO_ERROR "Cant use zero count."
+# define ZERO_ERROR "Cant use zero count. Use positive number."
 # define MINIMUM_ERROR "Need use bigger value."
-# define UNKNOWN_ERROR "Unknown error type."
+# define UNKNOWN_ERROR "Unknown error type. Please check your input."
 
 #endif /* PHILO_H */
