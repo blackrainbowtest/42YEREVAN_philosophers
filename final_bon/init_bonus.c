@@ -50,6 +50,7 @@ static void	init_philosophers(t_table *table)
 static void	init_semaphores(t_table *table)
 {
 	t_sem	*sem;
+	long	len;
 
 	cleanup_semaphores();
 	sem = table->sem;
@@ -61,8 +62,11 @@ static void	init_semaphores(t_table *table)
 	sem->write_sem = sem_open(SEM_WRITE, O_CREAT | O_EXCL, 0644, 1);
 	sem->sync_sem = sem_open(SEM_SYNC, O_CREAT | O_EXCL, 0644,
 			table->philo_count - 1);
+	len = table->philo_count / 2;
+	if (len == 0)
+		len = 1;
 	sem->sem_eat_slots = sem_open(EAT_SLOTS_SYNC, O_CREAT | O_EXCL,
-			0644, table->philo_count / 2);
+			0644, len);
 	if (any_semaphore_failed_to_open(sem))
 		clean_exit(table, "Semaphore "RED"OPEN"RST
 			" Error\n", EXIT_FAILURE);
