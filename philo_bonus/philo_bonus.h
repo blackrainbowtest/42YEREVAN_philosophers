@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 15:58:00 by root              #+#    #+#             */
-/*   Updated: 2025/08/03 17:37:07 by root             ###   ########.fr       */
+/*   Updated: 2025/08/03 18:12:53 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,12 @@ bool	is_digit_str(char *str);
 /* start_bonus.c */
 bool	start_simulation(t_table *table);
 void	philo_lifecycle(t_philo *philo);
+
+/* philo_life_bonus.c */
+void	print_action(t_philo *philo, char *msg);
+void	take_forks(t_philo *philo);
+void	eat(t_philo *philo);
+void	sleep_think(t_philo *philo);
+void	*monitor_death(void *arg);
 
 #endif /* PHILO_BONUS_H */

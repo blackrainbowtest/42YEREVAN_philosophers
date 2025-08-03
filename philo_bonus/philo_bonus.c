@@ -6,11 +6,27 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 15:58:03 by root              #+#    #+#             */
-/*   Updated: 2025/08/03 16:17:10 by root             ###   ########.fr       */
+/*   Updated: 2025/08/03 18:15:09 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+static void	cleanup(t_table *table)
+{
+	for (int i = 0; i < table->philo_count; i++)
+		kill(table->philos[i].pid, SIGKILL);
+	sem_close(table->forks);
+	sem_close(table->write_lock);
+	sem_close(table->meal_check);
+	sem_close(table->finish);
+	sem_unlink("/sem_forks");
+	sem_unlink("/sem_write");
+	sem_unlink("/sem_meal");
+	sem_unlink("/sem_finish");
+
+	free(table->philos);
+}
 
 int	main(int argc, char **argv)
 {
@@ -26,10 +42,9 @@ int	main(int argc, char **argv)
 	if (!init_philos(&table))
 		return (printf(RED "Error: " RST "Failed to initialize philos.\n"),
 			EXIT_PHILO_INIT);
-	
-	for (int i = 0; i < table.philo_count; i++)
-		printf("Philo %d: meals=%d, last_meal=%ld\n",
-			table.philos[i].id,
-			table.philos[i].meals_eaten,
-			table.philos[i].last_meal_time);
+	if (!start_simulation(&table))
+		return (printf(RED "Error: " RST "Failed to start simulation.\n"),
+			EXIT_UNKNOWN_ERROR);
+	sem_wait(table.finish);
+	cleanup(&table);
 }
