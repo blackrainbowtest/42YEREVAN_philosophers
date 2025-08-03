@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 15:58:00 by root              #+#    #+#             */
-/*   Updated: 2025/08/03 18:12:53 by root             ###   ########.fr       */
+/*   Updated: 2025/08/03 23:49:00 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef enum e_exit
 # define SEM_WRITE_NAME "/sem_write"
 # define SEM_MEAL_NAME "/sem_meal"
 # define SEM_FINISH_NAME "/sem_finish"
+# define SEM_MEAL_COUNTER_NAME "/sem_meal_counter"
 
 # define INT_ERROR "The value is too big, INT_MAX is the limit."
 # define THREAD_ERROR "There was an error creating the threads."
@@ -110,6 +111,7 @@ typedef struct s_table
 	sem_t		*write_lock;
 	sem_t		*meal_check;
 	sem_t		*finish;
+	sem_t		*meal_counter;
 
 	bool		all_alive;
 }	t_table;
@@ -130,6 +132,7 @@ bool	is_digit_str(char *str);
 /* start_bonus.c */
 bool	start_simulation(t_table *table);
 void	philo_lifecycle(t_philo *philo);
+void	dinner_start(t_table *table);
 
 /* philo_life_bonus.c */
 void	print_action(t_philo *philo, char *msg);

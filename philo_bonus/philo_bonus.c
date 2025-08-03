@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 15:58:03 by root              #+#    #+#             */
-/*   Updated: 2025/08/03 18:15:09 by root             ###   ########.fr       */
+/*   Updated: 2025/08/03 23:46:19 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ int	main(int argc, char **argv)
 	if (!init_philos(&table))
 		return (printf(RED "Error: " RST "Failed to initialize philos.\n"),
 			EXIT_PHILO_INIT);
-	if (!start_simulation(&table))
-		return (printf(RED "Error: " RST "Failed to start simulation.\n"),
-			EXIT_UNKNOWN_ERROR);
-	sem_wait(table.finish);
-	cleanup(&table);
+	dinner_start(&table);      // ⏳ Ожидает завершения внутри
+	cleanup(&table);           // ✅ Очистка после завершения
+	return (EXIT_SUCCESS);
 }
