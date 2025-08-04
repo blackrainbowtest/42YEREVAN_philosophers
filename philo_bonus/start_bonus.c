@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 16:21:35 by root              #+#    #+#             */
-/*   Updated: 2025/08/03 22:28:33 by root             ###   ########.fr       */
+/*   Updated: 2025/08/04 21:31:04 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,15 @@ void	philo_lifecycle(t_philo *philo)
 		sem_post(table->forks);
 		sem_post(table->forks);
 		if (table->must_eat_count != -1
-			&& ++philo->meals_eaten == table->must_eat_count)
+			&& philo->meals_eaten >= table->must_eat_count)
 		{
 			sem_post(table->meal_counter);
-			exit(0);
+			break ;
 		}
 		sleep_think(philo);
 	}
+	while (1)
+		pause();
 }
 
 bool	start_simulation(t_table *table)
