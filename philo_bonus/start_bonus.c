@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 16:21:35 by root              #+#    #+#             */
-/*   Updated: 2025/08/04 21:31:04 by root             ###   ########.fr       */
+/*   Updated: 2025/08/05 19:16:00 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	*monitor_meals(void *arg)
 {
-	t_table	*table = (t_table *)arg;
+	t_table	*table;
 	int		i;
 
+	table = (t_table *)arg;
 	i = 0;
 	while (i < table->philo_count)
 	{
@@ -55,11 +56,26 @@ void	philo_lifecycle(t_philo *philo)
 		pause();
 }
 
+static bool	meal_monitor(t_table *table)
+{
+	pthread_t	meal_monitor;
+
+	if (table->must_eat_count != -1)
+	{
+		if (pthread_create(&meal_monitor, NULL, monitor_meals, table) != 0)
+		{
+			printf(RED "Error: " RST "Failed to create meal monitor thread.\n");
+			return (false);
+		}
+		pthread_detach(meal_monitor);
+	}
+	return (true);
+}
+
 bool	start_simulation(t_table *table)
 {
 	int			i;
 	pid_t		pid;
-	pthread_t	meal_monitor;
 
 	i = 0;
 	while (i < table->philo_count)
@@ -76,36 +92,25 @@ bool	start_simulation(t_table *table)
 			exit(EXIT_SUCCESS);
 		}
 		else
-		{
 			table->philos[i].pid = pid;
-		}
 		i++;
 	}
-	if (table->must_eat_count != -1)
-	{
-		if (pthread_create(&meal_monitor, NULL, monitor_meals, table) != 0)
-		{
-			printf(RED "Error: " RST "Failed to create meal monitor thread.\n");
-			return (false);
-		}
-		pthread_detach(meal_monitor);
-	}
+	if (!meal_monitor(table))
+		return (false);
 	return (true);
 }
 
 void	dinner_start(t_table *table)
 {
+	int	i;
+
 	if (!start_simulation(table))
 		return ;
-
-	// ⏳ Ожидаем сигнал об окончании симуляции
 	sem_wait(table->finish);
-
-	// 💀 Убиваем всех философов
-	for (int i = 0; i < table->philo_count; i++)
+	i = -1;
+	while (++i < table->philo_count)
 		kill(table->philos[i].pid, SIGTERM);
-
-	// ✅ Ждём завершения всех процессов (чисто)
-	for (int i = 0; i < table->philo_count; i++)
+	i = -1;
+	while (++i < table->philo_count)
 		waitpid(table->philos[i].pid, NULL, 0);
 }
