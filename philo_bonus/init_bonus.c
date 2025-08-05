@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:51:21 by root              #+#    #+#             */
-/*   Updated: 2025/08/03 20:51:12 by root             ###   ########.fr       */
+/*   Updated: 2025/08/05 19:04:40 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,11 @@ bool	init_semaphores(t_table *table)
 	sem_unlink(SEM_MEAL_NAME);
 	sem_unlink(SEM_FINISH_NAME);
 	sem_unlink(SEM_MEAL_COUNTER_NAME);
-
 	table->forks = sem_open(SEM_FORKS_NAME, O_CREAT, 0644, table->philo_count);
 	table->write_lock = sem_open(SEM_WRITE_NAME, O_CREAT, 0644, 1);
 	table->meal_check = sem_open(SEM_MEAL_NAME, O_CREAT, 0644, 1);
 	table->finish = sem_open(SEM_FINISH_NAME, O_CREAT, 0644, 0);
 	table->meal_counter = sem_open(SEM_MEAL_COUNTER_NAME, O_CREAT, 0644, 0);
-
 	if (table->forks == SEM_FAILED || table->write_lock == SEM_FAILED
 		|| table->meal_check == SEM_FAILED || table->finish == SEM_FAILED
 		|| table->meal_counter == SEM_FAILED)
@@ -73,7 +71,6 @@ bool	init_semaphores(t_table *table)
 	}
 	return (true);
 }
-
 
 bool	init_philos(t_table *table)
 {

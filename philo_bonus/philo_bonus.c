@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 15:58:03 by root              #+#    #+#             */
-/*   Updated: 2025/08/03 23:46:19 by root             ###   ########.fr       */
+/*   Updated: 2025/08/05 19:06:05 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 static void	cleanup(t_table *table)
 {
-	for (int i = 0; i < table->philo_count; i++)
+	int	i;
+
+	i = -1;
+	while (++i < table->philo_count)
 		kill(table->philos[i].pid, SIGKILL);
 	sem_close(table->forks);
 	sem_close(table->write_lock);
@@ -24,7 +27,6 @@ static void	cleanup(t_table *table)
 	sem_unlink("/sem_write");
 	sem_unlink("/sem_meal");
 	sem_unlink("/sem_finish");
-
 	free(table->philos);
 }
 
@@ -42,7 +44,7 @@ int	main(int argc, char **argv)
 	if (!init_philos(&table))
 		return (printf(RED "Error: " RST "Failed to initialize philos.\n"),
 			EXIT_PHILO_INIT);
-	dinner_start(&table);      // ⏳ Ожидает завершения внутри
-	cleanup(&table);           // ✅ Очистка после завершения
+	dinner_start(&table);
+	cleanup(&table);
 	return (EXIT_SUCCESS);
 }
