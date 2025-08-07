@@ -21,6 +21,7 @@ static bool	check_death(t_table *table, int i)
 	if (ft_time_from_last_meal(last_meal, get_time()) > table->time_to_die)
 	{
 		write_message(table, i, "died");
+		pthread_mutex_lock(&(table->mtx_print));
 		table->someone_died = true;
 	}
 	pthread_mutex_unlock(&(table->mtx_meal_check));
