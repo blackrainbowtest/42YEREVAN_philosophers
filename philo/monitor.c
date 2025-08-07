@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 20:40:14 by aramarak          #+#    #+#             */
-/*   Updated: 2025/08/01 00:26:25 by root             ###   ########.fr       */
+/*   Updated: 2025/08/07 22:50:53 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static bool	check_death(t_table *table, int i)
 	if (ft_time_from_last_meal(last_meal, get_time()) > table->time_to_die)
 	{
 		write_message(table, i, "died");
-		pthread_mutex_lock(&(table->mtx_print));
 		table->someone_died = true;
 	}
 	pthread_mutex_unlock(&(table->mtx_meal_check));
