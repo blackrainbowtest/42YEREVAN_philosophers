@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 21:53:15 by root              #+#    #+#             */
-/*   Updated: 2025/08/01 20:22:11 by root             ###   ########.fr       */
+/*   Updated: 2025/08/10 21:16:38 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ static void	meal_simulation(t_philo *philo)
 	pthread_mutex_lock(&(table->mtx_meal_check));
 	write_message(table, philo->id, "is eating");
 	philo->last_meal_time = get_time();
+	(philo->meals_eaten)++;
 	pthread_mutex_unlock(&(table->mtx_meal_check));
 	smart_sleep(table->time_to_eat, table);
-	(philo->meals_eaten)++;
 	pthread_mutex_unlock(&(table->mtx_forks[philo->first_fork]));
 	pthread_mutex_unlock(&(table->mtx_forks[philo->second_fork]));
 }
@@ -63,11 +63,17 @@ void	*ft_thread(void *arg)
 	table = philo->table;
 	if (philo->id % 2)
 		usleep(15000);
-	while (!(table->someone_died))
+	while (!(table->someone_died) && !(table->all_philos_ate))
 	{
-		meal_simulation(philo);
-		if (table->all_philos_ate)
+		pthread_mutex_lock(&(table->mtx_meal_check));
+		if (table->meals_count != -1
+			&& philo->meals_eaten >= table->meals_count)
+		{
+			pthread_mutex_unlock(&(table->mtx_meal_check));
 			break ;
+		}
+		pthread_mutex_unlock(&(table->mtx_meal_check));
+		meal_simulation(philo);
 		if (philo->first_fork != philo->second_fork)
 			write_message(table, philo->id, "is sleeping");
 		smart_sleep(table->time_to_sleep, table);

@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 20:40:14 by aramarak          #+#    #+#             */
-/*   Updated: 2025/08/07 22:50:53 by root             ###   ########.fr       */
+/*   Updated: 2025/08/10 20:07:10 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,14 @@ static void	check_meals(t_table *table)
 
 	if (table->meals_count == -1)
 		return ;
+	pthread_mutex_lock(&(table->mtx_meal_check));
 	i = 0;
 	while (i < table->philo_count
 		&& table->philos[i].meals_eaten >= table->meals_count)
 		i++;
 	if (i == table->philo_count)
 		table->all_philos_ate = true;
+	pthread_mutex_unlock(&(table->mtx_meal_check));
 }
 
 static void	monitor_loop(t_table *table)
