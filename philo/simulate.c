@@ -6,11 +6,22 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 21:53:15 by root              #+#    #+#             */
-/*   Updated: 2025/08/10 21:16:38 by root             ###   ########.fr       */
+/*   Updated: 2025/08/12 00:43:42 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static int	has_eaten_enough(t_philo *philo)
+{
+	int	result;
+
+	pthread_mutex_lock(&(philo->table->mtx_meal_check));
+	result = (philo->table->meals_count != -1
+			&& philo->meals_eaten >= philo->table->meals_count);
+	pthread_mutex_unlock(&(philo->table->mtx_meal_check));
+	return (result);
+}
 
 void	ft_end_simulation(t_table *table)
 {
@@ -65,15 +76,11 @@ void	*ft_thread(void *arg)
 		usleep(15000);
 	while (!(table->someone_died) && !(table->all_philos_ate))
 	{
-		pthread_mutex_lock(&(table->mtx_meal_check));
-		if (table->meals_count != -1
-			&& philo->meals_eaten >= table->meals_count)
-		{
-			pthread_mutex_unlock(&(table->mtx_meal_check));
+		if (has_eaten_enough(philo))
 			break ;
-		}
-		pthread_mutex_unlock(&(table->mtx_meal_check));
 		meal_simulation(philo);
+		if (has_eaten_enough(philo))
+			break ;
 		if (philo->first_fork != philo->second_fork)
 			write_message(table, philo->id, "is sleeping");
 		smart_sleep(table->time_to_sleep, table);
