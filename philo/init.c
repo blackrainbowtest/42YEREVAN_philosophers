@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 17:06:26 by root              #+#    #+#             */
-/*   Updated: 2025/08/01 20:15:46 by root             ###   ########.fr       */
+/*   Updated: 2025/08/12 23:33:11 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,16 @@ static	int	ft_init_philos(t_table *table)
 	{
 		table->philos[i].id = i;
 		table->philos[i].meals_eaten = 0;
-		table->philos[i].first_fork = i;
-		table->philos[i].second_fork = (i + 1) % table->philo_count;
+		if (i % 2 == 0)
+		{
+			table->philos[i].first_fork = i;
+			table->philos[i].second_fork = (i + 1) % table->philo_count;
+		}
+		else
+		{
+			table->philos[i].first_fork = (i + 1) % table->philo_count;
+			table->philos[i].second_fork = i;
+		}
 		table->philos[i].last_meal_time = 0;
 		table->philos[i].table = table;
 	}
@@ -56,11 +64,7 @@ static	int	ft_init_table(t_table *table, char **argv)
 	table->someone_died = false;
 	table->all_philos_ate = false;
 	if (table->philo_count < 1 || table->time_to_die < 0
-		|| table->time_to_eat < 0 || table->time_to_sleep < 0
-		|| table->philo_count > MAX_PHILOS
-		|| table->time_to_die < MIN_TIME || table->time_to_die > MAX_TIME
-		|| table->time_to_eat < MIN_TIME || table->time_to_eat > MAX_TIME
-		|| table->time_to_sleep < MIN_TIME || table->time_to_sleep > MAX_TIME)
+		|| table->time_to_eat < 0 || table->time_to_sleep < 0)
 		error_manager(EXIT_UNKNOWN_ERROR);
 	if (argv[5])
 	{

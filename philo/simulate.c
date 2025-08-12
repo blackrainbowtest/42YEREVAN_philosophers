@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 21:53:15 by root              #+#    #+#             */
-/*   Updated: 2025/08/12 00:43:42 by root             ###   ########.fr       */
+/*   Updated: 2025/08/12 22:58:44 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,9 @@ int	ft_simulate(t_table *table)
 		philos[i].last_meal_time = get_time();
 		if (pthread_create(&philos[i].thread_id, NULL, ft_thread, &(philos[i])))
 		{
+			pthread_mutex_lock(&(table->mtx_meal_check));
 			table->someone_died = true;
+			pthread_mutex_unlock(&(table->mtx_meal_check));
 			ft_end_simulation(table);
 			return (EXIT_FAILURE);
 		}

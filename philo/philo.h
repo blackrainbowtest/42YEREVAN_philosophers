@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 15:50:17 by root              #+#    #+#             */
-/*   Updated: 2025/08/01 20:17:44 by root             ###   ########.fr       */
+/*   Updated: 2025/08/12 23:32:56 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 # include <limits.h>
 
 # define MAX_PHILOS 200
-# define MIN_TIME 60
-# define MAX_TIME 900
 # define NONE -1
 
 struct					s_table;
