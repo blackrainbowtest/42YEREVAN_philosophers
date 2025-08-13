@@ -40,22 +40,4 @@ fclean: clean
 
 re: fclean all
 
-val:
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) 4 200 200 200
-
-vr:
-	$(MAKE) re
-	clear
-	$(MAKE) val
-
-nr:
-	$(MAKE) re
-	clear
-	./$(NAME) 4 800 200 200
-
-nrl:
-	$(MAKE) re
-	clear
-	./$(NAME) 105 800 200 200
-
-.PHONY: all clean fclean re val vr nr nrl
+.PHONY: all clean fclean re
