@@ -19,6 +19,9 @@ static void	cleanup(t_table *table)
 	i = -1;
 	while (++i < table->philo_count)
 		kill(table->philos[i].pid, SIGKILL);
+	i = -1;
+	while (++i < table->philo_count)
+		waitpid(table->philos[i].pid, NULL, 0);
 	sem_close(table->forks);
 	sem_close(table->write_lock);
 	sem_close(table->meal_check);

@@ -29,7 +29,6 @@ void	*monitor_death(void *arg)
 			print_action(philo, "died");
 			sem_post(table->finish);
 			sem_post(table->meal_check);
-			sem_wait(philo->table->write_lock);
 			exit(EXIT_SUCCESS);
 		}
 		sem_post(table->meal_check);

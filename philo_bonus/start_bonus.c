@@ -52,8 +52,12 @@ void	philo_lifecycle(t_philo *philo)
 		}
 		sleep_think(philo);
 	}
-	while (1)
-		pause();
+	sem_close(table->forks);
+	sem_close(table->write_lock);
+	sem_close(table->meal_check);
+	sem_close(table->finish);
+	sem_close(table->meal_counter);
+	_exit(EXIT_SUCCESS);
 }
 
 static bool	meal_monitor(t_table *table)
@@ -107,10 +111,4 @@ void	dinner_start(t_table *table)
 	if (!start_simulation(table))
 		return ;
 	sem_wait(table->finish);
-	i = -1;
-	while (++i < table->philo_count)
-		kill(table->philos[i].pid, SIGTERM);
-	i = -1;
-	while (++i < table->philo_count)
-		waitpid(table->philos[i].pid, NULL, 0);
 }
