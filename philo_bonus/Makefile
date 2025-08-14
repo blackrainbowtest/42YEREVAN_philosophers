@@ -10,10 +10,13 @@ CC := cc
 CFLAGS := -Wall -Wextra -Werror
 RM := rm -f
 
-# Source files (указаны явно)
+# Source files
 SRC_FILES := philo_bonus.c \
 			 init_bonus.c \
-			 utils_time_bonus.c utils_text_bonus.c start_bonus.c philo_life_bonus.c
+			 utils_time_bonus.c \
+			 utils_text_bonus.c \
+			 start_bonus.c \
+			 philo_life_bonus.c
 OBJS := $(SRC_FILES:.c=.o)
 
 # Quiet build
