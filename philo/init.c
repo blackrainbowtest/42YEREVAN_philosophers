@@ -6,7 +6,7 @@
 /*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 18:56:03 by aramarak          #+#    #+#             */
-/*   Updated: 2025/08/14 18:56:05 by aramarak         ###   ########.fr       */
+/*   Updated: 2025/08/14 19:20:46 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static	int	ft_init_mutexses(t_table *table)
 	if (pthread_mutex_init(&(table->mtx_meal_check), NULL))
 		return (EXIT_FAILURE);
 	if (pthread_mutex_init(&(table->mtx_print), NULL))
+		return (EXIT_FAILURE);
+	if (pthread_mutex_init(&(table->mtx_death), NULL))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

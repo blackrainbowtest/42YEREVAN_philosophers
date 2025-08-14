@@ -6,7 +6,7 @@
 /*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 18:56:37 by aramarak          #+#    #+#             */
-/*   Updated: 2025/08/14 18:56:39 by aramarak         ###   ########.fr       */
+/*   Updated: 2025/08/14 19:26:46 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_table
 	bool			all_philos_ate;
 	t_mutex			mtx_meal_check;
 	t_mutex			mtx_print;
+	t_mutex			mtx_death;
 	t_mutex			mtx_forks[MAX_PHILOS];
 	t_philo			philos[MAX_PHILOS];
 }	t_table;

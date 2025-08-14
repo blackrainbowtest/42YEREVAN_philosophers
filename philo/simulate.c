@@ -6,7 +6,7 @@
 /*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 18:56:44 by aramarak          #+#    #+#             */
-/*   Updated: 2025/08/14 18:56:45 by aramarak         ###   ########.fr       */
+/*   Updated: 2025/08/14 19:43:27 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_end_simulation(t_table *table)
 	while (++i < table->philo_count)
 		pthread_mutex_destroy(&(table->mtx_forks[i]));
 	pthread_mutex_destroy(&(table->mtx_print));
+	pthread_mutex_destroy(&(table->mtx_death));
 	pthread_mutex_destroy(&(table->mtx_meal_check));
 	return ;
 }
@@ -49,8 +50,8 @@ static void	meal_simulation(t_philo *philo)
 	write_message(table, philo->id, "has taken a fork");
 	if (table->philo_count == 1)
 	{
-		precise_usleep(table->time_to_die);
 		pthread_mutex_unlock(&(table->mtx_forks[philo->first_fork]));
+		precise_usleep(table->time_to_die);
 		return ;
 	}
 	pthread_mutex_lock(&(table->mtx_forks[philo->second_fork]));
@@ -68,23 +69,27 @@ static void	meal_simulation(t_philo *philo)
 void	*ft_thread(void *arg)
 {
 	t_philo	*philo;
-	t_table	*table;
+	bool	dead;
+	bool	all_ate;
 
 	philo = (t_philo *)arg;
-	table = philo->table;
 	if (philo->id % 2)
 		usleep(15000);
-	while (!(table->someone_died) && !(table->all_philos_ate))
+	while (1)
 	{
-		if (has_eaten_enough(philo))
+		pthread_mutex_lock(&(philo->table->mtx_meal_check));
+		dead = philo->table->someone_died;
+		all_ate = philo->table->all_philos_ate;
+		pthread_mutex_unlock(&(philo->table->mtx_meal_check));
+		if (dead || all_ate || has_eaten_enough(philo))
 			break ;
 		meal_simulation(philo);
-		if (has_eaten_enough(philo))
+		if (dead || all_ate || has_eaten_enough(philo))
 			break ;
 		if (philo->first_fork != philo->second_fork)
-			write_message(table, philo->id, "is sleeping");
-		smart_sleep(table->time_to_sleep, table);
-		write_message(table, philo->id, "is thinking");
+			write_message(philo->table, philo->id, "is sleeping");
+		smart_sleep(philo->table->time_to_sleep, philo->table);
+		write_message(philo->table, philo->id, "is thinking");
 	}
 	return (NULL);
 }

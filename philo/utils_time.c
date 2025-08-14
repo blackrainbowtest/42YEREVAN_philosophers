@@ -6,7 +6,7 @@
 /*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 18:57:06 by aramarak          #+#    #+#             */
-/*   Updated: 2025/08/14 18:57:08 by aramarak         ###   ########.fr       */
+/*   Updated: 2025/08/14 19:21:51 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,20 @@ long long	ft_time_from_last_meal(long long past, long long pres)
 void	smart_sleep(long long time, t_table *table)
 {
 	long long	i;
+	bool		died;
 
 	i = get_time();
-	while (!(table->someone_died))
+	pthread_mutex_lock(&table->mtx_death);
+	died = table->someone_died;
+	pthread_mutex_unlock(&table->mtx_death);
+	while (!died)
 	{
 		if (ft_time_from_last_meal(i, get_time()) >= time)
 			break ;
 		usleep(50);
+		pthread_mutex_lock(&table->mtx_death);
+		died = table->someone_died;
+		pthread_mutex_unlock(&table->mtx_death);
 	}
 }
 
