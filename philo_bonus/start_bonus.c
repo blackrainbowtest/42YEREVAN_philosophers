@@ -6,7 +6,7 @@
 /*   By: aramarak <aramarak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 16:21:35 by root              #+#    #+#             */
-/*   Updated: 2025/08/05 19:16:00 by aramarak         ###   ########.fr       */
+/*   Updated: 2025/08/14 19:02:09 by aramarak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,6 @@ bool	start_simulation(t_table *table)
 
 void	dinner_start(t_table *table)
 {
-	int	i;
-
 	if (!start_simulation(table))
 		return ;
 	sem_wait(table->finish);
